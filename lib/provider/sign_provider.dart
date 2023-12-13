@@ -27,3 +27,15 @@ class SignProvider extends _$SignProvider {
     }).toList();
   }
 }
+
+@riverpod
+class CurrentMessage extends _$CurrentMessage {
+  @override
+  String build() {
+    return '';
+  }
+
+  setCurrentMessage(String message) {
+    state = message;
+  }
+}

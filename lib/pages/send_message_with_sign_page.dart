@@ -13,25 +13,26 @@ class SendMessageWithSignPage extends HookWidget {
         },
         child: Icon(Icons.mic),
       ),
-      body: SafeArea(
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 15),
-          child: Column(
-            children: [
-              SwitchListTile(
-                value: isSwitched.value,
-                onChanged: (value) {
-                  isSwitched.value = value;
-                },
-                title: const Text('Cambiar vista'),
-              ),
-              Expanded(
-                child: isSwitched.value
-                    ? SendMessageSlider()
-                    : SendMessageWithStaticImages(),
-              ),
-            ],
-          ),
+      appBar: AppBar(
+        title: Text("Enviar mensaje"),
+      ),
+      body: Container(
+        margin: EdgeInsets.symmetric(horizontal: 15),
+        child: Column(
+          children: [
+            SwitchListTile(
+              value: isSwitched.value,
+              onChanged: (value) {
+                isSwitched.value = value;
+              },
+              title: const Text('Cambiar vista'),
+            ),
+            Expanded(
+              child: isSwitched.value
+                  ? SendMessageSlider()
+                  : SendMessageWithStaticImages(),
+            ),
+          ],
         ),
       ),
     );
@@ -42,8 +43,11 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final listOnlyLettersNumbers = ref.watch(signProviderProvider);
+    final currentMessage = ref.watch(currentMessageProvider);
     final currentState = useState(5);
-    final message = useState("");
+    /* final message = useState("");
+    final controller = useTextEditingController()
+      ..value = TextEditingValue(text: "Hola"); */
     return Column(
       children: [
         Slider(
@@ -57,11 +61,12 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
           label: "Velocidad",
         ),
         TextField(
+          /* controller: controller, */
           onChanged: (value) {
-            message.value = value;
             ref
                 .read(signProviderProvider.notifier)
                 .generateListToMessage(value);
+            ref.read(currentMessageProvider.notifier).setCurrentMessage(value);
           },
           decoration: InputDecoration(
             border: OutlineInputBorder(),
@@ -86,11 +91,16 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
   }
 }
 
-class SendMessageSlider extends StatelessWidget {
+class SendMessageSlider extends HookConsumerWidget {
   const SendMessageSlider({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final listOnlyLettersNumbers = ref.watch(signProviderProvider);
+    final currentMessage = ref.watch(currentMessageProvider);
+    final currentState = useState<String>("");
+    final pageController = usePageController();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -98,7 +108,7 @@ class SendMessageSlider extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SimpleText(
-              text: "Letra",
+              text: "A",
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
@@ -114,9 +124,24 @@ class SendMessageSlider extends StatelessWidget {
           width: 300,
           height: 400,
           color: Colors.blue,
+          child: PageView.builder(
+            controller: pageController,
+            scrollDirection: Axis.horizontal,
+            itemCount: listOnlyLettersNumbers.length,
+            itemBuilder: (context, int index) {
+              final sign = listOnlyLettersNumbers[index];
+              return SvgPicture.asset(
+                sign.pathImage,
+                width: 200,
+                height: 200,
+              );
+            },
+          ),
         ),
         SimpleText(
-          text: "Aqui aparecer tu texto",
+          text: currentMessage.isEmpty
+              ? "Aqui aparecer tu texto"
+              : currentMessage,
           fontSize: 17,
           fontWeight: FontWeight.w700,
         ),
@@ -125,9 +150,20 @@ class SendMessageSlider extends StatelessWidget {
             border: OutlineInputBorder(),
             labelText: 'Escribe tu texto',
           ),
+          onChanged: (value) {
+            currentState.value = value;
+          },
         ),
         FilledButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              print(currentState.value);
+              ref
+                  .read(signProviderProvider.notifier)
+                  .generateListToMessage(currentState.value);
+              ref
+                  .read(currentMessageProvider.notifier)
+                  .setCurrentMessage(currentState.value);
+            },
             icon: Icon(Icons.send),
             label: Text(
               "Enviar mensajes",
