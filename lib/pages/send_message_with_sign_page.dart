@@ -38,10 +38,12 @@ class SendMessageWithSignPage extends HookWidget {
   }
 }
 
-class SendMessageWithStaticImages extends HookWidget {
+class SendMessageWithStaticImages extends HookConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final listOnlyLettersNumbers = ref.watch(signProviderProvider);
     final currentState = useState(5);
+    final message = useState("");
     return Column(
       children: [
         Slider(
@@ -55,6 +57,12 @@ class SendMessageWithStaticImages extends HookWidget {
           label: "Velocidad",
         ),
         TextField(
+          onChanged: (value) {
+            message.value = value;
+            ref
+                .read(signProviderProvider.notifier)
+                .generateListToMessage(value);
+          },
           decoration: InputDecoration(
             border: OutlineInputBorder(),
             labelText: 'Escribe tu texto',
@@ -66,9 +74,9 @@ class SendMessageWithStaticImages extends HookWidget {
               crossAxisCount: currentState.value,
               mainAxisSpacing: 5,
               crossAxisSpacing: 5,
-              itemCount: listOnlySingAndNumbers.length,
+              itemCount: listOnlyLettersNumbers.length,
               itemBuilder: (context, int index) {
-                return SquareCard(sign: listOnlySingAndNumbers[index]);
+                return SquareCard(sign: listOnlyLettersNumbers[index]);
               },
             ),
           ),

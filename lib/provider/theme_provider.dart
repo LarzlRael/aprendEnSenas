@@ -1,6 +1,6 @@
 part of './providers.dart';
 
-class ThemeProviderNotifier extends ChangeNotifier {
+/* class ThemeProviderNotifier extends ChangeNotifier {
   /* STATE = estado => new AppTheme */
   AppTheme _appTheme = AppTheme(
     isDarkMode: false,
@@ -38,3 +38,4 @@ class ThemeProviderNotifier extends ChangeNotifier {
     notifyListeners(); // Notificar a los oyentes del cambio de estado
   }
 }
+ */
