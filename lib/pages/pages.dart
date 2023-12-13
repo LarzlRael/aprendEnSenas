@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:asl/data/games_data.dart';
 import 'package:asl/data/sign_list.dart';
 import 'package:asl/models/models.dart';
 import 'package:asl/provider/providers.dart';
@@ -17,3 +18,4 @@ part 'letter_and_numbers_page.dart';
 part 'letter_and_numbers_page_detail.dart';
 part 'send_message_with_sign_page.dart';
 part 'games/select_game_menu_page.dart';
+part 'games/select_difficulty_page.dart';

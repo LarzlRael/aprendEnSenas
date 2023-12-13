@@ -61,7 +61,7 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
           label: "Velocidad",
         ),
         TextField(
-          /* controller: controller, */
+          controller: TextEditingController(text: currentMessage),
           onChanged: (value) {
             ref
                 .read(signProviderProvider.notifier)
@@ -98,7 +98,7 @@ class SendMessageSlider extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final listOnlyLettersNumbers = ref.watch(signProviderProvider);
     final currentMessage = ref.watch(currentMessageProvider);
-    final currentState = useState<String>("");
+
     final pageController = usePageController();
 
     return Column(
@@ -146,23 +146,28 @@ class SendMessageSlider extends HookConsumerWidget {
           fontWeight: FontWeight.w700,
         ),
         TextField(
+          controller: TextEditingController(text: currentMessage),
           decoration: InputDecoration(
             border: OutlineInputBorder(),
             labelText: 'Escribe tu texto',
           ),
           onChanged: (value) {
-            currentState.value = value;
+            ref
+                .read(signProviderProvider.notifier)
+                .generateListToMessage(value);
+            ref.read(currentMessageProvider.notifier).setCurrentMessage(value);
           },
         ),
         FilledButton.icon(
             onPressed: () {
-              print(currentState.value);
               ref
                   .read(signProviderProvider.notifier)
-                  .generateListToMessage(currentState.value);
-              ref
-                  .read(currentMessageProvider.notifier)
-                  .setCurrentMessage(currentState.value);
+                  .generateListToMessage(currentMessage);
+              pageController.animateToPage(
+                listOnlyLettersNumbers.length - 1,
+                duration: Duration(milliseconds: 1500),
+                curve: Curves.easeIn,
+              );
             },
             icon: Icon(Icons.send),
             label: Text(

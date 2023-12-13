@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../pages/pages.dart';
 
 final appRouter = GoRouter(
-  initialLocation: '/send_message_with_sign_page',
+  initialLocation: '/select_difficulty_page',
   /* refreshListenable: goRouterNotifier, */
   routes: [
     ///* Primera pantalla
@@ -26,5 +26,14 @@ final appRouter = GoRouter(
       path: '/send_message_with_sign_page',
       builder: (_, __) => const SendMessageWithSignPage(),
     ),
+    GoRoute(
+        path: '/select_game_menu_page',
+        builder: (_, __) => SelectGameMenuPage()),
+    GoRoute(
+        path: '/select_difficulty_page',
+        builder: (_, state) {
+          /* final game = state.extra as SelectGameCard; */
+          return SelectDifficultyPage(/* game: game */);
+        }),
   ],
 );
