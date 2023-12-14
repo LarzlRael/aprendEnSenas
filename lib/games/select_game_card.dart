@@ -4,22 +4,27 @@ class SelectGameCard extends StatelessWidget {
   final IconData icon;
   final String title;
   final String subtitle;
-  final String? path;
+
+  final Function(BuildContext context)? onSelected;
 
   const SelectGameCard({
     super.key,
     required this.icon,
     required this.title,
     required this.subtitle,
-    this.path,
+    this.onSelected,
   });
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      onTap: () {
+        if (onSelected != null) {
+          onSelected!(context);
+        }
+      },
       customBorder: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
-      onTap: () => context.push(path!),
       child: Card(
         child: Container(
           padding: EdgeInsets.all(5),

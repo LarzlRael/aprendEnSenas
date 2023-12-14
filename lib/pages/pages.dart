@@ -19,3 +19,4 @@ part 'letter_and_numbers_page_detail.dart';
 part 'send_message_with_sign_page.dart';
 part 'games/select_game_menu_page.dart';
 part 'games/select_difficulty_page.dart';
+part 'games/test_your_memory_page.dart';

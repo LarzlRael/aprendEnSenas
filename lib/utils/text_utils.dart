@@ -7,15 +7,15 @@ extension StringCasingExtension on String {
       .split(' ')
       .map((str) => str.toCapitalize())
       .join(' ');
-  String convertSnakeCaseToNormal() {
-    List<String> parts = this.split('_');
-    String result = parts[0];
+  String snakeCaseToWords() {
+    List<String> parts = split('_');
+    List<String> words = [];
 
-    for (int i = 1; i < parts.length; i++) {
-      result += parts[i][0].toUpperCase() + parts[i].substring(1);
+    for (String part in parts) {
+      words.add(part);
     }
 
-    return result;
+    return words.join(' ');
   }
 }
 

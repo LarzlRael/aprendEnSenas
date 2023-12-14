@@ -22,6 +22,7 @@ class SelectGameMenuPage extends StatelessWidget {
               icon: item.icon,
               title: item.title,
               subtitle: item.subtitle,
+              onSelected: item.onSelected,
             );
           },
         ),
