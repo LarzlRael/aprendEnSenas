@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../pages/pages.dart';
 
 final appRouter = GoRouter(
-  initialLocation: '/word_in_sight_page',
+  initialLocation: '/guess_the_word_page',
   /* refreshListenable: goRouterNotifier, */
   routes: [
     ///* Primera pantalla
@@ -48,6 +48,10 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/word_in_sight_page',
       builder: (_, __) => const WordInSightPage(),
+    ),
+    GoRoute(
+      path: '/guess_the_word_page',
+      builder: (_, __) => const GuessTheWordPage(),
     ),
   ],
 );

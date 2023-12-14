@@ -5,7 +5,7 @@ class WordInSightPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final state =
-        useState<WordInSightGame>(createWordInSightGame(palabrasComunes, 4));
+        useState<WordInSightGame>(createWordInSightGame(commonWords, 4));
     final isCorrect = useState(false);
 
     final indexState = useState(-1);
@@ -14,7 +14,7 @@ class WordInSightPage extends HookWidget {
 
     useEffect(() {
       if (isCorrect.value) {
-        state.value = createWordInSightGame(palabrasComunes, 4);
+        state.value = createWordInSightGame(commonWords, 4);
         indexState.value = -1;
       }
       isCorrect.value = false;
