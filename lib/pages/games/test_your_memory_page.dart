@@ -19,8 +19,32 @@ class TestYourMemoryPage extends HookWidget {
       body: SafeArea(
         child: Center(
           child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            width: double.infinity,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    BackIcon(),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SimpleText(
+                          text: 'Hits',
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        SimpleText(
+                          text: 'Dificultad: ${difficulty.name}',
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
                 LifesCounter(
                   lifes: lifes.value,
                 ),
@@ -53,10 +77,10 @@ class TestYourMemoryPage extends HookWidget {
                             createTestYourGameState.value =
                                 createTestYourGame(listOnlySingAndNumbers, 3);
                           } else {
-                            if (lifes.value == 0) {
-                              context.pop();
-                            }
                             lifes.value--;
+                            if (lifes.value == 0) {
+                              context.canPop();
+                            }
                           }
                         },
                         child: Card(
@@ -92,18 +116,22 @@ class LifesCounter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final totalLifes = lifes;
+    final size = 30.0;
     return Container(
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           for (int i = 0; i < lifes; i++)
             Icon(
               Icons.favorite,
               color: Colors.red,
+              size: size,
             ),
           for (int i = lifes; i < 5; i++)
             Icon(
               Icons.favorite_border,
               color: Colors.red,
+              size: size,
             ),
         ],
       ),

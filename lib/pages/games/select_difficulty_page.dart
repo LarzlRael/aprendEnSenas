@@ -1,11 +1,13 @@
 part of '../pages.dart';
 
 class SelectDifficultyPage extends StatelessWidget {
+  final GameType gameType;
+  final String? gameRoutePage;
   const SelectDifficultyPage({
     super.key,
     required this.gameType,
+    this.gameRoutePage,
   });
-  final GameType gameType;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,12 @@ class SelectDifficultyPage extends StatelessWidget {
                             colorByDifficulty[difficulty],
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          context.push(
+                            "/$gameRoutePage",
+                            extra: difficulty,
+                          );
+                        },
                         child: Text(
                             difficulty.name.snakeCaseToWords().toCapitalize()),
                       ),

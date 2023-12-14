@@ -9,7 +9,7 @@ final items = <SelectGameCard>[
     title: GameType.test_your_memory.name,
     subtitle: "Adivina la palabra o numero correcto",
     onSelected: (context) {
-      context.push('/select_difficulty_page/',
+      context.push('/select_difficulty_page/test_your_memory_page',
           extra: GameType.test_your_memory);
     },
   ),
@@ -18,8 +18,10 @@ final items = <SelectGameCard>[
     title: GameType.adivina_la_palabra.name,
     subtitle: "Prueba con conocimiento con las palabras",
     onSelected: (context) {
-      context.push('/select_difficulty_page/',
-          extra: GameType.adivina_la_palabra);
+      context.push(
+        '/guess_the_word_page',
+        extra: GameType.adivina_la_palabra,
+      );
     },
   ),
   SelectGameCard(
@@ -27,8 +29,10 @@ final items = <SelectGameCard>[
     title: GameType.volteo_de_cartas.name,
     subtitle: "Voltea las cartas y encuentra la pareja",
     onSelected: (context) {
-      context.push('/select_difficulty_page/',
-          extra: GameType.volteo_de_cartas);
+      context.push(
+        '/select_difficulty_page/flipping_cards_page',
+        extra: GameType.volteo_de_cartas,
+      );
     },
   ),
   SelectGameCard(
@@ -36,8 +40,10 @@ final items = <SelectGameCard>[
     subtitle: "Desafiate a ti mismo y a tus amigos",
     title: GameType.palabra_a_la_vista.name,
     onSelected: (context) {
-      context.push('/select_difficulty_page/',
-          extra: GameType.palabra_a_la_vista);
+      context.push(
+        '/word_in_sight_page',
+        extra: GameType.palabra_a_la_vista,
+      );
     },
   ),
 ];

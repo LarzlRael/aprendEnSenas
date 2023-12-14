@@ -39,7 +39,7 @@ class SelectGameCard extends StatelessWidget {
                 size: 75,
               ),
               SimpleText(
-                text: title,
+                text: title.snakeCaseToWords().toCapitalize(),
                 fontSize: 15,
                 fontWeight: FontWeight.w500,
                 textAlign: TextAlign.center,

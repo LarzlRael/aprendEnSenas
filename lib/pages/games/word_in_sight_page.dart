@@ -11,7 +11,7 @@ class WordInSightPage extends HookWidget {
     final indexState = useState(-1);
 
     final lifesCounter = useState(5);
-
+    final status = useState<double>(0.0);
     useEffect(() {
       if (isCorrect.value) {
         state.value = createWordInSightGame(commonWords, 4);
@@ -24,9 +24,47 @@ class WordInSightPage extends HookWidget {
         child: Container(
             child: Column(
           children: [
-            LifesAndCounter(lifes: lifesCounter.value),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                BackIcon(),
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: GestureDetector(
+                      onTap: () {
+                        status.value = status.value + 0.1;
+                        print(status.value);
+                      },
+                      child: /* LinearProgressIndicator(
+                        borderRadius: BorderRadius.circular(10),
+                        minHeight: 20,
+                        value: status.value,
+                      ), */
+                          TweenAnimationBuilder<double>(
+                        duration: const Duration(milliseconds: 250),
+                        curve: Curves.easeInOut,
+                        tween: Tween<double>(
+                          begin: 0,
+                          end: status.value,
+                        ),
+                        builder: (context, value, _) => LinearProgressIndicator(
+                          value: value,
+                          borderRadius: BorderRadius.circular(10),
+                          minHeight: 20,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                LifesAndCounter(lifes: lifesCounter.value),
+              ],
+            ),
             SimpleText(
-              text: 'Selecciona la palabra que corresponde a la imagen',
+              text: '¿Cual es la palabra?',
+              fontSize: 17,
+              fontWeight: FontWeight.w600,
+              padding: EdgeInsets.symmetric(vertical: 10),
             ),
             Wrap(
               children: state.value.correctAnswerList.map((sign) {
@@ -66,11 +104,6 @@ class WordInSightPage extends HookWidget {
                         ),
                       ),
                       child: Container(
-                        /* decoration: BoxDecoration(
-                          color: indexState.value == index
-                              ? Colors.blue
-                              : Colors.white,
-                        ), */
                         padding: EdgeInsets.all(10),
                         width: 100,
                         height: 100,
@@ -98,6 +131,7 @@ class WordInSightPage extends HookWidget {
                         if (value.options[indexState.value] ==
                             value.correctAnswerString) {
                           isCorrect.value = true;
+                          status.value = status.value + 0.1;
                         } else {
                           lifesCounter.value--;
                         }

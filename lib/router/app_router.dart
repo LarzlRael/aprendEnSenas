@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../pages/pages.dart';
 
 final appRouter = GoRouter(
-  initialLocation: '/guess_the_word_page',
+  initialLocation: '/select_game_menu_page',
   /* refreshListenable: goRouterNotifier, */
   routes: [
     ///* Primera pantalla
@@ -30,17 +30,16 @@ final appRouter = GoRouter(
         path: '/select_game_menu_page',
         builder: (_, __) => SelectGameMenuPage()),
     GoRoute(
-        path: '/select_difficulty_page',
+        path: '/select_difficulty_page/:game',
         builder: (_, state) {
           GameType game = state.extra as GameType;
+          final gameType = state.params['game'];
           return SelectDifficultyPage(
+            gameRoutePage: gameType,
             gameType: game,
           );
         }),
-    GoRoute(
-      path: '/test_your_memory_page',
-      builder: (_, __) => const TestYourMemoryPage(),
-    ),
+
     GoRoute(
       path: '/test_your_memory_page',
       builder: (_, __) => const TestYourMemoryPage(),
@@ -52,6 +51,10 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/guess_the_word_page',
       builder: (_, __) => const GuessTheWordPage(),
+    ),
+    GoRoute(
+      path: '/flipping_cards_page',
+      builder: (_, __) => const FlippingCardsPage(),
     ),
   ],
 );

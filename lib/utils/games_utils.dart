@@ -46,3 +46,11 @@ WordInSightGame createWordInSightGame(List<String> options, int amountOptions) {
 getRandomWordFromStringList(List<String> list) {
   return list[Random().nextInt(list.length)];
 }
+
+List<Sign> generateSignToPair(List<Sign> list, int itemsCount) {
+  final listItems = list.take(itemsCount).toList();
+  return [
+    ...listItems,
+    ...listItems,
+  ]..shuffle();
+}
