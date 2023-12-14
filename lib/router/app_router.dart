@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../pages/pages.dart';
 
 final appRouter = GoRouter(
-  initialLocation: '/test_your_memory_page',
+  initialLocation: '/word_in_sight_page',
   /* refreshListenable: goRouterNotifier, */
   routes: [
     ///* Primera pantalla
@@ -40,6 +40,14 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/test_your_memory_page',
       builder: (_, __) => const TestYourMemoryPage(),
+    ),
+    GoRoute(
+      path: '/test_your_memory_page',
+      builder: (_, __) => const TestYourMemoryPage(),
+    ),
+    GoRoute(
+      path: '/word_in_sight_page',
+      builder: (_, __) => const WordInSightPage(),
     ),
   ],
 );
