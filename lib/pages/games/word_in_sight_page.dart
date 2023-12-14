@@ -6,13 +6,25 @@ class WordInSightPage extends HookWidget {
   Widget build(BuildContext context) {
     final state =
         useState<WordInSightGame>(createWordInSightGame(palabrasComunes, 4));
-    ;
+    final isCorrect = useState(false);
+
     final indexState = useState(-1);
+
+    final lifesCounter = useState(5);
+
+    useEffect(() {
+      if (isCorrect.value) {
+        state.value = createWordInSightGame(palabrasComunes, 4);
+        indexState.value = -1;
+      }
+      isCorrect.value = false;
+    }, [isCorrect.value]);
     return Scaffold(
       body: SafeArea(
         child: Container(
             child: Column(
           children: [
+            LifesAndCounter(lifes: lifesCounter.value),
             SimpleText(
               text: 'Selecciona la palabra que corresponde a la imagen',
             ),
@@ -78,22 +90,16 @@ class WordInSightPage extends HookWidget {
               width: double.infinity,
               height: 50,
               child: FilledButton(
-                child: Text('Siguiente'),
+                child: Text('Verificar'),
                 onPressed: indexState.value == -1
                     ? null
                     : () {
                         final value = state.value;
                         if (value.options[indexState.value] ==
                             value.correctAnswerString) {
-                          state.value =
-                              createWordInSightGame(palabrasComunes, 4);
-                          indexState.value = -1;
+                          isCorrect.value = true;
                         } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Incorrecto'),
-                            ),
-                          );
+                          lifesCounter.value--;
                         }
                       },
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
@@ -103,6 +109,33 @@ class WordInSightPage extends HookWidget {
           ],
         )),
       ),
+    );
+  }
+}
+
+class LifesAndCounter extends StatelessWidget {
+  final int lifes;
+
+  const LifesAndCounter({super.key, required this.lifes});
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Icon(
+          Icons.favorite,
+          color: Colors.red,
+          size: 25,
+        ),
+        SimpleText(
+          text: lifes.toString(),
+          color: Colors.red,
+          fontSize: 18,
+          fontWeight: FontWeight.w500,
+          padding: EdgeInsets.symmetric(horizontal: 5),
+        ),
+      ],
     );
   }
 }
