@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../pages/pages.dart';
 
 final appRouter = GoRouter(
-  initialLocation: '/select_game_menu_page',
+  initialLocation: '/send_message_with_sign_page',
   /* refreshListenable: goRouterNotifier, */
   routes: [
     ///* Primera pantalla

@@ -20,17 +20,22 @@ class SendMessageWithSignPage extends HookWidget {
         margin: EdgeInsets.symmetric(horizontal: 15),
         child: Column(
           children: [
-            SwitchListTile(
-              value: isSwitched.value,
-              onChanged: (value) {
-                isSwitched.value = value;
-              },
-              title: const Text('Cambiar vista'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text('Cambiar vista'),
+                Switch(
+                  value: isSwitched.value,
+                  onChanged: (value) {
+                    isSwitched.value = value;
+                  },
+                ),
+              ],
             ),
             Expanded(
               child: isSwitched.value
-                  ? SendMessageSlider()
-                  : SendMessageWithStaticImages(),
+                  ? SendMessageWithStaticImages()
+                  : SendMessageSlider(),
             ),
           ],
         ),
@@ -93,87 +98,125 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
 
 class SendMessageSlider extends HookConsumerWidget {
   const SendMessageSlider({super.key});
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final _currentPage = useState(0);
     final listOnlyLettersNumbers = ref.watch(signProviderProvider);
     final currentMessage = ref.watch(currentMessageProvider);
 
     final pageController = usePageController();
+    final currentMessagex = useState("");
+    final currenSign = useState<Sign?>(null);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SimpleText(
-              text: "A",
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-            SizedBox(width: 5),
-            SimpleText(
-              text: "a",
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ],
-        ),
-        Container(
-          width: 300,
-          height: 400,
-          color: Colors.blue,
-          child: PageView.builder(
-            controller: pageController,
-            scrollDirection: Axis.horizontal,
-            itemCount: listOnlyLettersNumbers.length,
-            itemBuilder: (context, int index) {
-              final sign = listOnlyLettersNumbers[index];
-              return SvgPicture.asset(
-                sign.pathImage,
-                width: 200,
-                height: 200,
-              );
-            },
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SimpleText(
+                text: currenSign.value?.type!.name ?? "",
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+              SizedBox(width: 5),
+              SimpleText(
+                text: currenSign.value?.letter ?? "",
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ],
           ),
-        ),
-        SimpleText(
-          text: currentMessage.isEmpty
-              ? "Aqui aparecer tu texto"
-              : currentMessage,
-          fontSize: 17,
-          fontWeight: FontWeight.w700,
-        ),
-        TextField(
-          controller: TextEditingController(text: currentMessage),
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: 'Escribe tu texto',
+          Container(
+            width: 300,
+            height: 400,
+            child: PageView.builder(
+              controller: pageController,
+              scrollDirection: Axis.horizontal,
+              itemCount: listOnlyLettersNumbers.length,
+              itemBuilder: (context, int index) {
+                final sign = listOnlyLettersNumbers[index];
+                return SvgPicture.asset(
+                  sign.pathImage,
+                  width: 200,
+                  height: 200,
+                );
+              },
+            ),
           ),
-          onChanged: (value) {
-            ref
-                .read(signProviderProvider.notifier)
-                .generateListToMessage(value);
-            ref.read(currentMessageProvider.notifier).setCurrentMessage(value);
-          },
-        ),
-        FilledButton.icon(
-            onPressed: () {
-              ref
+          SimpleText(
+            text: currentMessage.isEmpty
+                ? "Aqui aparecera tu texto"
+                : currentMessage,
+            fontSize: 17,
+            fontWeight: FontWeight.w700,
+            padding: EdgeInsets.symmetric(vertical: 10),
+          ),
+          TextField(
+            /* controller: TextEditingController(text: currentMessage), */
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: 'Escribe tu texto',
+            ),
+            onChanged: (value) {
+              currentMessagex.value = value;
+              /* ref
                   .read(signProviderProvider.notifier)
-                  .generateListToMessage(currentMessage);
-              pageController.animateToPage(
-                listOnlyLettersNumbers.length - 1,
-                duration: Duration(milliseconds: 1500),
-                curve: Curves.easeIn,
-              );
+                  .generateListToMessage(value); */
+              /* ref
+                  .read(currentMessageProvider.notifier)
+                  .setCurrentMessage(value); */
             },
-            icon: Icon(Icons.send),
-            label: Text(
-              "Enviar mensajes",
-            ))
-      ],
+          ),
+          FilledButton.icon(
+              onPressed: () {
+                ref
+                    .read(signProviderProvider.notifier)
+                    .generateListToMessage(currentMessagex.value);
+
+                /* pageController.animateToPage(
+                  listOnlyLettersNumbers.length - 1,
+                  duration: Duration(milliseconds: 1500),
+                  curve: Curves.easeIn,
+                ); */
+
+                /* Timer.periodic(Duration(seconds: 5), (Timer timer) {
+                  if (_currentPage.value < listOnlyLettersNumbers.length - 1) {
+                    _currentPage.value++;
+                  } else {
+                    _currentPage.value = 0;
+                  }
+
+                  pageController.animateToPage(
+                    _currentPage.value,
+                    duration: Duration(milliseconds: 350),
+                    curve: Curves.easeIn,
+                  );
+                }); */
+
+                Timer.periodic(Duration(milliseconds: 1000), (Timer timer) {
+                  if (_currentPage.value < listOnlyLettersNumbers.length) {
+                    print("current page: ${pageController.page!.toInt()}");
+                    currenSign.value = listOnlyLettersNumbers[
+                        pageController.page!.toInt() + 1];
+                    pageController.nextPage(
+                      duration: Duration(milliseconds: 500),
+                      curve: Curves.easeInOut,
+                    );
+                  } else {
+                    // Si estás en la última página, vuelve al principio
+                    pageController.jumpToPage(0);
+                  }
+                  timer.cancel();
+                });
+              },
+              icon: Icon(Icons.send),
+              label: Text(
+                "Enviar mensajes",
+              ))
+        ],
+      ),
     );
   }
 }

@@ -1,19 +1,28 @@
 part of '../pages.dart';
 
+const speed = 500;
+
+class SignIndex {
+  final int index;
+  final String letter;
+  SignIndex(this.index, this.letter);
+}
+
+class Pair {
+  final dynamic left;
+  final dynamic right;
+  Pair(this.left, this.right);
+
+  @override
+  String toString() => 'Pair[$left, $right]';
+}
+
 class FlippingCardsPage extends HookWidget {
   const FlippingCardsPage({
     super.key,
     this.difficulty = Difficulty.easy,
   });
   final Difficulty difficulty;
-
-  void verifyIsEqual(List<Sign> list, int index, int index2) {
-    if (list[index].letter == list[index2].letter) {
-      print('son iguales');
-    } else {
-      print('no son iguales');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +33,31 @@ class FlippingCardsPage extends HookWidget {
         List.generate(state.value.length, (index) => FlipCardController()));
 
     final flippedElements = useState<List<String>>([]);
-    final blockedElements = useState<List<String>>([]);
+    final completedElementsIndex = useState<List<int>>([]);
+    final isButtonsDisabled = useState<bool>(false);
+    final stateFlipsVerify = useState<List<int>>([]);
+
+    void verifyIsEqual(
+      SignIndex signIndex,
+      SignIndex signIndex2,
+    ) {
+      if (signIndex.letter == signIndex2.letter) {
+        completedElementsIndex.value.add(signIndex.index);
+        completedElementsIndex.value.add(signIndex2.index);
+      } else {
+        flipsControllersState.value[signIndex.index].toggleCard();
+      }
+      stateFlipsVerify.value.clear();
+    }
+
+    void onButtonPressed() {
+      isButtonsDisabled.value = true;
+
+      // Después de 500 ms, habilita nuevamente el botón
+      Future.delayed(Duration(milliseconds: speed), () {
+        isButtonsDisabled.value = false;
+      });
+    }
 
     /* void verifyFlipMatch() {
       if (flippedElements.value.length == 2) {
@@ -37,6 +70,7 @@ class FlippingCardsPage extends HookWidget {
           /* Verify if all flips are disabled */
           if (flipsControllersState.value
               .every((flipState) => !flipState.isEnabled)) {
+
             // showDialogGameDC(context);
             // AdUtils.checkAdCounter(context);
             // Navigator.of(context).pop();
@@ -87,36 +121,53 @@ class FlippingCardsPage extends HookWidget {
                   crossAxisSpacing: 5,
                   itemCount: state.value.length,
                   itemBuilder: (context, int index) {
-                    return InkWell(
-                      onTap: () {
-                        /* if (onTap != null) {
-              onTap!(letterWithSignArray[index]);
-            } */
-                      },
-                      child: FlipCard(
-                        flipOnTouch: true,
-                        controller: flipsControllersState.value[index],
-                        /* controller: FlipController(), */
-                        front: Card(
-                          child: Container(
-                            padding: EdgeInsets.all(10),
-                            width: 100,
-                            height: 100,
-                            child: Icon(
-                              Icons.help_outline_rounded,
-                              size: 50,
+                    return FlipCard(
+                      onFlip: () {
+                        onButtonPressed();
+                        if (stateFlipsVerify.value.contains(index)) {
+                          stateFlipsVerify.value.remove(index);
+                        } else {
+                          stateFlipsVerify.value.add(index);
+                        }
+                        if (stateFlipsVerify.value.length == 2) {
+                          print(stateFlipsVerify.value);
+                          print('verificando');
+                          /* onButtonPressed(isButtonsDisableds); */
+                          /* onButtonPressed(); */
+                          verifyIsEqual(
+                            SignIndex(
+                              stateFlipsVerify.value[0],
+                              state.value[stateFlipsVerify.value[0]].letter,
                             ),
+                            SignIndex(
+                              stateFlipsVerify.value[1],
+                              state.value[stateFlipsVerify.value[1]].letter,
+                            ),
+                          );
+                        }
+                      },
+                      flipOnTouch: !isButtonsDisabled.value,
+                      controller: flipsControllersState.value[index],
+                      speed: speed,
+                      front: Card(
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          width: 100,
+                          height: 100,
+                          child: Icon(
+                            Icons.help_outline_rounded,
+                            size: 50,
                           ),
                         ),
-                        back: Card(
-                          child: Container(
-                            padding: EdgeInsets.all(10),
-                            width: 100,
-                            height: 100,
-                            child: SvgPicture.asset(
-                              state.value[index]
-                                  .pathImage, // Reemplaza con la ruta de tu archivo SVG
-                            ),
+                      ),
+                      back: Card(
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          width: 100,
+                          height: 100,
+                          child: SvgPicture.asset(
+                            state.value[index]
+                                .pathImage, // Reemplaza con la ruta de tu archivo SVG
                           ),
                         ),
                       ),
