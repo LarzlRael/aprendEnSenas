@@ -1,5 +1,7 @@
 part of 'pages.dart';
 
+const timeMiliseconds = 1500;
+
 class SendMessageWithSignPage extends HookWidget {
   const SendMessageWithSignPage({super.key});
   @override
@@ -8,9 +10,7 @@ class SendMessageWithSignPage extends HookWidget {
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.push('/letter-and-numbers');
-        },
+        onPressed: () => context.push('/letter-and-numbers'),
         child: Icon(Icons.mic),
       ),
       appBar: AppBar(
@@ -174,41 +174,25 @@ class SendMessageSlider extends HookConsumerWidget {
                 ref
                     .read(signProviderProvider.notifier)
                     .generateListToMessage(currentMessagex.value);
+                ref
+                    .read(currentMessageProvider.notifier)
+                    .setCurrentMessage(currentMessagex.value);
 
-                /* pageController.animateToPage(
-                  listOnlyLettersNumbers.length - 1,
-                  duration: Duration(milliseconds: 1500),
-                  curve: Curves.easeIn,
-                ); */
-
-                /* Timer.periodic(Duration(seconds: 5), (Timer timer) {
-                  if (_currentPage.value < listOnlyLettersNumbers.length - 1) {
-                    _currentPage.value++;
-                  } else {
-                    _currentPage.value = 0;
-                  }
-
-                  pageController.animateToPage(
-                    _currentPage.value,
-                    duration: Duration(milliseconds: 350),
-                    curve: Curves.easeIn,
-                  );
-                }); */
-
-                Timer.periodic(Duration(milliseconds: 1000), (Timer timer) {
-                  if (_currentPage.value < listOnlyLettersNumbers.length) {
-                    print("current page: ${pageController.page!.toInt()}");
-                    currenSign.value = listOnlyLettersNumbers[
-                        pageController.page!.toInt() + 1];
+                Timer.periodic(Duration(milliseconds: timeMiliseconds),
+                    (Timer timer) {
+                  if (pageController.page!.toInt() <
+                      listOnlyLettersNumbers.length - 1) {
+                    currenSign.value =
+                        listOnlyLettersNumbers[pageController.page!.toInt()];
                     pageController.nextPage(
-                      duration: Duration(milliseconds: 500),
+                      duration: Duration(milliseconds: timeMiliseconds),
                       curve: Curves.easeInOut,
                     );
                   } else {
                     // Si estás en la última página, vuelve al principio
                     pageController.jumpToPage(0);
+                    timer.cancel();
                   }
-                  timer.cancel();
                 });
               },
               icon: Icon(Icons.send),
