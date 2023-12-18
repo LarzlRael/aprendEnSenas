@@ -102,6 +102,7 @@ class SendMessageSlider extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final _currentPage = useState(0);
     final listOnlyLettersNumbers = ref.watch(signProviderProvider);
+    print("listOnlyLettersNumbers: $listOnlyLettersNumbers");
     final currentMessage = ref.watch(currentMessageProvider);
 
     final pageController = usePageController();
@@ -161,12 +162,6 @@ class SendMessageSlider extends HookConsumerWidget {
             ),
             onChanged: (value) {
               currentMessagex.value = value;
-              /* ref
-                  .read(signProviderProvider.notifier)
-                  .generateListToMessage(value); */
-              /* ref
-                  .read(currentMessageProvider.notifier)
-                  .setCurrentMessage(value); */
             },
           ),
           FilledButton.icon(
@@ -180,6 +175,9 @@ class SendMessageSlider extends HookConsumerWidget {
 
                 Timer.periodic(Duration(milliseconds: timeMiliseconds),
                     (Timer timer) {
+                  print("pageController.page: ${pageController.page!.toInt()}");
+                  print(
+                      "listOnlyLettersNumbers: ${listOnlyLettersNumbers.length - 1}");
                   if (pageController.page!.toInt() <
                       listOnlyLettersNumbers.length - 1) {
                     currenSign.value =
@@ -190,8 +188,8 @@ class SendMessageSlider extends HookConsumerWidget {
                     );
                   } else {
                     // Si estás en la última página, vuelve al principio
-                    pageController.jumpToPage(0);
                     timer.cancel();
+                    pageController.jumpToPage(0);
                   }
                 });
               },

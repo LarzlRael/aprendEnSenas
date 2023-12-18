@@ -8,10 +8,11 @@ part 'sign_provider.g.dart';
 class SignProvider extends _$SignProvider {
   @override
   List<Sign> build() {
-    return listOnlySingAndNumbers;
+    return [];
   }
 
   void generateListToMessage(String inputString) {
+    state = [];
     Set<String> validLetters = Set.from(
         listOnlySingAndNumbers.map((sign) => sign.letter.toLowerCase()));
 
