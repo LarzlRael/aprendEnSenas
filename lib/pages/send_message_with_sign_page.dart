@@ -50,9 +50,10 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
     final listOnlyLettersNumbers = ref.watch(signProviderProvider);
     final currentMessage = ref.watch(currentMessageProvider);
     final currentState = useState(5);
-    /* final message = useState("");
+    final message = useState(currentMessage);
+
     final controller = useTextEditingController()
-      ..value = TextEditingValue(text: "Hola"); */
+      ..value = TextEditingValue(text: message.value);
     return Column(
       children: [
         Slider(
@@ -65,19 +66,11 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
           divisions: 10,
           label: "Velocidad",
         ),
-        TextField(
-          controller: TextEditingController(text: currentMessage),
-          onChanged: (value) {
-            ref
-                .read(signProviderProvider.notifier)
-                .generateListToMessage(value);
-            ref.read(currentMessageProvider.notifier).setCurrentMessage(value);
-          },
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: 'Escribe tu texto',
-          ),
-        ),
+        TextFieldSendMessage((value) {
+          message.value = value;
+          ref.read(signProviderProvider.notifier).generateListToMessage(value);
+          ref.read(currentMessageProvider.notifier).setCurrentMessage(value);
+        }),
         Expanded(
           child: Card(
             child: AlignedGridView.count(
@@ -100,14 +93,35 @@ class SendMessageSlider extends HookConsumerWidget {
   const SendMessageSlider({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _currentPage = useState(0);
-    final listOnlyLettersNumbers = ref.watch(signProviderProvider);
-    print("listOnlyLettersNumbers: $listOnlyLettersNumbers");
+    final listOnlyLettersNumbers = useState<List<Sign>>(listOnlySingAndNumbers);
     final currentMessage = ref.watch(currentMessageProvider);
 
-    final pageController = usePageController();
-    final currentMessagex = useState("");
+    final currentMessagex = useState(currentMessage);
     final currenSign = useState<Sign?>(null);
+    final controller = useTextEditingController()
+      ..value = TextEditingValue(text: currentMessagex.value);
+
+    final pageController = usePageController();
+    pageController.addListener(() {
+      if (pageController.page!.toInt() < listOnlyLettersNumbers.value.length) {
+        currenSign.value =
+            listOnlyLettersNumbers.value[pageController.page!.toInt()];
+      }
+    });
+
+    useEffect(() {
+      /* ref
+          .read(signProviderProvider.notifier)
+          .generateListToMessage(currentMessagex.value);
+      ref
+          .read(currentMessageProvider.notifier)
+          .setCurrentMessage(currentMessagex.value); */
+      listOnlyLettersNumbers.value = generateListToMessage(
+        listOnlySingAndNumbers,
+        currentMessagex.value,
+      );
+      return null;
+    }, [currentMessagex.value]);
 
     return SingleChildScrollView(
       child: Column(
@@ -135,53 +149,56 @@ class SendMessageSlider extends HookConsumerWidget {
             child: PageView.builder(
               controller: pageController,
               scrollDirection: Axis.horizontal,
-              itemCount: listOnlyLettersNumbers.length,
+              itemCount: listOnlyLettersNumbers.value.length,
               itemBuilder: (context, int index) {
-                final sign = listOnlyLettersNumbers[index];
-                return SvgPicture.asset(
-                  sign.pathImage,
-                  width: 200,
-                  height: 200,
+                final sign = listOnlyLettersNumbers.value[index];
+                return InkWell(
+                  onTap: () =>
+                      context.push('/letter-and-numbers/detail', extra: sign),
+                  child: SvgPicture.asset(
+                    sign.pathImage,
+                    width: 200,
+                    height: 200,
+                  ),
                 );
               },
             ),
           ),
           SimpleText(
-            text: currentMessage.isEmpty
+            text: currentMessagex.value.isEmpty
                 ? "Aqui aparecera tu texto"
-                : currentMessage,
+                : currentMessagex.value,
             fontSize: 17,
             fontWeight: FontWeight.w700,
             padding: EdgeInsets.symmetric(vertical: 10),
           ),
-          TextField(
-            /* controller: TextEditingController(text: currentMessage), */
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Escribe tu texto',
-            ),
-            onChanged: (value) {
-              currentMessagex.value = value;
-            },
-          ),
+          TextFieldSendMessage((value) {
+            currentMessagex.value = value;
+          }),
           FilledButton.icon(
               onPressed: () {
-                ref
+                /*  ref
                     .read(signProviderProvider.notifier)
                     .generateListToMessage(currentMessagex.value);
                 ref
                     .read(currentMessageProvider.notifier)
-                    .setCurrentMessage(currentMessagex.value);
+                    .setCurrentMessage(currentMessagex.value); */
+/*                 print("currentMessagex.value: ${currentMessagex.value}");
+                listOnlyLettersNumbers.value = generateListToMessage(
+                  listOnlySingAndNumbers,
+                  currentMessagex.value,
+                ); */
+                ref
+                    .read(signProviderProvider.notifier)
+                    .generateListToMessage(currentMessagex.value);
+                print(
+                    "listOnlyLettersNumbers: ${listOnlyLettersNumbers.value}");
+                pageController.jumpToPage(0);
 
                 Timer.periodic(Duration(milliseconds: timeMiliseconds),
                     (Timer timer) {
-                  print("pageController.page: ${pageController.page!.toInt()}");
-                  print(
-                      "listOnlyLettersNumbers: ${listOnlyLettersNumbers.length - 1}");
                   if (pageController.page!.toInt() <
-                      listOnlyLettersNumbers.length - 1) {
-                    currenSign.value =
-                        listOnlyLettersNumbers[pageController.page!.toInt()];
+                      listOnlyLettersNumbers.value.length - 1) {
                     pageController.nextPage(
                       duration: Duration(milliseconds: timeMiliseconds),
                       curve: Curves.easeInOut,
@@ -220,6 +237,26 @@ class SquareCard extends StatelessWidget {
           Text(sign.letter),
         ],
       ),
+    );
+  }
+}
+
+class TextFieldSendMessage extends HookConsumerWidget {
+  final Function(String value) onChanged;
+
+  TextFieldSendMessage(this.onChanged);
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final controller = useTextEditingController()
+      ..value = TextEditingValue(text: ref.watch(currentMessageProvider));
+
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: 'Escribe tu texto',
+      ),
+      onChanged: onChanged,
     );
   }
 }
