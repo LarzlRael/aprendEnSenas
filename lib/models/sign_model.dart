@@ -5,6 +5,19 @@ enum SignType {
   number,
 }
 
+extension SignTypeExtension on SignType {
+  String get name {
+    switch (this) {
+      case SignType.letter:
+        return 'letra';
+      case SignType.number:
+        return 'número';
+      default:
+        return '';
+    }
+  }
+}
+
 class Sign {
   String letter;
   String pathImage;

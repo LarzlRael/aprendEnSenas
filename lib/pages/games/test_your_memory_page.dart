@@ -3,16 +3,17 @@ part of '../pages.dart';
 class TestYourMemoryPage extends HookWidget {
   const TestYourMemoryPage({
     super.key,
-    this.difficulty = Difficulty.easy,
+    required this.difficulty,
   });
   final Difficulty difficulty;
 
   @override
   Widget build(BuildContext context) {
+    final generate = getTestYourMemoryGameDifficulty(difficulty);
     final createTestYourGameState = useState<TestYourGame>(
-      createTestYourGame(listOnlySingAndNumbers, 3),
+      createTestYourGame(listOnlySingAndNumbers, generate.numberOptions),
     );
-    final lifes = useState<int>(5);
+    final lifes = useState<int>(generate.lifes);
     final correctAnswer = createTestYourGameState.value.correctAnswer;
 
     return Scaffold(
@@ -47,22 +48,23 @@ class TestYourMemoryPage extends HookWidget {
                 ),
                 LifesCounter(
                   lifes: lifes.value,
+                  margin: EdgeInsets.symmetric(vertical: 20),
                 ),
                 SimpleText(
-                  text: 'Cual es seña de la ${correctAnswer.type!.name}',
-                  fontSize: 25,
-                  fontWeight: FontWeight.w500,
+                  text: 'Cual es la seña de la ${correctAnswer.type!.name}',
+                  fontSize: 22,
+                  fontWeight: FontWeight.w400,
                   textAlign: TextAlign.center,
                 ),
                 SimpleText(
                   text: '${correctAnswer.letter}',
-                  fontSize: 25,
+                  fontSize: 20,
                   fontWeight: FontWeight.w400,
                   textAlign: TextAlign.center,
                 ),
                 Expanded(
                   child: AlignedGridView.count(
-                    crossAxisCount: 2,
+                    crossAxisCount: generate.rows,
                     mainAxisSpacing: 5,
                     crossAxisSpacing: 5,
                     itemCount: createTestYourGameState.value.options.length,
@@ -108,16 +110,19 @@ class TestYourMemoryPage extends HookWidget {
 }
 
 class LifesCounter extends StatelessWidget {
+  final int lifes;
+  final EdgeInsets? margin;
   const LifesCounter({
     super.key,
     required this.lifes,
+    this.margin = const EdgeInsets.symmetric(vertical: 10),
   });
-  final int lifes;
   @override
   Widget build(BuildContext context) {
     final totalLifes = lifes;
     final size = 30.0;
     return Container(
+      margin: margin,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

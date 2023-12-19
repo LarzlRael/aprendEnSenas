@@ -7,7 +7,8 @@ class GuessTheWordPage extends HookWidget {
     final mediaQuery = MediaQuery.of(context).size;
     final textTheme = Theme.of(context).textTheme;
 
-    final randomCommonWord = useState(getRandomWordFromStringList(commonWords));
+    final randomCommonWord =
+        useState<GuessTheWord>(getRandomWordFromStringList(commonWords));
     final currentWord = useState("");
     final isCorrect = useState(false);
     final onEditing = useState(true);
@@ -42,10 +43,18 @@ class GuessTheWordPage extends HookWidget {
                   ),
                 ), */
                 Container(
-                  width: mediaQuery.width * 0.8,
-                  height: mediaQuery.height * 0.60,
-                  color: Colors.black,
-                ),
+                    width: mediaQuery.width * 0.8,
+                    height: mediaQuery.height * 0.60,
+                    child: PageView.builder(
+                      itemCount: randomCommonWord.value.correctWord.length,
+                      itemBuilder: (context, int index) {
+                        return Container(
+                          child: SvgPicture.asset(
+                            randomCommonWord.value.correctWord[index].pathImage,
+                          ),
+                        );
+                      },
+                    )),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: SizedBox(
@@ -53,7 +62,7 @@ class GuessTheWordPage extends HookWidget {
                     child: FilledButton.icon(
                       onPressed: () {},
                       icon: Icon(Icons.refresh),
-                      label: Text('Reiniciar'),
+                      label: Text('Reiniciar ${randomCommonWord.value.word}'),
                     ),
                   ),
                 ),
@@ -71,7 +80,7 @@ class GuessTheWordPage extends HookWidget {
                   keyboardType: TextInputType.text,
                   underlineColor: Colors
                       .amber, // If this is null it will use primaryColor: Colors.red from Theme
-                  length: randomCommonWord.value.length,
+                  length: randomCommonWord.value.word.length,
                   cursorColor: Colors
                       .blue, // If this is null it will default to the ambient
                   // clearAll is NOT required, you can delete it
@@ -89,7 +98,7 @@ class GuessTheWordPage extends HookWidget {
                   margin: const EdgeInsets.all(5),
                   onCompleted: (String value) {
                     currentWord.value = value;
-                    if (currentWord.value == randomCommonWord.value) {
+                    if (currentWord.value == randomCommonWord.value.word) {
                       isCorrect.value = true;
                     }
                   },

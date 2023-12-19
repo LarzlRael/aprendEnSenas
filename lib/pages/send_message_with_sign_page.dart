@@ -15,6 +15,12 @@ class SendMessageWithSignPage extends HookWidget {
       ),
       appBar: AppBar(
         title: Text("Enviar mensaje"),
+        actions: [
+          IconButton(
+            onPressed: () => context.push('/select_game_menu_page'),
+            icon: Icon(Icons.mic),
+          ),
+        ],
       ),
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: 15),

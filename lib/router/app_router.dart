@@ -42,7 +42,12 @@ final appRouter = GoRouter(
 
     GoRoute(
       path: '/test_your_memory_page',
-      builder: (_, __) => const TestYourMemoryPage(),
+      builder: (_, state) {
+        final difficulty = state.extra as Difficulty;
+        return TestYourMemoryPage(
+          difficulty: difficulty,
+        );
+      },
     ),
     GoRoute(
       path: '/word_in_sight_page',

@@ -9,8 +9,10 @@ final items = <SelectGameCard>[
     title: GameType.test_your_memory.name,
     subtitle: "Adivina la palabra o numero correcto",
     onSelected: (context) {
-      context.push('/select_difficulty_page/test_your_memory_page',
-          extra: GameType.test_your_memory);
+      context.push(
+        '/select_difficulty_page/test_your_memory_page',
+        extra: GameType.test_your_memory,
+      );
     },
   ),
   SelectGameCard(

@@ -19,7 +19,7 @@ class _ProgresLinearTimerState extends State<ProgresLinearTimer> {
   late int _milisecondsRemaining;
   late double _barWidth;
   int durationMiliseconds = 17;
-
+  late Timer timer;
   @override
   void initState() {
     super.initState();
@@ -28,19 +28,30 @@ class _ProgresLinearTimerState extends State<ProgresLinearTimer> {
     startTimer();
   }
 
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
   void startTimer() {
-    Timer.periodic(Duration(milliseconds: durationMiliseconds), (timer) {
-      setState(() {
-        if (_milisecondsRemaining > 0) {
-          _milisecondsRemaining -= durationMiliseconds;
-          _barWidth = _milisecondsRemaining <= 0
-              ? 0
-              : _milisecondsRemaining / widget.durationMiliseconds;
-        } else {
-          widget.onTimerFinish();
-          timer.cancel();
-        }
-      });
+    timer =
+        Timer.periodic(Duration(milliseconds: durationMiliseconds), (timer) {
+      if (mounted) {
+        setState(() {
+          if (_milisecondsRemaining > 0) {
+            _milisecondsRemaining -= durationMiliseconds;
+            _barWidth = _milisecondsRemaining <= 0
+                ? 0
+                : _milisecondsRemaining / widget.durationMiliseconds;
+          } else {
+            widget.onTimerFinish();
+            timer.cancel();
+          }
+        });
+      } else {
+        timer.cancel();
+      }
     });
   }
 
