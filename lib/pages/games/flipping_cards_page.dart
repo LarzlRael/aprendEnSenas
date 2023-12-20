@@ -20,14 +20,18 @@ class Pair {
 class FlippingCardsPage extends HookWidget {
   const FlippingCardsPage({
     super.key,
-    this.difficulty = Difficulty.easy,
+    required this.difficulty,
   });
   final Difficulty difficulty;
 
   @override
   Widget build(BuildContext context) {
-    final state =
-        useState<List<Sign>>(generateSignToPair(listOnlySingAndNumbers, 4));
+    final getFlipCardGameDifficultyState =
+        getFlipCardGameDifficulty(difficulty);
+    final state = useState<List<Sign>>(generateSignToPair(
+      listOnlySingAndNumbers,
+      getFlipCardGameDifficultyState.options,
+    ));
 
     final flipsControllersState = useState<List<FlipCardController>>(
         List.generate(state.value.length, (index) => FlipCardController()));
@@ -106,7 +110,8 @@ class FlippingCardsPage extends HookWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ProgresLinearTimer(
-                durationMiliseconds: 10000,
+                durationMiliseconds:
+                    getFlipCardGameDifficultyState.duration.inMilliseconds,
                 onTimerFinish: () {
                   print('timer finish');
                 },
@@ -116,7 +121,7 @@ class FlippingCardsPage extends HookWidget {
               ),
               Expanded(
                 child: AlignedGridView.count(
-                  crossAxisCount: 3,
+                  crossAxisCount: getFlipCardGameDifficultyState.rows,
                   mainAxisSpacing: 5,
                   crossAxisSpacing: 5,
                   itemCount: state.value.length,

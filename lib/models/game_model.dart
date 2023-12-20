@@ -2,6 +2,23 @@ part of 'models.dart';
 
 enum Difficulty { easy, medium, hard, very_hard }
 
+extension DifficultyExtension on Difficulty {
+  String get name {
+    switch (this) {
+      case Difficulty.easy:
+        return 'Fácil';
+      case Difficulty.medium:
+        return 'Medio';
+      case Difficulty.hard:
+        return 'Difícil';
+      case Difficulty.very_hard:
+        return 'Muy difícil';
+      default:
+        return '';
+    }
+  }
+}
+
 enum GameType {
   test_your_memory,
   adivina_la_palabra,

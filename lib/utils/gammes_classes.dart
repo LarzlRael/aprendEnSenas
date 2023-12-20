@@ -33,3 +33,11 @@ class TestYourMemoryGameDifficulty {
 
   TestYourMemoryGameDifficulty(this.lifes, this.numberOptions, this.rows);
 }
+
+class FlipCardGame {
+  final int options;
+  final int rows;
+  final Duration duration;
+
+  FlipCardGame(this.options, this.rows, this.duration);
+}

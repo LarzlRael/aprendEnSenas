@@ -59,7 +59,12 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       path: '/flipping_cards_page',
-      builder: (_, __) => const FlippingCardsPage(),
+      builder: (_, state) {
+        final difficulty = state.extra as Difficulty;
+        return FlippingCardsPage(
+          difficulty: difficulty,
+        );
+      },
     ),
   ],
 );

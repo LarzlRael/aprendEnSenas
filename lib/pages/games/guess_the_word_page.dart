@@ -12,11 +12,13 @@ class GuessTheWordPage extends HookWidget {
     final currentWord = useState("");
     final isCorrect = useState(false);
     final onEditing = useState(true);
+    final restartKey = useState(UniqueKey());
 
     useEffect(() {
       if (isCorrect.value) {
         randomCommonWord.value = getRandomWordFromStringList(commonWords);
         currentWord.value = "";
+        restartKey.value = UniqueKey();
       }
       isCorrect.value = false;
     }, [isCorrect.value]);
@@ -43,18 +45,13 @@ class GuessTheWordPage extends HookWidget {
                   ),
                 ), */
                 Container(
-                    width: mediaQuery.width * 0.8,
-                    height: mediaQuery.height * 0.60,
-                    child: PageView.builder(
-                      itemCount: randomCommonWord.value.correctWord.length,
-                      itemBuilder: (context, int index) {
-                        return Container(
-                          child: SvgPicture.asset(
-                            randomCommonWord.value.correctWord[index].pathImage,
-                          ),
-                        );
-                      },
-                    )),
+                  width: mediaQuery.width * 0.8,
+                  height: mediaQuery.height * 0.60,
+                  child: PageViewSignSlider(
+                    key: UniqueKey(),
+                    singList: randomCommonWord.value.correctWord,
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: SizedBox(
@@ -67,6 +64,7 @@ class GuessTheWordPage extends HookWidget {
                   ),
                 ),
                 VerificationCode(
+                  key: restartKey.value,
                   fullBorder: true,
                   itemSize: 55,
                   underlineWidth: 1.5,
