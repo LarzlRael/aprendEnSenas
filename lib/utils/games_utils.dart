@@ -79,11 +79,11 @@ time 60 seconds 5x5 rows
 FlipCardGame getFlipCardGameDifficulty(Difficulty gameDifficulty) {
   switch (gameDifficulty) {
     case Difficulty.easy:
-      return FlipCardGame(6, 2, Duration(seconds: 90));
+      return FlipCardGame(3, 3, Duration(seconds: 90));
     case Difficulty.medium:
-      return FlipCardGame(12, 3, Duration(seconds: 60));
+      return FlipCardGame(6, 4, Duration(seconds: 60));
     case Difficulty.hard:
-      return FlipCardGame(16, 4, Duration(seconds: 45));
+      return FlipCardGame(8, 4, Duration(seconds: 45));
     case Difficulty.very_hard:
       return FlipCardGame(25, 5, Duration(seconds: 60));
     default:

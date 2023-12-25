@@ -81,7 +81,7 @@ class TestYourMemoryPage extends HookWidget {
                           } else {
                             lifes.value--;
                             if (lifes.value == 0) {
-                              context.canPop();
+                              context.pop();
                             }
                           }
                         },

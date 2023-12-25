@@ -19,6 +19,12 @@ class WordInSightPage extends HookWidget {
       }
       isCorrect.value = false;
     }, [isCorrect.value]);
+    /* useEffect(() {
+      if (lifesCounter.value == 0) {
+        context.pop();
+      }
+      return null;
+    }, [lifesCounter.value]); */
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -134,6 +140,9 @@ class WordInSightPage extends HookWidget {
                           status.value = status.value + 0.1;
                         } else {
                           lifesCounter.value--;
+                          if (lifesCounter.value == 0) {
+                            context.pop();
+                          }
                         }
                       },
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.green),

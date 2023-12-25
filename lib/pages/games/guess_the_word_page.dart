@@ -81,18 +81,7 @@ class GuessTheWordPage extends HookWidget {
                   length: randomCommonWord.value.word.length,
                   cursorColor: Colors
                       .blue, // If this is null it will default to the ambient
-                  // clearAll is NOT required, you can delete it
-                  // takes any widget, so you can implement your design
-                  /* clearAll: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Limpiar',
-                      style: TextStyle(
-                          fontSize: 14.0,
-                          /* decoration: TextDecoration.underline, */
-                          color: Colors.blue[700]),
-                    ),
-                  ), */
+
                   margin: const EdgeInsets.all(5),
                   onCompleted: (String value) {
                     currentWord.value = value;
@@ -103,18 +92,9 @@ class GuessTheWordPage extends HookWidget {
 
                   onEditing: (bool value) {
                     onEditing.value = value;
-
                     if (!onEditing.value) FocusScope.of(context).unfocus();
                   },
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Center(
-                    child: onEditing.value
-                        ? const Text('Please enter full code')
-                        : Text('Your code: ${currentWord.value}'),
-                  ),
-                )
               ],
             ),
           ),

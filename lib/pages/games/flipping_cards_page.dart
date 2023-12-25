@@ -127,41 +127,46 @@ class FlippingCardsPage extends HookWidget {
                   itemCount: state.value.length,
                   itemBuilder: (context, int index) {
                     return FlipCard(
-                      onFlip: () {
-                        onButtonPressed();
-                        if (stateFlipsVerify.value.contains(index)) {
-                          stateFlipsVerify.value.remove(index);
-                        } else {
-                          stateFlipsVerify.value.add(index);
-                        }
-                        if (stateFlipsVerify.value.length == 2) {
-                          print(stateFlipsVerify.value);
-                          print('verificando');
-                          /* onButtonPressed(isButtonsDisableds); */
-                          /* onButtonPressed(); */
-                          verifyIsEqual(
-                            SignIndex(
-                              stateFlipsVerify.value[0],
-                              state.value[stateFlipsVerify.value[0]].letter,
-                            ),
-                            SignIndex(
-                              stateFlipsVerify.value[1],
-                              state.value[stateFlipsVerify.value[1]].letter,
-                            ),
-                          );
+                      onFlipDone: (isDone) {
+                        if (isDone) {
+                          if (stateFlipsVerify.value.contains(index)) {
+                            stateFlipsVerify.value.remove(index);
+                          } else {
+                            stateFlipsVerify.value.add(index);
+                          }
+                          if (stateFlipsVerify.value.length == 2) {
+                            print(stateFlipsVerify.value);
+                            print('verificando');
+                            /* onButtonPressed(isButtonsDisableds); */
+                            /* onButtonPressed(); */
+                            verifyIsEqual(
+                              SignIndex(
+                                stateFlipsVerify.value[0],
+                                state.value[stateFlipsVerify.value[0]].letter,
+                              ),
+                              SignIndex(
+                                stateFlipsVerify.value[1],
+                                state.value[stateFlipsVerify.value[1]].letter,
+                              ),
+                            );
+                          }
                         }
                       },
+                      onFlip: onButtonPressed,
                       flipOnTouch: !isButtonsDisabled.value,
                       controller: flipsControllersState.value[index],
                       speed: speed,
                       front: Card(
                         child: Container(
-                          padding: EdgeInsets.all(10),
+                          /* color: Colors.blue, */
+                          /* padding: EdgeInsets.all(10), */
                           width: 100,
                           height: 100,
-                          child: Icon(
-                            Icons.help_outline_rounded,
-                            size: 50,
+                          child: Center(
+                            child: Icon(
+                              Icons.help_outline_rounded,
+                              size: 50,
+                            ),
                           ),
                         ),
                       ),
