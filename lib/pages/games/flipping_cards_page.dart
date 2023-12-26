@@ -113,7 +113,7 @@ class FlippingCardsPage extends HookWidget {
                 durationMiliseconds:
                     getFlipCardGameDifficultyState.duration.inMilliseconds,
                 onTimerFinish: () {
-                  print('timer finish');
+                  context.pop();
                 },
               ),
               BackIcon(
@@ -128,7 +128,9 @@ class FlippingCardsPage extends HookWidget {
                   itemBuilder: (context, int index) {
                     return FlipCard(
                       onFlipDone: (isDone) {
+                        print(isDone);
                         if (isDone) {
+                          print('isDone');
                           if (stateFlipsVerify.value.contains(index)) {
                             stateFlipsVerify.value.remove(index);
                           } else {

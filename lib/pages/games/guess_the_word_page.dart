@@ -21,6 +21,7 @@ class GuessTheWordPage extends HookWidget {
         restartKey.value = UniqueKey();
       }
       isCorrect.value = false;
+      return null;
     }, [isCorrect.value]);
     return Scaffold(
       body: SafeArea(
@@ -48,19 +49,8 @@ class GuessTheWordPage extends HookWidget {
                   width: mediaQuery.width * 0.8,
                   height: mediaQuery.height * 0.60,
                   child: PageViewSignSlider(
-                    key: UniqueKey(),
+                    key: restartKey.value,
                     singList: randomCommonWord.value.correctWord,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: SizedBox(
-                    height: 50,
-                    child: FilledButton.icon(
-                      onPressed: () {},
-                      icon: Icon(Icons.refresh),
-                      label: Text('Reiniciar ${randomCommonWord.value.word}'),
-                    ),
                   ),
                 ),
                 VerificationCode(
@@ -82,7 +72,7 @@ class GuessTheWordPage extends HookWidget {
                   cursorColor: Colors
                       .blue, // If this is null it will default to the ambient
 
-                  margin: const EdgeInsets.all(5),
+                  margin: const EdgeInsets.all(2),
                   onCompleted: (String value) {
                     currentWord.value = value;
                     if (currentWord.value == randomCommonWord.value.word) {

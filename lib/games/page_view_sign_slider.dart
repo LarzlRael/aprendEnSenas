@@ -1,61 +1,66 @@
 part of '../widgets/widgets.dart';
 
+const timeMiliseconds = 750;
+
 class PageViewSignSlider extends HookWidget {
   const PageViewSignSlider({super.key, required this.singList});
   final List<Sign> singList;
   @override
   Widget build(BuildContext context) {
-    final controller = usePageController();
-    final timer = useState<Timer?>(null);
+    final pagerController = usePageController();
+    final timerState = useState<Timer?>(null);
+    final isInProgress = useState(false);
 
-    /*  useEffect(() {
-      print('useEffect');
-      print(singList.length);
-
-      timer.value = Timer.periodic(Duration(seconds: 1000), (Timer timer) {
-        if (controller.page! < singList.length - 1) {
-          controller.nextPage(
-              duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+    void restartTimer() {
+      timerState.value?.cancel();
+      timerState.value = Timer.periodic(Duration(milliseconds: timeMiliseconds),
+          (Timer timer) {
+        if (pagerController.page!.toInt() < singList.length - 1) {
+          isInProgress.value = true;
+          pagerController.nextPage(
+              duration: Duration(milliseconds: timeMiliseconds),
+              curve: Curves.easeIn);
         } else {
-          controller.jumpToPage(0);
+          pagerController.jumpToPage(0);
+          timer.cancel();
+          timerState.value?.cancel();
+          timerState.value = null;
+          isInProgress.value = false;
         }
       });
-      return controller.dispose;
-    }, [singList]); */
+    }
+
+    useEffect(() {
+      restartTimer();
+      return pagerController.dispose;
+    }, [singList]);
+
     return Column(
       children: [
         Expanded(
           child: PageView.builder(
-            key: PageStorageKey('pageViewSignSlider'),
-            controller: controller,
+            key: key,
+            controller: pagerController,
             itemCount: singList.length,
             itemBuilder: (context, int index) {
               return Container(
-                child: SvgPicture.asset(
-                  singList[index].pathImage,
+                child: Card(
+                  child: SvgPicture.asset(
+                    singList[index].pathImage,
+                  ),
                 ),
               );
             },
           ),
         ),
-        FilledButton.icon(
-          onPressed: () {
-            if (timer.value != null) {
-              timer.value!.cancel();
-              timer.value =
-                  Timer.periodic(Duration(seconds: 1000), (Timer timer) {
-                if (controller.page! < singList.length - 1) {
-                  controller.nextPage(
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.easeIn);
-                } else {
-                  controller.jumpToPage(0);
-                }
-              });
-            }
-          },
-          icon: Icon(Icons.refresh),
-          label: Text('Reiniciar'),
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 10),
+          height: 50,
+          child: FilledButton.icon(
+            onPressed: isInProgress.value ? null : restartTimer,
+            icon: Icon(Icons.refresh),
+            label: Text('Reiniciar'),
+          ),
         ),
       ],
     );

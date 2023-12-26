@@ -126,7 +126,7 @@ class SendMessageSlider extends HookConsumerWidget {
         listOnlySingAndNumbers,
         currentMessagex.value,
       );
-      return null;
+      return pageController.dispose;
     }, [currentMessagex.value]);
 
     return SingleChildScrollView(
