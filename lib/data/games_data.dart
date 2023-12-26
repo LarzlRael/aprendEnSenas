@@ -32,7 +32,7 @@ final items = <SelectGameCard>[
     subtitle: "Voltea las cartas y encuentra la pareja",
     onSelected: (context) {
       context.push(
-        '/select_difficulty_page/flipping_cards_page',
+        '/select_difficulty_page/flipping_cards_page2',
         extra: GameType.volteo_de_cartas,
       );
     },

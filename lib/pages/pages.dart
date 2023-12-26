@@ -7,6 +7,7 @@ import 'package:asl/models/models.dart';
 import 'package:asl/provider/providers.dart';
 import 'package:asl/utils/utils.dart';
 import 'package:asl/widgets/widgets.dart';
+import 'package:confetti/confetti.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
@@ -28,3 +29,5 @@ part 'games/word_in_sight_page.dart';
 part 'games/guess_the_word_page.dart';
 part 'games/flipping_cards_page.dart';
 /* part 'games/flipping_cards_2.dart'; */
+part 'games/game_screen.dart';
+part 'games/game_over_screen.dart';

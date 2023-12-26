@@ -66,5 +66,12 @@ final appRouter = GoRouter(
         );
       },
     ),
+    GoRoute(
+      path: '/flipping_cards_page2',
+      builder: (_, state) {
+        final difficulty = state.extra as Difficulty;
+        return MyFlipCardGame(difficulty: difficulty);
+      },
+    )
   ],
 );

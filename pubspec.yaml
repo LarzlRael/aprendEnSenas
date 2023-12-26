@@ -29,6 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   animate_do: ^3.0.2
+  confetti: ^0.7.0
   cupertino_icons: ^1.0.2
   flip_card: ^0.7.0
   flutter:
