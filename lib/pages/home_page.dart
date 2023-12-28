@@ -6,14 +6,12 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final list = signList;
     return Scaffold(
-      body: ListView.builder(
-        itemCount: signList.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Container(
-              child: ColorFilteredSvg(
-            pathImage: list[index].pathImage,
-          ));
-        },
+      body: Container(
+        child: Image.asset(
+          'assets/signs_png/0_number.png',
+          /* color: Colors.white, */
+          /* colorBlendMode: BlendMode.xor, */
+        ),
       ),
     );
   }

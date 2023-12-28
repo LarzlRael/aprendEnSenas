@@ -1,26 +1,5 @@
 part of 'utils.dart';
 
-List<String> imageSource() {
-  return [
-    'assets/images/image_1.png',
-    'assets/images/image_2.png',
-    'assets/images/image_3.png',
-    'assets/images/image_4.png',
-    'assets/images/image_5.png',
-    'assets/images/image_6.png',
-    'assets/images/image_7.png',
-    'assets/images/image_8.png',
-    'assets/images/image_1.png',
-    'assets/images/image_2.png',
-    'assets/images/image_3.png',
-    'assets/images/image_4.png',
-    'assets/images/image_5.png',
-    'assets/images/image_6.png',
-    'assets/images/image_7.png',
-    'assets/images/image_8.png',
-  ];
-}
-
 List<Sign> createShuffledListFromImageSource(int amount) {
   return generateSignToPair(listOnlySingAndNumbers, amount);
 }

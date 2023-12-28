@@ -19,8 +19,15 @@ extension DifficultyExtension on Difficulty {
   }
 }
 
+Difficulty getNextDifficulty(Difficulty currentDifficulty) {
+  final values = Difficulty.values;
+  final currentIndex = values.indexOf(currentDifficulty);
+
+  return values[(currentIndex + 1) % values.length];
+}
+
 enum GameType {
-  test_your_memory,
+  prueba_tu_memoria,
   adivina_la_palabra,
   volteo_de_cartas,
   palabra_a_la_vista,

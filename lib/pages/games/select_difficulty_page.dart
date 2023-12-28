@@ -1,12 +1,12 @@
 part of '../pages.dart';
 
 class SelectDifficultyPage extends StatelessWidget {
-  final GameType gameType;
-  final String? gameRoutePage;
+  final String gameTitle;
+  final String? gameRouteDestinyPage;
   const SelectDifficultyPage({
     super.key,
-    required this.gameType,
-    this.gameRoutePage,
+    this.gameRouteDestinyPage,
+    required this.gameTitle,
   });
 
   @override
@@ -27,7 +27,7 @@ class SelectDifficultyPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SimpleText(
-              text: gameType.name.snakeCaseToWords().toCapitalize(),
+              text: gameTitle.snakeCaseToWords().toCapitalize(),
               fontSize: 25,
               fontWeight: FontWeight.w400,
               textAlign: TextAlign.center,
@@ -56,7 +56,7 @@ class SelectDifficultyPage extends StatelessWidget {
                     ),
                     onPressed: () {
                       context.push(
-                        "/$gameRoutePage",
+                        "/games/$gameRouteDestinyPage",
                         extra: difficulty,
                       );
                     },

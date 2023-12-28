@@ -6,12 +6,12 @@ import 'package:go_router/go_router.dart';
 final items = <SelectGameCard>[
   SelectGameCard(
     icon: Icons.ac_unit,
-    title: GameType.test_your_memory.name,
-    subtitle: "Adivina la palabra o numero correcto",
+    title: GameType.prueba_tu_memoria.name,
+    subtitle: "Adivina la palabra o número correcto",
     onSelected: (context) {
       context.push(
-        '/select_difficulty_page/test_your_memory_page',
-        extra: GameType.test_your_memory,
+        '/select_difficulty_page/${GameType.prueba_tu_memoria.name}/test_your_memory_page',
+        extra: GameType.prueba_tu_memoria,
       );
     },
   ),
@@ -21,7 +21,7 @@ final items = <SelectGameCard>[
     subtitle: "Prueba con conocimiento con las palabras",
     onSelected: (context) {
       context.push(
-        '/guess_the_word_page',
+        '/games/guess_the_word_page',
         extra: GameType.adivina_la_palabra,
       );
     },
@@ -32,7 +32,7 @@ final items = <SelectGameCard>[
     subtitle: "Voltea las cartas y encuentra la pareja",
     onSelected: (context) {
       context.push(
-        '/select_difficulty_page/flipping_cards_page2',
+        '/select_difficulty_page/${GameType.volteo_de_cartas.name}/flipping_cards_page',
         extra: GameType.volteo_de_cartas,
       );
     },
@@ -43,7 +43,7 @@ final items = <SelectGameCard>[
     title: GameType.palabra_a_la_vista.name,
     onSelected: (context) {
       context.push(
-        '/word_in_sight_page',
+        '/games/word_in_sight_page',
         extra: GameType.palabra_a_la_vista,
       );
     },

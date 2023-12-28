@@ -27,7 +27,7 @@ part 'games/select_difficulty_page.dart';
 part 'games/test_your_memory_page.dart';
 part 'games/word_in_sight_page.dart';
 part 'games/guess_the_word_page.dart';
-part 'games/flipping_cards_page.dart';
+part 'games/test_flipping_cards_page.dart';
 /* part 'games/flipping_cards_2.dart'; */
-part 'games/game_screen.dart';
+part 'games/flipping_card_game.dart';
 part 'games/game_over_screen.dart';

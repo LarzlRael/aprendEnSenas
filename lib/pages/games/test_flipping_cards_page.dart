@@ -17,8 +17,8 @@ class Pair {
   String toString() => 'Pair[$left, $right]';
 }
 
-class FlippingCardsPage extends HookWidget {
-  const FlippingCardsPage({
+class TestFlippingCardsPage extends HookWidget {
+  const TestFlippingCardsPage({
     super.key,
     required this.difficulty,
   });

@@ -30,17 +30,17 @@ final appRouter = GoRouter(
         path: '/select_game_menu_page',
         builder: (_, __) => SelectGameMenuPage()),
     GoRoute(
-        path: '/select_difficulty_page/:game',
+        path: '/select_difficulty_page/:gameTitle/:gameDestinty',
         builder: (_, state) {
-          GameType game = state.extra as GameType;
-          final gameType = state.params['game'];
+          final gameTitle = state.params['gameTitle'];
+          final gameDestinty = state.params['gameDestinty'];
           return SelectDifficultyPage(
-            gameRoutePage: gameType,
-            gameType: game,
+            gameTitle: gameTitle!,
+            gameRouteDestinyPage: gameDestinty,
           );
         }),
 
-    GoRoute(
+    /* GoRoute(
       path: '/test_your_memory_page',
       builder: (_, state) {
         final difficulty = state.extra as Difficulty;
@@ -65,13 +65,39 @@ final appRouter = GoRouter(
           difficulty: difficulty,
         );
       },
-    ),
+    ), */
+
     GoRoute(
-      path: '/flipping_cards_page2',
-      builder: (_, state) {
-        final difficulty = state.extra as Difficulty;
-        return MyFlipCardGame(difficulty: difficulty);
-      },
-    )
+      path: '/games',
+      builder: (_, __) => const SelectGameMenuPage(),
+      routes: [
+        GoRoute(
+          path: 'test_your_memory_page',
+          builder: (_, state) {
+            final difficulty = state.extra as Difficulty;
+            return TestYourMemoryPage(
+              difficulty: difficulty,
+            );
+          },
+        ),
+        GoRoute(
+          path: 'word_in_sight_page',
+          builder: (_, __) => const WordInSightPage(),
+        ),
+        GoRoute(
+          path: 'guess_the_word_page',
+          builder: (_, __) => const GuessTheWordPage(),
+        ),
+        GoRoute(
+          path: 'flipping_cards_page',
+          builder: (_, state) {
+            final difficulty = state.extra as Difficulty;
+            return FlippingCardGame(
+              difficulty: difficulty,
+            );
+          },
+        ),
+      ],
+    ),
   ],
 );

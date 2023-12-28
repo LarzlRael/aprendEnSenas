@@ -1,33 +1,24 @@
 part of '../pages.dart';
 
-class GameOverScreen extends StatefulWidget {
+class GameOverScreen extends HookWidget {
   final int duration;
-  const GameOverScreen({super.key, required this.duration});
-
-  @override
-  State<GameOverScreen> createState() => _GameOverScreenState();
-}
-
-class _GameOverScreenState extends State<GameOverScreen> {
-  bool isConfettiPlaying = true;
-  final _confettiController = ConfettiController(
-    duration: const Duration(seconds: 12),
-  );
-
-  @override
-  void initState() {
-    super.initState();
-    _confettiController.play();
-  }
-
-  @override
-  void dispose() {
-    _confettiController.dispose();
-    super.dispose();
-  }
+  final Difficulty difficulty;
+  const GameOverScreen({
+    super.key,
+    required this.difficulty,
+    required this.duration,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final _confettiController = useState<ConfettiController>(
+        ConfettiController(duration: const Duration(seconds: 12)));
+
+    useEffect(() {
+      _confettiController.value.play();
+      return () => _confettiController.dispose();
+    }, const []);
+
     final theme = Theme.of(context).textTheme;
     return Scaffold(
       body: Stack(
@@ -39,14 +30,16 @@ class _GameOverScreenState extends State<GameOverScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 RichText(
+                  textAlign: TextAlign.center,
                   text: TextSpan(
-                    text: "Under ",
+                    text: "Under",
                     style: theme.bodyLarge,
                     children: [
                       TextSpan(
-                          text: "${widget.duration}",
-                          style: theme.displaySmall),
-                      TextSpan(text: "seconds", style: theme.bodySmall),
+                        text: " ${duration} ",
+                        style: theme.displaySmall,
+                      ),
+                      TextSpan(text: "Segundos", style: theme.bodySmall),
                     ],
                   ),
                 ),
@@ -56,7 +49,7 @@ class _GameOverScreenState extends State<GameOverScreen> {
                 RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
-                    text: "Congratulations! ",
+                    text: "Felicidades!",
                     style: theme.bodyLarge,
                     children: [
                       TextSpan(
@@ -72,9 +65,12 @@ class _GameOverScreenState extends State<GameOverScreen> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.popUntil(context, (route) => route.isFirst);
+                    context.push(
+                      '/flipping_cards_page',
+                      extra: getNextDifficulty(difficulty),
+                    );
                   },
-                  child: const Text("Replay Game"),
+                  child: const Text("Ve al siguiente nivel"),
                 ),
               ],
             ),
@@ -84,7 +80,7 @@ class _GameOverScreenState extends State<GameOverScreen> {
             minBlastForce: 10,
             maxBlastForce: 20,
             blastDirectionality: BlastDirectionality.explosive,
-            confettiController: _confettiController,
+            confettiController: _confettiController.value,
             gravity: 0.1,
           ),
         ],

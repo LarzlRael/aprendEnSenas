@@ -2,16 +2,24 @@ part of '../widgets/widgets.dart';
 
 class BackIcon extends StatelessWidget {
   final EdgeInsetsGeometry? margin;
-
-  const BackIcon({super.key, this.margin});
+  final Function()? onPressed;
+  final double? size;
+  final Color? color;
+  const BackIcon({
+    super.key,
+    this.margin,
+    this.size,
+    this.onPressed,
+    this.color = Colors.green,
+  });
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 45,
-      height: 45,
+      width: size ?? 45,
+      height: size ?? 45,
       margin: margin,
-      decoration: const BoxDecoration(
-        color: Colors.green,
+      decoration: BoxDecoration(
+        color: color,
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
@@ -22,7 +30,7 @@ class BackIcon extends StatelessWidget {
         ],
       ),
       child: IconButton(
-        onPressed: context.pop,
+        onPressed: onPressed ?? () => context.pop(),
         icon: Icon(
           Icons.arrow_back_rounded,
           color: Colors.white,
