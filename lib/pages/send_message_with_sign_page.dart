@@ -57,17 +57,22 @@ class SendMessageWithSignPage extends HookWidget {
 class SendMessageWithStaticImages extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final listOnlyLettersNumbers = ref.watch(signProviderProvider);
+    final listOnlyLettersNumbers = useState<List<Sign>>([]);
     final currentMessage = ref.watch(currentMessageProvider);
-    final currentState = useState(5);
-    final message = useState(currentMessage);
+    final currentSliderState = useState(5);
+    useEffect(() {
+      listOnlyLettersNumbers.value = generateListToMessage(
+        listOnlySingAndNumbers,
+        currentMessage,
+      );
+    }, [currentMessage]);
 
     return Column(
       children: [
         Slider(
-          value: currentState.value.toDouble(),
+          value: currentSliderState.value.toDouble(),
           onChanged: (value) {
-            currentState.value = value.toInt();
+            currentSliderState.value = value.toInt();
           },
           min: 1,
           max: 10,
@@ -84,12 +89,12 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
         Expanded(
           child: Card(
             child: AlignedGridView.count(
-              crossAxisCount: currentState.value,
+              crossAxisCount: currentSliderState.value,
               mainAxisSpacing: 5,
               crossAxisSpacing: 5,
-              itemCount: listOnlyLettersNumbers.length,
+              itemCount: listOnlyLettersNumbers.value.length,
               itemBuilder: (context, int index) {
-                return SquareCard(sign: listOnlyLettersNumbers[index]);
+                return SquareCard(sign: listOnlyLettersNumbers.value[index]);
               },
             ),
           ),
