@@ -66,7 +66,7 @@ class GameOverScreen extends HookWidget {
                 ElevatedButton(
                   onPressed: () {
                     context.push(
-                      '/flipping_cards_page',
+                      '/games/flipping_cards_page',
                       extra: getNextDifficulty(difficulty),
                     );
                   },

@@ -39,33 +39,10 @@ final appRouter = GoRouter(
             gameRouteDestinyPage: gameDestinty,
           );
         }),
-
-    /* GoRoute(
-      path: '/test_your_memory_page',
-      builder: (_, state) {
-        final difficulty = state.extra as Difficulty;
-        return TestYourMemoryPage(
-          difficulty: difficulty,
-        );
-      },
-    ),
     GoRoute(
-      path: '/word_in_sight_page',
-      builder: (_, __) => const WordInSightPage(),
+      path: '/settings_page',
+      builder: (_, __) => const SettingsPage(),
     ),
-    GoRoute(
-      path: '/guess_the_word_page',
-      builder: (_, __) => const GuessTheWordPage(),
-    ),
-    GoRoute(
-      path: '/flipping_cards_page',
-      builder: (_, state) {
-        final difficulty = state.extra as Difficulty;
-        return FlippingCardsPage(
-          difficulty: difficulty,
-        );
-      },
-    ), */
 
     GoRoute(
       path: '/games',

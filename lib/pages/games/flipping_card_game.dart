@@ -12,7 +12,7 @@ final decorationBorder = BoxDecoration(
 );
 final style = TextStyle(
   fontSize: 14.0,
-  fontWeight: FontWeight.w400,
+  fontWeight: FontWeight.w500,
 );
 
 class FlippingCardGame extends HookWidget {
@@ -123,11 +123,13 @@ class FlippingCardGame extends HookWidget {
                 /* centerTitle: true, */
                 leading: BackIcon(size: 20)),
             body: SafeArea(
-              child: SingleChildScrollView(
-                child: Container(
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height -
-                      AppBar().preferredSize.height,
+              child: Container(
+                /* color: Colors.blue, */
+                margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height -
+                    AppBar().preferredSize.height,
+                child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -140,9 +142,10 @@ class FlippingCardGame extends HookWidget {
                               'Remaining: ${_left.value}',
                               style: style,
                             ),
-                            Text(
-                              'Duration: ${gameDuration.value}s',
+                            SimpleText(
+                              text: 'Duration: ${gameDuration.value}s',
                               style: style,
+                              padding: EdgeInsets.symmetric(horizontal: 10),
                             ),
                             _time.value == 0
                                 ? const SizedBox()

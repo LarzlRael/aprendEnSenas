@@ -46,8 +46,12 @@ class SelectDifficultyPage extends StatelessWidget {
               itemCount: Difficulty.values.length,
               itemBuilder: (context, int index) {
                 final difficulty = Difficulty.values[index];
+                final listMessage = generateListToMessage(
+                  listOnlySingAndNumbers,
+                  difficulty.name,
+                );
                 return SizedBox(
-                  height: 55,
+                  height: 75,
                   child: FilledButton(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
@@ -60,8 +64,29 @@ class SelectDifficultyPage extends StatelessWidget {
                         extra: difficulty,
                       );
                     },
-                    child:
-                        Text(difficulty.name.snakeCaseToWords().toCapitalize()),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SimpleText(
+                          text:
+                              difficulty.name.snakeCaseToWords().toCapitalize(),
+                          fontSize: 18,
+                        ),
+                        Wrap(
+                          children: listMessage
+                              .map(
+                                (sign) => SvgPicture.asset(
+                                  sign.pathImage,
+                                  height: 30,
+                                  width: 30,
+                                  fit: BoxFit.contain,
+                                ),
+                              )
+                              .toList(),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },

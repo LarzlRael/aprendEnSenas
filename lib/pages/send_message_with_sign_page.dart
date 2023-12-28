@@ -20,6 +20,10 @@ class SendMessageWithSignPage extends HookWidget {
             onPressed: () => context.push('/select_game_menu_page'),
             icon: Icon(Icons.mic),
           ),
+          IconButton(
+            onPressed: () => context.push('/settings_page'),
+            icon: Icon(Icons.settings),
+          ),
         ],
       ),
       body: Container(
@@ -58,8 +62,6 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
     final currentState = useState(5);
     final message = useState(currentMessage);
 
-    final controller = useTextEditingController()
-      ..value = TextEditingValue(text: message.value);
     return Column(
       children: [
         Slider(
@@ -72,11 +74,13 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
           divisions: 10,
           label: "Velocidad",
         ),
-        TextFieldSendMessage((value) {
+        TextFieldSendMessage(),
+        /* TextFieldSendMessage((value) {
           message.value = value;
-          ref.read(signProviderProvider.notifier).generateListToMessage(value);
-          ref.read(currentMessageProvider.notifier).setCurrentMessage(value);
-        }),
+          /* Fix this */
+          /* ref.read(signProviderProvider.notifier).generateListToMessage(value);
+          ref.read(currentMessageProvider.notifier).setCurrentMessage(value); */
+        }), */
         Expanded(
           child: Card(
             child: AlignedGridView.count(
@@ -99,13 +103,12 @@ class SendMessageSlider extends HookConsumerWidget {
   const SendMessageSlider({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final settings = ref.watch(settingsProviderProvider);
     final listOnlyLettersNumbers = useState<List<Sign>>(listOnlySingAndNumbers);
     final currentMessage = ref.watch(currentMessageProvider);
+    final isPlaying = useState(false);
 
-    final currentMessagex = useState(currentMessage);
     final currenSign = useState<Sign?>(null);
-    final controller = useTextEditingController()
-      ..value = TextEditingValue(text: currentMessagex.value);
 
     final pageController = usePageController();
     pageController.addListener(() {
@@ -124,10 +127,10 @@ class SendMessageSlider extends HookConsumerWidget {
           .setCurrentMessage(currentMessagex.value); */
       listOnlyLettersNumbers.value = generateListToMessage(
         listOnlySingAndNumbers,
-        currentMessagex.value,
+        currentMessage,
       );
-      return pageController.dispose;
-    }, [currentMessagex.value]);
+      /* return pageController.dispose; */
+    }, [currentMessage]);
 
     return SingleChildScrollView(
       child: Column(
@@ -154,7 +157,7 @@ class SendMessageSlider extends HookConsumerWidget {
             height: 400,
             child: PageView.builder(
               controller: pageController,
-              scrollDirection: Axis.horizontal,
+              scrollDirection: settings.sliderDirection,
               itemCount: listOnlyLettersNumbers.value.length,
               itemBuilder: (context, int index) {
                 final sign = listOnlyLettersNumbers.value[index];
@@ -171,55 +174,55 @@ class SendMessageSlider extends HookConsumerWidget {
             ),
           ),
           SimpleText(
-            text: currentMessagex.value.isEmpty
+            text: currentMessage.isEmpty
                 ? "Aqui aparecera tu texto"
-                : currentMessagex.value,
+                : currentMessage,
             fontSize: 17,
             fontWeight: FontWeight.w700,
             padding: EdgeInsets.symmetric(vertical: 10),
           ),
-          TextFieldSendMessage((value) {
-            currentMessagex.value = value;
-          }),
-          FilledButton.icon(
-              onPressed: () {
-                /*  ref
-                    .read(signProviderProvider.notifier)
-                    .generateListToMessage(currentMessagex.value);
-                ref
-                    .read(currentMessageProvider.notifier)
-                    .setCurrentMessage(currentMessagex.value); */
-/*                 print("currentMessagex.value: ${currentMessagex.value}");
-                listOnlyLettersNumbers.value = generateListToMessage(
-                  listOnlySingAndNumbers,
-                  currentMessagex.value,
-                ); */
-                ref
-                    .read(signProviderProvider.notifier)
-                    .generateListToMessage(currentMessagex.value);
-                print(
-                    "listOnlyLettersNumbers: ${listOnlyLettersNumbers.value}");
-                pageController.jumpToPage(0);
-
-                Timer.periodic(Duration(milliseconds: timeMiliseconds),
-                    (Timer timer) {
-                  if (pageController.page!.toInt() <
-                      listOnlyLettersNumbers.value.length - 1) {
-                    pageController.nextPage(
-                      duration: Duration(milliseconds: timeMiliseconds),
-                      curve: Curves.easeInOut,
-                    );
-                  } else {
-                    // Si estás en la última página, vuelve al principio
-                    timer.cancel();
+          TextFieldSendMessage(),
+          isPlaying.value
+              ? FilledButton.icon(
+                  onPressed: () {
                     pageController.jumpToPage(0);
-                  }
-                });
-              },
-              icon: Icon(Icons.send),
-              label: Text(
-                "Enviar mensajes",
-              ))
+                    isPlaying.value = false;
+                  },
+                  icon: Icon(Icons.pause),
+                  label: Text(
+                    "Cancelar",
+                  ))
+              : FilledButton.icon(
+                  onPressed: () {
+                    ref
+                        .read(currentMessageProvider.notifier)
+                        .setCurrentMessage(currentMessage);
+
+                    print(
+                        "listOnlyLettersNumbers: ${listOnlyLettersNumbers.value}");
+                    pageController.jumpToPage(0);
+
+                    Timer.periodic(Duration(milliseconds: timeMiliseconds),
+                        (Timer timer) {
+                      if (pageController.page!.toInt() <
+                          listOnlyLettersNumbers.value.length - 1) {
+                        isPlaying.value = true;
+                        pageController.nextPage(
+                          duration: Duration(milliseconds: timeMiliseconds),
+                          curve: Curves.easeInOut,
+                        );
+                      } else {
+                        // Si estás en la última página, vuelve al principio
+                        timer.cancel();
+                        pageController.jumpToPage(0);
+                        isPlaying.value = false;
+                      }
+                    });
+                  },
+                  icon: Icon(Icons.send),
+                  label: Text(
+                    "Enviar mensaje",
+                  ))
         ],
       ),
     );
@@ -248,9 +251,9 @@ class SquareCard extends StatelessWidget {
 }
 
 class TextFieldSendMessage extends HookConsumerWidget {
-  final Function(String value) onChanged;
+  /* final Function(String value) onChanged; */
 
-  TextFieldSendMessage(this.onChanged);
+  TextFieldSendMessage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = useTextEditingController()
@@ -262,7 +265,9 @@ class TextFieldSendMessage extends HookConsumerWidget {
         border: OutlineInputBorder(),
         labelText: 'Escribe tu texto',
       ),
-      onChanged: onChanged,
+      onChanged: (val) {
+        ref.read(currentMessageProvider.notifier).setCurrentMessage(val);
+      },
     );
   }
 }
