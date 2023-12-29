@@ -157,35 +157,36 @@ class SendMessageSlider extends HookConsumerWidget {
               ),
             ],
           ),
-          Container(
-            width: 300,
-            height: 400,
-            child: PageView.builder(
-              controller: pageController,
-              scrollDirection: settings.sliderDirection,
-              itemCount: listOnlyLettersNumbers.value.length,
-              itemBuilder: (context, int index) {
-                final sign = listOnlyLettersNumbers.value[index];
-                return InkWell(
-                  onTap: () =>
-                      context.push('/letter-and-numbers/detail', extra: sign),
-                  child: SvgPicture.asset(
-                    sign.pathImage,
-                    width: 200,
-                    height: 200,
-                  ),
-                );
-              },
-            ),
-          ),
-          SimpleText(
-            text: currentMessage.isEmpty
-                ? "Aqui aparecera tu texto"
-                : currentMessage,
-            fontSize: 17,
-            fontWeight: FontWeight.w700,
-            padding: EdgeInsets.symmetric(vertical: 10),
-          ),
+          settings.typeDisplay == TypeDisplay.pageView
+              ? Column(
+                  children: [
+                    Container(
+                      width: 300,
+                      height: 400,
+                      child: PageView.builder(
+                        controller: pageController,
+                        scrollDirection: settings.sliderDirection,
+                        itemCount: listOnlyLettersNumbers.value.length,
+                        itemBuilder: (context, int index) {
+                          final sign = listOnlyLettersNumbers.value[index];
+                          return InkWell(
+                            onTap: () => context.push(
+                                '/letter-and-numbers/detail',
+                                extra: sign),
+                            child: SvgPicture.asset(
+                              sign.pathImage,
+                              width: 200,
+                              height: 200,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                )
+              : ImageSwitcher(
+                  imagesPaths: listOnlyLettersNumbers.value,
+                ),
           TextFieldSendMessage(),
           isPlaying.value
               ? FilledButton.icon(

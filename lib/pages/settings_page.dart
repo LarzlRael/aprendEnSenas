@@ -59,10 +59,9 @@ class SettingsPage extends ConsumerWidget {
                     }),
                 Text('Tiempo actual: ${settings.transitionTime}'),
                 Text('Transicion'),
-                TextButton(
+                /* TextButton(
                   onPressed: () {
-                    reff.setSelectedAxiosOption(0);
-                    reff.setSliderDirection(Axis.horizontal);
+                    reff.setSelectedDisplayOption(0);
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -73,35 +72,33 @@ class SettingsPage extends ConsumerWidget {
                           child: Checkbox(
                               value: settings.selectedAxiosOption == 0,
                               onChanged: (value) {
-                                reff.setSelectedAxiosOption(0);
-                                reff.setSliderDirection(Axis.horizontal);
+                                reff.setSelectedDisplayOption(0);
                               })),
                       SizedBox(width: 10.0),
                       Text("Horizontal")
                     ],
                   ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    reff.setSelectedAxiosOption(1);
-                    reff.setSliderDirection(Axis.vertical);
+                ), */
+                CustomCheckBox(
+                  label: 'Horizontal',
+                  value: settings.selectedAxiosOption == 0,
+                  onTap: () {
+                    reff.setSelectedDisplayOption(0);
                   },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                          height: 24.0,
-                          width: 24.0,
-                          child: Checkbox(
-                              value: settings.selectedAxiosOption == 1,
-                              onChanged: (value) {
-                                reff.setSelectedAxiosOption(1);
-                                reff.setSliderDirection(Axis.vertical);
-                              })),
-                      SizedBox(width: 10.0),
-                      Text("Vertical")
-                    ],
-                  ),
+                ),
+                CustomCheckBox(
+                  label: 'Vertical',
+                  value: settings.selectedAxiosOption == 1,
+                  onTap: () {
+                    reff.setSelectedDisplayOption(1);
+                  },
+                ),
+                CustomCheckBox(
+                  label: 'Imagenes',
+                  value: settings.selectedAxiosOption == 2,
+                  onTap: () {
+                    reff.setSelectedDisplayOption(2);
+                  },
                 ),
               ],
             )
@@ -151,6 +148,34 @@ class OptionSetting extends StatelessWidget {
           ],
         ),
       ],
+    );
+  }
+}
+
+class CustomCheckBox extends ConsumerWidget {
+  const CustomCheckBox(
+      {super.key,
+      required this.onTap,
+      required this.value,
+      required this.label});
+  final Function() onTap;
+  final bool value;
+  final String label;
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return TextButton(
+      onPressed: onTap,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(
+              height: 24.0,
+              width: 24.0,
+              child: Checkbox(value: value, onChanged: (value) => onTap())),
+          SizedBox(width: 10.0),
+          Text(label),
+        ],
+      ),
     );
   }
 }

@@ -4,11 +4,17 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'settings_provider.g.dart';
 
+enum TypeDisplay {
+  pageView,
+  imageSwitcher,
+}
+
 @riverpod
 class SettingsProvider extends _$SettingsProvider {
   @override
   ProviderState build() {
-    return ProviderState(false, false, false, 0.0, Axis.horizontal, 0);
+    return ProviderState(
+        false, false, false, 0.0, Axis.horizontal, 0, TypeDisplay.pageView);
   }
 
   void toggleDarkMode() {
@@ -27,12 +33,30 @@ class SettingsProvider extends _$SettingsProvider {
     state = state.copyWith(transitionTime: value);
   }
 
-  void setSliderDirection(Axis value) {
-    state = state.copyWith(sliderDirection: value);
-  }
-
-  void setSelectedAxiosOption(int value) {
-    state = state.copyWith(selectedAxiosOption: value);
+  void setSelectedDisplayOption(int value) {
+    switch (value) {
+      case 0:
+        state = state.copyWith(
+            sliderDirection: Axis.horizontal,
+            selectedAxiosOption: value,
+            typeDisplay: TypeDisplay.pageView);
+        break;
+      case 1:
+        state = state.copyWith(
+            sliderDirection: Axis.vertical,
+            selectedAxiosOption: value,
+            typeDisplay: TypeDisplay.pageView);
+        break;
+      case 2:
+        state = state.copyWith(
+            sliderDirection: Axis.vertical,
+            selectedAxiosOption: value,
+            typeDisplay: TypeDisplay.imageSwitcher);
+        break;
+      default:
+        state = state.copyWith(
+            sliderDirection: Axis.horizontal, selectedAxiosOption: value);
+    }
   }
 }
 
@@ -43,9 +67,16 @@ class ProviderState {
   final double transitionTime;
   final Axis sliderDirection;
   final int selectedAxiosOption;
+  final TypeDisplay typeDisplay;
 
-  ProviderState(this.isDarkMode, this.isSoundActive, this.isVibrationActive,
-      this.transitionTime, this.sliderDirection, this.selectedAxiosOption);
+  ProviderState(
+      this.isDarkMode,
+      this.isSoundActive,
+      this.isVibrationActive,
+      this.transitionTime,
+      this.sliderDirection,
+      this.selectedAxiosOption,
+      this.typeDisplay);
 
   ProviderState copyWith({
     bool? isDarkMode,
@@ -54,6 +85,7 @@ class ProviderState {
     double? transitionTime,
     Axis? sliderDirection,
     int? selectedAxiosOption,
+    TypeDisplay? typeDisplay,
   }) {
     return ProviderState(
       isDarkMode ?? this.isDarkMode,
@@ -62,6 +94,7 @@ class ProviderState {
       transitionTime ?? this.transitionTime,
       sliderDirection ?? this.sliderDirection,
       selectedAxiosOption ?? this.selectedAxiosOption,
+      typeDisplay ?? this.typeDisplay,
     );
   }
 }
