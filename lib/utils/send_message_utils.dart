@@ -1,6 +1,6 @@
 part of 'utils.dart';
 
-List<Sign> generateListToMessage(
+List<Sign> generateListToMessageUtil(
   List<Sign> listOnlySingAndNumbers,
   String inputString,
 ) {

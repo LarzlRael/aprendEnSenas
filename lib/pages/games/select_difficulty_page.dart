@@ -46,7 +46,7 @@ class SelectDifficultyPage extends StatelessWidget {
               itemCount: Difficulty.values.length,
               itemBuilder: (context, int index) {
                 final difficulty = Difficulty.values[index];
-                final listMessage = generateListToMessage(
+                final listMessage = generateListToMessageUtil(
                   listOnlySingAndNumbers,
                   difficulty.name,
                 );

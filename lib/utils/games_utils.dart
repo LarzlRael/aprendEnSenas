@@ -20,7 +20,7 @@ WordInSightGame createWordInSightGame(List<String> options, int amountOptions) {
   final correct = Random().nextInt(amountOptions);
   return WordInSightGame(
     selectedOptions,
-    generateListToMessage(
+    generateListToMessageUtil(
       listOnlySingAndNumbers,
       selectedOptions[correct],
     ),
@@ -31,7 +31,7 @@ WordInSightGame createWordInSightGame(List<String> options, int amountOptions) {
 GuessTheWord getRandomWordFromStringList(List<String> list) {
   final randomWord = list[Random().nextInt(list.length)];
   return GuessTheWord(
-    generateListToMessage(listOnlySingAndNumbers, randomWord),
+    generateListToMessageUtil(listOnlySingAndNumbers, randomWord),
     randomWord,
   );
 }

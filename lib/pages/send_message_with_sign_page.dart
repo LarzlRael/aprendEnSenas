@@ -58,13 +58,14 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final listOnlyLettersNumbers = useState<List<Sign>>([]);
-    final currentMessage = ref.watch(currentMessageProvider);
+    final currentMessage = ref.watch(signProviderProvider);
     final currentSliderState = useState(5);
     useEffect(() {
-      listOnlyLettersNumbers.value = generateListToMessage(
+      listOnlyLettersNumbers.value = generateListToMessageUtil(
         listOnlySingAndNumbers,
-        currentMessage,
+        currentMessage.currentMessage,
       );
+      return null;
     }, [currentMessage]);
 
     return Column(
@@ -109,54 +110,88 @@ class SendMessageSlider extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(settingsProviderProvider);
-    final listOnlyLettersNumbers = useState<List<Sign>>(listOnlySingAndNumbers);
-    final currentMessage = ref.watch(currentMessageProvider);
+    /* final listOnlyLettersNumbers = useState<List<Sign>>(listOnlySingAndNumbers); */
+    final signProviderRef = ref.watch(signProviderProvider);
     final isPlaying = useState(false);
 
-    final currenSign = useState<Sign?>(null);
-
     final pageController = usePageController();
+
+    final _currentIndex = useState<int>(0);
+
     pageController.addListener(() {
-      if (pageController.page!.toInt() < listOnlyLettersNumbers.value.length) {
-        currenSign.value =
-            listOnlyLettersNumbers.value[pageController.page!.toInt()];
+      if (pageController.page!.toInt() < signProviderRef.listSigns.length) {
+        /* currenSign.value =
+            signProviderRef.listSigns[pageController.page!.toInt()]; */
+        ref.read(signProviderProvider.notifier).setCurrentSign(
+            signProviderRef.listSigns[pageController.page!.toInt()]);
       }
     });
 
     useEffect(() {
-      /* ref
-          .read(signProviderProvider.notifier)
-          .generateListToMessage(currentMessagex.value);
-      ref
-          .read(currentMessageProvider.notifier)
-          .setCurrentMessage(currentMessagex.value); */
-      listOnlyLettersNumbers.value = generateListToMessage(
+      signProviderRef.listSigns = generateListToMessageUtil(
         listOnlySingAndNumbers,
-        currentMessage,
+        signProviderRef.currentMessage,
       );
       /* return pageController.dispose; */
-    }, [currentMessage]);
+    }, [signProviderRef]);
+
+    startMessage() async {
+      ref
+          .read(signProviderProvider.notifier)
+          .setCurrentMessage(signProviderRef.currentMessage);
+
+      /* print("listOnlyLettersNumbers: ${listOnlyLettersNumbers.value}"); */
+      pageController.jumpToPage(0);
+
+      signProviderRef.timer = Timer.periodic(
+          Duration(milliseconds: timeMiliseconds), (Timer timer) {
+        if (pageController.page!.toInt() <
+            signProviderRef.listSigns.length - 1) {
+          isPlaying.value = true;
+          pageController.nextPage(
+            duration: Duration(milliseconds: timeMiliseconds),
+            curve: Curves.easeInOut,
+          );
+        } else {
+          // Si estás en la última página, vuelve al principio
+          timer.cancel();
+          signProviderRef.timer?.cancel();
+
+          pageController.jumpToPage(0);
+          isPlaying.value = false;
+        }
+      });
+    }
+
+    void stopTimerAnimatedImages() {
+      isPlaying.value = false;
+      signProviderRef.timer?.cancel();
+      _currentIndex.value = 0;
+      ref
+          .read(signProviderProvider.notifier)
+          .setCurrentSign(signProviderRef.listSigns[_currentIndex.value]);
+    }
+
+    void startTimerAnimatedImages() {
+      signProviderRef.timer =
+          Timer.periodic(const Duration(seconds: 1), (timer) async {
+        isPlaying.value = true;
+        ref
+            .read(signProviderProvider.notifier)
+            .setCurrentSign(signProviderRef.listSigns[_currentIndex.value]);
+        _currentIndex.value = _currentIndex.value + 1;
+
+        if (_currentIndex.value == signProviderRef.listSigns.length) {
+          stopTimerAnimatedImages();
+        }
+      });
+    }
 
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SimpleText(
-                text: currenSign.value?.type!.name ?? "",
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-              SizedBox(width: 5),
-              SimpleText(
-                text: currenSign.value?.letter ?? "",
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ],
-          ),
+          CurrentSign(currenSign: signProviderRef.currentSign),
           settings.typeDisplay == TypeDisplay.pageView
               ? Column(
                   children: [
@@ -166,9 +201,9 @@ class SendMessageSlider extends HookConsumerWidget {
                       child: PageView.builder(
                         controller: pageController,
                         scrollDirection: settings.sliderDirection,
-                        itemCount: listOnlyLettersNumbers.value.length,
+                        itemCount: signProviderRef.listSigns.length,
                         itemBuilder: (context, int index) {
-                          final sign = listOnlyLettersNumbers.value[index];
+                          final sign = signProviderRef.listSigns[index];
                           return InkWell(
                             onTap: () => context.push(
                                 '/letter-and-numbers/detail',
@@ -184,53 +219,98 @@ class SendMessageSlider extends HookConsumerWidget {
                     ),
                   ],
                 )
-              : ImageSwitcher(
-                  imagesPaths: listOnlyLettersNumbers.value,
+              : Container(
+                  width: 300,
+                  height: 400,
+                  child: signProviderRef.listSigns.isEmpty
+                      ? const SizedBox()
+                      : Expanded(
+                          child: AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 500),
+                              child: Card(
+                                child: SvgPicture.asset(
+                                  signProviderRef
+                                      .listSigns[_currentIndex.value].pathImage,
+                                  key: ValueKey<int>(_currentIndex.value),
+                                  /*   width: 200,
+                                                height: 200, */
+                                ),
+                              )),
+                        ),
                 ),
-          TextFieldSendMessage(),
-          isPlaying.value
-              ? FilledButton.icon(
-                  onPressed: () {
-                    pageController.jumpToPage(0);
-                    isPlaying.value = false;
-                  },
-                  icon: Icon(Icons.pause),
-                  label: Text(
-                    "Cancelar",
-                  ))
-              : FilledButton.icon(
-                  onPressed: () {
-                    ref
-                        .read(currentMessageProvider.notifier)
-                        .setCurrentMessage(currentMessage);
-
-                    print(
-                        "listOnlyLettersNumbers: ${listOnlyLettersNumbers.value}");
-                    pageController.jumpToPage(0);
-
-                    Timer.periodic(Duration(milliseconds: timeMiliseconds),
-                        (Timer timer) {
-                      if (pageController.page!.toInt() <
-                          listOnlyLettersNumbers.value.length - 1) {
-                        isPlaying.value = true;
-                        pageController.nextPage(
-                          duration: Duration(milliseconds: timeMiliseconds),
-                          curve: Curves.easeInOut,
-                        );
-                      } else {
-                        // Si estás en la última página, vuelve al principio
-                        timer.cancel();
-                        pageController.jumpToPage(0);
-                        isPlaying.value = false;
-                      }
-                    });
-                  },
-                  icon: Icon(Icons.send),
-                  label: Text(
-                    "Enviar mensaje",
-                  ))
+          SimpleText(
+            text: signProviderRef.currentMessage,
+            fontSize: 17,
+            fontWeight: FontWeight.w700,
+            padding: EdgeInsets.symmetric(vertical: 10),
+          ),
+          Row(
+            children: [
+              Expanded(
+                  child: SizedBox(
+                child: TextFieldSendMessage(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50.0),
+                    ),
+                    hintText: "Escribe tu mensaje",
+                  ),
+                ),
+              )),
+              const SizedBox(width: 3),
+              Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.green,
+                ),
+                child: IconButton(
+                  onPressed: isPlaying.value
+                      ? () {
+                          pageController.jumpToPage(0);
+                          isPlaying.value = false;
+                        }
+                      : settings.typeDisplay == TypeDisplay.pageView
+                          ? startMessage
+                          : startTimerAnimatedImages,
+                  icon: Icon(
+                    isPlaying.value ? Icons.pause : Icons.send,
+                    color: Colors.white,
+                  ),
+                ),
+              )
+            ],
+          ),
         ],
       ),
+    );
+  }
+}
+
+class CurrentSign extends StatelessWidget {
+  const CurrentSign({
+    super.key,
+    required this.currenSign,
+  });
+
+  final Sign? currenSign;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SimpleText(
+          text: currenSign?.type!.name ?? "",
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
+        SizedBox(width: 5),
+        SimpleText(
+          text: currenSign?.letter ?? "",
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
+      ],
     );
   }
 }
@@ -258,21 +338,27 @@ class SquareCard extends StatelessWidget {
 
 class TextFieldSendMessage extends HookConsumerWidget {
   /* final Function(String value) onChanged; */
-
-  TextFieldSendMessage({super.key});
+  final InputDecoration? decoration;
+  TextFieldSendMessage({super.key, this.decoration});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = useTextEditingController()
-      ..value = TextEditingValue(text: ref.watch(currentMessageProvider));
+      ..value = TextEditingValue(
+          text: ref.watch(signProviderProvider).currentMessage);
 
     return TextField(
       controller: controller,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(),
-        labelText: 'Escribe tu texto',
-      ),
+      decoration: decoration ??
+          InputDecoration(
+            hintText: "Escribe tu mensaje",
+            border: OutlineInputBorder(),
+          ),
       onChanged: (val) {
-        ref.read(currentMessageProvider.notifier).setCurrentMessage(val);
+        ref
+            .read(
+              signProviderProvider.notifier,
+            )
+            .setCurrentMessage(val);
       },
     );
   }

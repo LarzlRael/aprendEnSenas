@@ -16,7 +16,7 @@ final appRouter = GoRouter(
       builder: (context, state) => LetterAndNumbersPage(),
     ),
     GoRoute(
-      path: '/letter-and-numbers/detail',
+      path: '/letter-and-numbers/detail/:letter',
       builder: (context, state) {
         final sing = state.extra as Sign;
         return LetterAndNumbersPageDetail(sing: sing);
