@@ -17,3 +17,4 @@ part '/games/select_game_card.dart';
 part '/games/page_view_sign_slider.dart';
 part '/games/progres_linear_timer.dart';
 part '/navigation/back_icon.dart';
+part '/buttons/animated_play_button.dart';

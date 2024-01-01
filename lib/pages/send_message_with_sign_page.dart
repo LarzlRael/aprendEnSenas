@@ -9,10 +9,10 @@ class SendMessageWithSignPage extends HookWidget {
     final isSwitched = useState(false);
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
+      /* floatingActionButton: FloatingActionButton(
         onPressed: () => context.push('/letter-and-numbers'),
         child: Icon(Icons.mic),
-      ),
+      ), */
       appBar: AppBar(
         title: Text("Enviar mensaje"),
         actions: [
@@ -27,7 +27,9 @@ class SendMessageWithSignPage extends HookWidget {
         ],
       ),
       body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 15),
+        /* margin: EdgeInsets.symmetric(horizontal: 15), */
+        /* width: double.infinity,
+        height: double.infinity, */
         child: Column(
           children: [
             Row(
@@ -80,7 +82,7 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
           divisions: 10,
           label: "Velocidad",
         ),
-        TextFieldSendMessage(),
+
         /* TextFieldSendMessage((value) {
           message.value = value;
           /* Fix this */
@@ -100,6 +102,20 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
             ),
           ),
         ),
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 5),
+          child: Row(
+            children: [
+              Expanded(child: TextFieldSendMessage()),
+              const SizedBox(width: 2),
+              FloatingActionButton(
+                shape: CircleBorder(),
+                onPressed: () {},
+                child: Icon(Icons.mic, color: Colors.black),
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }
@@ -110,18 +126,14 @@ class SendMessageSlider extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(settingsProviderProvider);
-    /* final listOnlyLettersNumbers = useState<List<Sign>>(listOnlySingAndNumbers); */
     final signProviderRef = ref.watch(signProviderProvider);
     final isPlaying = useState(false);
 
     final pageController = usePageController();
-
     final _currentIndex = useState<int>(0);
 
     pageController.addListener(() {
       if (pageController.page!.toInt() < signProviderRef.listSigns.length) {
-        /* currenSign.value =
-            signProviderRef.listSigns[pageController.page!.toInt()]; */
         ref.read(signProviderProvider.notifier).setCurrentSign(
             signProviderRef.listSigns[pageController.page!.toInt()]);
       }
@@ -188,99 +200,131 @@ class SendMessageSlider extends HookConsumerWidget {
     }
 
     return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          CurrentSign(currenSign: signProviderRef.currentSign),
-          settings.typeDisplay == TypeDisplay.pageView
-              ? Column(
-                  children: [
-                    Container(
-                      width: 300,
-                      height: 400,
-                      child: PageView.builder(
-                        controller: pageController,
-                        scrollDirection: settings.sliderDirection,
-                        itemCount: signProviderRef.listSigns.length,
-                        itemBuilder: (context, int index) {
-                          final sign = signProviderRef.listSigns[index];
-                          return InkWell(
-                            onTap: () => context.push(
-                                '/letter-and-numbers/detail',
-                                extra: sign),
-                            child: SvgPicture.asset(
-                              sign.pathImage,
-                              width: 200,
-                              height: 200,
+      child: Container(
+        /* width: double.infinity,
+        height: double.infinity, */
+        color: Colors.grey[200],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CurrentSign(currenSign: signProviderRef.currentSign),
+            settings.typeDisplay == TypeDisplay.pageView
+                ? Column(
+                    children: [
+                      Container(
+                        width: 300,
+                        height: 400,
+                        child: PageView.builder(
+                          controller: pageController,
+                          scrollDirection: settings.sliderDirection,
+                          itemCount: signProviderRef.listSigns.length,
+                          itemBuilder: (context, int index) {
+                            final sign = signProviderRef.listSigns[index];
+                            return InkWell(
+                              onTap: () => context.push(
+                                  '/letter-and-numbers/detail',
+                                  extra: sign),
+                              child: SvgPicture.asset(
+                                sign.pathImage,
+                                width: 200,
+                                height: 200,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  )
+                : Container(
+                    width: 300,
+                    height: 400,
+                    child: signProviderRef.listSigns.isEmpty
+                        ? const SizedBox()
+                        : Expanded(
+                            child: AnimatedSwitcher(
+                                duration: const Duration(milliseconds: 500),
+                                child: Card(
+                                  child: SvgPicture.asset(
+                                    signProviderRef
+                                        .listSigns[_currentIndex.value]
+                                        .pathImage,
+                                    key: ValueKey<int>(_currentIndex.value),
+                                    /*   width: 200,
+                                                  height: 200, */
+                                  ),
+                                )),
+                          ),
+                  ),
+            signProviderRef.listSigns.isEmpty
+                ? const SimpleText(text: "No hay mensaje")
+                : RichText(
+                    text: TextSpan(
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                      children: signProviderRef.listSigns.map((e) {
+                        if (_currentIndex.value ==
+                            signProviderRef.listSigns[_currentIndex.value]) {
+                          return TextSpan(
+                              text: e.letter,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green,
+                              ));
+                        } else {
+                          return WidgetSpan(
+                            child: Transform.translate(
+                              offset: const Offset(0.0, 0.0),
+                              child: Text(
+                                e.letter,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
                             ),
                           );
-                        },
-                      ),
+                        }
+                      }).toList(),
                     ),
-                  ],
-                )
-              : Container(
-                  width: 300,
-                  height: 400,
+                  ),
+            Row(
+              children: [
+                Expanded(child: TextFieldSendMessage()),
+                const SizedBox(width: 2),
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 500),
                   child: signProviderRef.listSigns.isEmpty
-                      ? const SizedBox()
-                      : Expanded(
-                          child: AnimatedSwitcher(
-                              duration: const Duration(milliseconds: 500),
-                              child: Card(
-                                child: SvgPicture.asset(
-                                  signProviderRef
-                                      .listSigns[_currentIndex.value].pathImage,
-                                  key: ValueKey<int>(_currentIndex.value),
-                                  /*   width: 200,
-                                                height: 200, */
-                                ),
-                              )),
+                      ? const FloatingActionButton(
+                          shape: CircleBorder(),
+                          /* TODO mic state */
+                          onPressed: null,
+                          child: Icon(
+                            Icons.mic,
+                            color: Colors.black,
+                          ),
+                        )
+                      : AnimatedPlayButton(
+                          isPlaying: isPlaying.value,
+                          onTap: (controller) {
+                            if (isPlaying.value) {
+                              controller.reverse();
+                              isPlaying.value = false;
+                            } else {
+                              controller.forward();
+                              isPlaying.value = true;
+                            }
+                          },
                         ),
                 ),
-          SimpleText(
-            text: signProviderRef.currentMessage,
-            fontSize: 17,
-            fontWeight: FontWeight.w700,
-            padding: EdgeInsets.symmetric(vertical: 10),
-          ),
-          Row(
-            children: [
-              Expanded(
-                  child: SizedBox(
-                child: TextFieldSendMessage(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50.0),
-                    ),
-                    hintText: "Escribe tu mensaje",
-                  ),
-                ),
-              )),
-              const SizedBox(width: 3),
-              Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.green,
-                ),
-                child: IconButton(
-                  onPressed: isPlaying.value
-                      ? () {
-                          pageController.jumpToPage(0);
-                          isPlaying.value = false;
-                        }
-                      : settings.typeDisplay == TypeDisplay.pageView
-                          ? startMessage
-                          : startTimerAnimatedImages,
-                  icon: Icon(
-                    isPlaying.value ? Icons.pause : Icons.send,
-                    color: Colors.white,
-                  ),
-                ),
-              )
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -337,29 +381,44 @@ class SquareCard extends StatelessWidget {
 }
 
 class TextFieldSendMessage extends HookConsumerWidget {
-  /* final Function(String value) onChanged; */
-  final InputDecoration? decoration;
-  TextFieldSendMessage({super.key, this.decoration});
+  TextFieldSendMessage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = useTextEditingController()
       ..value = TextEditingValue(
           text: ref.watch(signProviderProvider).currentMessage);
 
-    return TextField(
-      controller: controller,
-      decoration: decoration ??
-          InputDecoration(
-            hintText: "Escribe tu mensaje",
-            border: OutlineInputBorder(),
+    return SizedBox(
+      height: 45,
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(35.0),
+            borderSide: BorderSide(
+              color: Colors.orange,
+            ),
           ),
-      onChanged: (val) {
-        ref
-            .read(
-              signProviderProvider.notifier,
-            )
-            .setCurrentMessage(val);
-      },
+          /* filled: true,
+                        fillColor: Colors.black, */
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(35.0),
+          ),
+          hintText: "Escribe tu mensaje",
+          hintStyle: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            color: Colors.black45,
+          ),
+        ),
+        onChanged: (val) {
+          ref
+              .read(
+                signProviderProvider.notifier,
+              )
+              .setCurrentMessage(val);
+        },
+      ),
     );
   }
 }

@@ -13,6 +13,10 @@ enum TypeDisplay {
 class SettingsProvider extends _$SettingsProvider {
   @override
   ProviderState build() {
+    return initBuild();
+  }
+
+  ProviderState initBuild() {
     return ProviderState(
         false, false, false, 0.0, Axis.horizontal, 0, TypeDisplay.pageView);
   }
