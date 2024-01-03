@@ -13,7 +13,7 @@ final items = <SelectGameCard>[
     onSelected: (context) {
       context.push(
         '/select_difficulty_page/${GameType.prueba_tu_memoria.name}/test_your_memory_page',
-        extra: GameType.prueba_tu_memoria,
+        extra: MyFlutterApp.test_your_memory,
       );
     },
   ),
@@ -24,7 +24,7 @@ final items = <SelectGameCard>[
     onSelected: (context) {
       context.push(
         '/games/guess_the_word_page',
-        extra: GameType.adivina_la_palabra,
+        extra: MyFlutterApp.guess_the_word,
       );
     },
   ),
@@ -35,7 +35,7 @@ final items = <SelectGameCard>[
     onSelected: (context) {
       context.push(
         '/select_difficulty_page/${GameType.volteo_de_cartas.name}/flipping_cards_page',
-        extra: GameType.volteo_de_cartas,
+        extra: MyFlutterApp.flip_card,
       );
     },
   ),
@@ -46,7 +46,7 @@ final items = <SelectGameCard>[
     onSelected: (context) {
       context.push(
         '/games/word_in_sight_page',
-        extra: GameType.palabra_a_la_vista,
+        extra: MyFlutterApp.flip_card,
       );
     },
   ),

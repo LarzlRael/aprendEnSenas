@@ -232,9 +232,11 @@ class SendMessageSlider extends HookConsumerWidget {
                                 onTap: () => context.push(
                                     '/letter-and-numbers/detail',
                                     extra: sign),
-                                child: Icon(
-                                  sign.iconSign,
-                                  size: 50,
+                                child: Card(
+                                  child: Icon(
+                                    sign.iconSign,
+                                    size: 100,
+                                  ),
                                 ),
                               );
                             },

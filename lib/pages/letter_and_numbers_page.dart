@@ -57,9 +57,9 @@ class ListRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
       separatorBuilder: (context, index) => SizedBox(height: 13),
-      itemCount: signList.length,
+      itemCount: signLowerLetters.length,
       itemBuilder: (BuildContext context, int index) {
-        final list = signList[index];
+        final list = signLowerLetters[index];
         return Card(
           child: Container(
             padding: EdgeInsets.all(10),
@@ -96,12 +96,12 @@ class ListGrid extends StatelessWidget {
       crossAxisCount: 2,
       mainAxisSpacing: 5,
       crossAxisSpacing: 5,
-      itemCount: letterWithSignArray.length,
+      itemCount: signUpperLetters.length,
       itemBuilder: (context, int index) {
         return InkWell(
           onTap: () {
             if (onTap != null) {
-              onTap!(letterWithSignArray[index]);
+              onTap!(signUpperLetters[index]);
             }
           },
           child: Card(
@@ -109,7 +109,7 @@ class ListGrid extends StatelessWidget {
               padding: EdgeInsets.all(10),
               width: 100,
               height: 100,
-              child: Icon(letterWithSignArray[index].iconSign),
+              child: Icon(signUpperLetters[index].iconSign),
             ),
           ),
         );

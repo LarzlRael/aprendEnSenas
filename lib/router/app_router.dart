@@ -1,9 +1,10 @@
 import 'package:asl/models/models.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../pages/pages.dart';
 
 final appRouter = GoRouter(
-  initialLocation: '/letter-and-numbers',
+  initialLocation: '/send_message_with_sign_page',
   /* refreshListenable: goRouterNotifier, */
   routes: [
     ///* Primera pantalla
@@ -34,9 +35,11 @@ final appRouter = GoRouter(
         builder: (_, state) {
           final gameTitle = state.params['gameTitle'];
           final gameDestinty = state.params['gameDestinty'];
+          final iconGame = state.extra as IconData;
           return SelectDifficultyPage(
             gameTitle: gameTitle!,
             gameRouteDestinyPage: gameDestinty,
+            iconGame: iconGame,
           );
         }),
     GoRoute(

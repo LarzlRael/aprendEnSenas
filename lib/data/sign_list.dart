@@ -1,12 +1,12 @@
 import 'package:asl/customs_icons/my_flutter_app_icons.dart';
 import 'package:asl/models/models.dart';
 
-final signList = <Sign>[
+final signLowerLetters = <Sign>[
   Sign("a", MyFlutterApp.a_sign),
-  Sign("b", MyFlutterApp.b_sing),
+  Sign("b", MyFlutterApp.b_sign),
   Sign("c", MyFlutterApp.c_sign),
   Sign("d", MyFlutterApp.d_sign),
-  Sign("e", MyFlutterApp.esign),
+  Sign("e", MyFlutterApp.e_sign),
   Sign("f", MyFlutterApp.f_sign),
   Sign("g", MyFlutterApp.g_sign),
   Sign("h", MyFlutterApp.h_sign),
@@ -16,7 +16,6 @@ final signList = <Sign>[
   Sign("l", MyFlutterApp.l_sign),
   Sign("m", MyFlutterApp.m_sign),
   Sign("n", MyFlutterApp.n_sign),
-  /* FIX ñ */
   Sign("ñ", MyFlutterApp.n_sign),
   Sign("o", MyFlutterApp.o_sign),
   Sign("p", MyFlutterApp.p_sign),
@@ -30,65 +29,9 @@ final signList = <Sign>[
   Sign("x", MyFlutterApp.x_sign),
   Sign("y", MyFlutterApp.y_sign),
   Sign("z", MyFlutterApp.z_sign),
-  //?  numbers
-  ...listOnlyNumer
-
-  /* Sign("a_letter", 'assets/signs/a_letter.svg'),
-  Sign("a_only_sing", 'assets/signs/a_only_sing.svg'),
-  Sign("b_only_sing", 'assets/signs/b_only_sing.svg'),
-  Sign("c_letter", 'assets/signs/c_letter.svg'),
-  Sign("c_only_sing", 'assets/signs/c_only_sing.svg'),
-  Sign("d_letter", 'assets/signs/d_letter.svg'),
-  Sign("d_only_sing", 'assets/signs/d_only_sing.svg'),
-  Sign("e_letter", 'assets/signs/e_letter.svg'),
-  Sign("e_only_sing", 'assets/signs/e_only_sing.svg'),
-  Sign("f_letter", 'assets/signs/f_letter.svg'),
-  Sign("f_only_sing", 'assets/signs/f_only_sing.svg'),
-  Sign("g_letter", 'assets/signs/g_letter.svg'),
-  Sign("g_only_sing", 'assets/signs/g_only_sing.svg'),
-  Sign("h_letter", 'assets/signs/h_letter.svg'),
-  Sign("h_only_sing", 'assets/signs/h_only_sing.svg'),
-  Sign("i_letter", 'assets/signs/i_letter.svg'),
-  Sign("i_only_sing", 'assets/signs/i_only_sing.svg'),
-  Sign("j_letter", 'assets/signs/j_letter.svg'),
-  Sign("j_only_sing", 'assets/signs/j_only_sing.svg'),
-  Sign("k_letter", 'assets/signs/k_letter.svg'),
-  Sign("k_only_sing", 'assets/signs/k_only_sing.svg'),
-  Sign("L_letter", 'assets/signs/L_letter.svg'),
-  Sign("L_only_sing", 'assets/signs/L_only_sing.svg'),
-  Sign("m_letter", 'assets/signs/m_letter.svg'),
-  Sign("m_only_sing", 'assets/signs/m_only_sing.svg'),
-  Sign("n_letter", 'assets/signs/n_letter.svg'),
-  Sign("n_only_sing", 'assets/signs/n_only_sing.svg'),
-  Sign("nn_letter", 'assets/signs/nn_letter.svg'),
-  Sign("o_letter", 'assets/signs/o_letter.svg'),
-  Sign("o_only_sing", 'assets/signs/o_only_sing.svg'),
-  Sign("p_letter", 'assets/signs/p_letter.svg'),
-  Sign("p_only_sing", 'assets/signs/p_only_sing.svg'),
-  Sign("q_letter", 'assets/signs/q_letter.svg'),
-  Sign("q_only_sing", 'assets/signs/q_only_sing.svg'),
-  Sign("r_letter", 'assets/signs/r_letter.svg'),
-  Sign("r_only_sing", 'assets/signs/r_only_sing.svg'),
-  /* Sign("Sin título-2", 'assets/signs/Sin título-2.svg'), */
-  Sign("s_letter", 'assets/signs/s_letter.svg'),
-  Sign("s_only_sing", 'assets/signs/s_only_sing.svg'),
-  Sign("t_letter", 'assets/signs/t_letter.svg'),
-  Sign("t_only_sing", 'assets/signs/t_only_sing.svg'),
-  Sign("u_letter", 'assets/signs/u_letter.svg'),
-  Sign("u_only_sing", 'assets/signs/u_only_sing.svg'),
-  Sign("v_letter", 'assets/signs/v_letter.svg'),
-  Sign("v_only_sing", 'assets/signs/v_only_sing.svg'),
-  Sign("w_letter", 'assets/signs/w_letter.svg'),
-  Sign("w_only_sing", 'assets/signs/w_only_sing.svg'),
-  Sign("x_letter", 'assets/signs/x_letter.svg'),
-  Sign("x_only_sing", 'assets/signs/x_only_sing.svg'),
-  Sign("y_letter", 'assets/signs/y_letter.svg'),
-  Sign("y_only_sing", 'assets/signs/y_only_sing.svg'),
-  Sign("z_letter", 'assets/signs/z_letter.svg'), */
-  // END: ed8c6549bwf9
 ];
 
-final letterWithSignArray = <Sign>[
+final signUpperLetters = <Sign>[
   Sign("A", MyFlutterApp.a_letter),
   Sign("B", MyFlutterApp.b_letter),
   Sign("C", MyFlutterApp.c_letter),
@@ -103,6 +46,7 @@ final letterWithSignArray = <Sign>[
   Sign("L", MyFlutterApp.l_letter),
   Sign("M", MyFlutterApp.m_letter),
   Sign("N", MyFlutterApp.n_letter),
+  Sign("Ñ", MyFlutterApp.nn_letter),
   Sign("O", MyFlutterApp.o_letter),
   Sign("P", MyFlutterApp.p_letter),
   Sign("Q", MyFlutterApp.q_letter),
@@ -115,9 +59,8 @@ final letterWithSignArray = <Sign>[
   Sign("X", MyFlutterApp.x_letter),
   Sign("Y", MyFlutterApp.y_letter),
   Sign("Z", MyFlutterApp.z_letter),
-  ...listOnlyNumer,
 ];
-final listOnlyNumer = <Sign>[
+final listOnlyNumers = <Sign>[
   Sign("0", MyFlutterApp.number_0, type: SignType.number),
   Sign("1", MyFlutterApp.number_0, type: SignType.number),
   Sign("2", MyFlutterApp.number_2, type: SignType.number),
@@ -131,22 +74,12 @@ final listOnlyNumer = <Sign>[
   Sign("10", MyFlutterApp.number_9, type: SignType.number),
 ];
 final listOnlySingAndNumbers = <Sign>[
-  Sign("0", MyFlutterApp.number_0, type: SignType.number),
-  Sign("1", MyFlutterApp.number_0, type: SignType.number),
-  Sign("2", MyFlutterApp.number_2, type: SignType.number),
-  Sign("3", MyFlutterApp.number_3, type: SignType.number),
-  Sign("4", MyFlutterApp.number_4, type: SignType.number),
-  Sign("5", MyFlutterApp.number_5, type: SignType.number),
-  Sign("6", MyFlutterApp.number_6, type: SignType.number),
-  Sign("7", MyFlutterApp.number_7, type: SignType.number),
-  Sign("8", MyFlutterApp.number_8, type: SignType.number),
-  Sign("9", MyFlutterApp.number_9, type: SignType.number),
-  Sign("10", MyFlutterApp.number_9, type: SignType.number),
+  ...listOnlyNumers,
   Sign("a", MyFlutterApp.a_sign),
-  Sign("b", MyFlutterApp.b_sing),
+  Sign("b", MyFlutterApp.b_sign),
   Sign("c", MyFlutterApp.c_sign),
   Sign("d", MyFlutterApp.d_sign),
-  Sign("e", MyFlutterApp.esign),
+  Sign("e", MyFlutterApp.e_sign),
   Sign("f", MyFlutterApp.f_sign),
   Sign("g", MyFlutterApp.g_sign),
   Sign("h", MyFlutterApp.h_sign),
@@ -156,8 +89,7 @@ final listOnlySingAndNumbers = <Sign>[
   Sign("l", MyFlutterApp.l_sign),
   Sign("m", MyFlutterApp.m_sign),
   Sign("n", MyFlutterApp.n_sign),
-  /* fix */
-  /* Sign("ñ", MyFlutterApp.ñ_sign), */
+  Sign("ñ", MyFlutterApp.nn_sign),
   Sign("o", MyFlutterApp.o_sign),
   Sign("p", MyFlutterApp.p_sign),
   Sign("q", MyFlutterApp.q_sign),
@@ -170,4 +102,10 @@ final listOnlySingAndNumbers = <Sign>[
   Sign("x", MyFlutterApp.x_sign),
   Sign("y", MyFlutterApp.y_sign),
   Sign("z", MyFlutterApp.z_sign),
+];
+
+final listAllSign = <Sign>[
+  ...listOnlyNumers,
+  ...signLowerLetters,
+  ...signUpperLetters,
 ];

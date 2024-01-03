@@ -4,7 +4,7 @@ class HomePage extends StatelessWidget {
   const HomePage({super.key});
   @override
   Widget build(BuildContext context) {
-    final list = signList;
+    final list = signLowerLetters;
     return Scaffold(
       body: Container(
         child: Image.asset(

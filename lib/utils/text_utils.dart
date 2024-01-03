@@ -17,6 +17,8 @@ extension StringCasingExtension on String {
 
     return words.join(' ');
   }
+
+  String removeDiacriticsFromString() => removeDiacritics(this);
 }
 
 String removeAllHtmlTags(String htmlText) {
