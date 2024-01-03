@@ -81,7 +81,7 @@ class WordInSightPage extends HookWidget {
                     height: 75,
                     child: Icon(
                       sign.iconSign,
-                      size: 30,
+                      size: 45,
                     ),
                   ),
                 );

@@ -50,7 +50,7 @@ class PageViewSignSlider extends HookWidget {
                   ), */
                   child: Icon(
                     singList[index].iconSign,
-                    size: 20,
+                    size: 300,
                   ),
                 ),
               );

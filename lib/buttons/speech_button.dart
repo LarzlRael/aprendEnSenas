@@ -85,10 +85,15 @@ class _SpeechButtonState extends State<SpeechButton> {
         duration: Duration(milliseconds: 200),
         width: _isPressed ? 75.0 : 50.0, // Change these values as needed
         height: _isPressed ? 75.0 : 50.0,
-        child: Icon(
-          _speechToText.isNotListening ? Icons.mic_off : Icons.mic,
-          color: Colors.white,
-          size: _isPressed ? 35.0 : 25.0,
+        child: Flash(
+          animate: _isPressed,
+          infinite: _isPressed,
+          child: Icon(
+            /* _isPressed ? Icons.mic_off : Icons.mic, */
+            Icons.mic,
+            color: _isPressed ? Colors.red : Colors.white,
+            size: _isPressed ? 35.0 : 25.0,
+          ),
         ),
       ),
     );

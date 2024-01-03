@@ -1,8 +1,10 @@
 part of 'utils.dart';
 
+List<Sign> shuffleList(List<Sign> list) => List<Sign>.from(list)..shuffle();
+
 TestYourGame createTestYourGame(List<Sign> options, int indexValues) {
   final correctAnswer = options.first;
-  final randomOptions = List<Sign>.from(options)..shuffle();
+  final randomOptions = shuffleList(options);
   final getIndexes = indexValues - 1;
   final selectedOptions = randomOptions.take(getIndexes).toList()
     ..add(correctAnswer);
@@ -37,10 +39,12 @@ GuessTheWord getRandomWordFromStringList(List<String> list) {
 }
 
 List<Sign> generateSignToPair(List<Sign> list, int itemsCount) {
-  final listItems = list.take(itemsCount).toList();
+  final listItems = shuffleList(list);
+  final listItemsToReturn = listItems.take(itemsCount).toList();
+
   return [
-    ...listItems,
-    ...listItems,
+    ...listItemsToReturn,
+    ...listItemsToReturn,
   ]..shuffle();
 }
 

@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../pages/pages.dart';
 
 final appRouter = GoRouter(
-  initialLocation: '/send_message_with_sign_page',
+  initialLocation: '/letter-and-numbers',
   /* refreshListenable: goRouterNotifier, */
   routes: [
     ///* Primera pantalla
@@ -19,8 +19,8 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/letter-and-numbers/detail/:letter',
       builder: (context, state) {
-        final sing = state.extra as Sign;
-        return LetterAndNumbersPageDetail(sing: sing);
+        final letter = state.params['letter'];
+        return LetterAndNumbersPageDetail(signChar: letter!);
       },
     ),
     GoRoute(

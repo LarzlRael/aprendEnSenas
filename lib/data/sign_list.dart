@@ -1,5 +1,6 @@
 import 'package:asl/customs_icons/my_flutter_app_icons.dart';
 import 'package:asl/models/models.dart';
+import 'package:flutter/material.dart';
 
 final signLowerLetters = <Sign>[
   Sign("a", MyFlutterApp.a_sign),
@@ -71,7 +72,7 @@ final listOnlyNumers = <Sign>[
   Sign("7", MyFlutterApp.number_7, type: SignType.number),
   Sign("8", MyFlutterApp.number_8, type: SignType.number),
   Sign("9", MyFlutterApp.number_9, type: SignType.number),
-  Sign("10", MyFlutterApp.number_9, type: SignType.number),
+  Sign("10", MyFlutterApp.number_10, type: SignType.number),
 ];
 final listOnlySingAndNumbers = <Sign>[
   ...listOnlyNumers,
@@ -109,3 +110,8 @@ final listAllSign = <Sign>[
   ...signLowerLetters,
   ...signUpperLetters,
 ];
+
+Sign getIconSign(String letter) {
+  final sign = listAllSign.firstWhere((element) => element.letter == letter);
+  return sign;
+}

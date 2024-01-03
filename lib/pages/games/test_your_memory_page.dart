@@ -72,6 +72,9 @@ class TestYourMemoryPage extends HookWidget {
                       final letterWithSignArray =
                           createTestYourGameState.value.options[index];
                       return InkWell(
+                        customBorder: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
                         onTap: () {
                           if (letterWithSignArray.letter ==
                               createTestYourGameState

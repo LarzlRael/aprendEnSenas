@@ -230,8 +230,7 @@ class SendMessageSlider extends HookConsumerWidget {
                               final sign = signProviderRef.listSigns[index];
                               return InkWell(
                                 onTap: () => context.push(
-                                    '/letter-and-numbers/detail',
-                                    extra: sign),
+                                    '/letter-and-numbers/detail/${sign.letter}'),
                                 child: Card(
                                   child: Icon(
                                     sign.iconSign,
@@ -420,10 +419,25 @@ class TextFieldSendMessage extends HookConsumerWidget {
           text: ref.watch(signProviderProvider).currentMessage);
 
     return SizedBox(
-      height: 45,
+      /* height: 45, */
       child: TextField(
+        minLines: 1,
+        maxLines: 2,
         controller: controller,
         decoration: InputDecoration(
+          suffix: AnimatedOpacity(
+            duration: const Duration(milliseconds: 500),
+            opacity:
+                ref.watch(signProviderProvider).currentMessage.isEmpty ? 0 : 1,
+            child: IconButton(
+              color: Colors.grey,
+              onPressed: () {
+                controller.clear();
+                ref.read(signProviderProvider.notifier).setCurrentMessage("");
+              },
+              icon: Icon(Icons.cancel),
+            ),
+          ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(35.0),
             borderSide: BorderSide(

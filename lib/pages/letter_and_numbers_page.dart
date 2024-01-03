@@ -8,7 +8,7 @@ class LetterAndNumbersPage extends StatelessWidget {
       body: SafeArea(
         child: MyStatelessWidget(
           onSelected: (selected) {
-            context.push('/letter-and-numbers/detail', extra: selected);
+            context.push('/letter-and-numbers/detail/${selected.letter}');
           },
         ),
       ),
@@ -40,9 +40,12 @@ class MyStatelessWidget extends HookWidget {
                 isSwitched.value = value;
               }),
           Expanded(
-            child: isSwitched.value
-                ? ListGrid(onTap: onSelected)
-                : ListRow(onTap: onSelected),
+            child: AnimatedSwitcher(
+              duration: Duration(milliseconds: 500),
+              child: isSwitched.value
+                  ? ListGrid(onTap: onSelected, key: UniqueKey())
+                  : ListRow(onTap: onSelected, key: UniqueKey()),
+            ),
           ),
         ],
       ),
@@ -96,20 +99,38 @@ class ListGrid extends StatelessWidget {
       crossAxisCount: 2,
       mainAxisSpacing: 5,
       crossAxisSpacing: 5,
-      itemCount: signUpperLetters.length,
+      itemCount: signLowerLetters.length,
       itemBuilder: (context, int index) {
         return InkWell(
           onTap: () {
             if (onTap != null) {
-              onTap!(signUpperLetters[index]);
+              onTap!(signLowerLetters[index]);
             }
           },
           child: Card(
-            child: Container(
-              padding: EdgeInsets.all(10),
-              width: 100,
-              height: 100,
-              child: Icon(signUpperLetters[index].iconSign),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  signLowerLetters[index].letter.toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 50,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.grey[700],
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                Container(
+                  padding: EdgeInsets.all(10),
+                  width: 100,
+                  height: 100,
+                  child: Icon(
+                    signLowerLetters[index].iconSign,
+                    size: 50,
+                  ),
+                ),
+              ],
             ),
           ),
         );

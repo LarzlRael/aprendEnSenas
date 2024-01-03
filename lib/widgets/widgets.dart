@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:animate_do/animate_do.dart';
 import 'package:asl/data/sign_list.dart';
 import 'package:asl/models/models.dart';
 import 'package:asl/utils/utils.dart';
