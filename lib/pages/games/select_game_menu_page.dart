@@ -7,7 +7,8 @@ class SelectGameMenuPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Selecciona un juego"),
+        leading: BackIcon(margin: const EdgeInsets.only(left: 10)),
+        title: Text("Selecciona un juego "),
       ),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),

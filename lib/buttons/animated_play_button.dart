@@ -34,24 +34,35 @@ class _AnimatedPlayButtonState extends State<AnimatedPlayButton>
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
-      shape: const CircleBorder(),
-      child: AnimatedIcon(
-        icon: AnimatedIcons.pause_play,
-        progress: animation,
-        size: 40.0,
-        semanticLabel: 'Show menu',
+    return InkWell(
+      onTap: () => widget.onTap(controller),
+      child: Container(
+        width: 50.0,
+        height: 50.0,
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.green,
+        ),
+        child: Center(
+          child: AnimatedIcon(
+            icon: AnimatedIcons.pause_play,
+            progress: animation,
+            size: 35.0,
+            color: Colors.white,
+            semanticLabel: 'Show menu',
+          ),
+        ),
+        /*  onPressed: () {
+          /* if (widget.isPlaying) {
+            controller.reverse();
+            /* widget.isPlaying = false; */
+          } else {
+            controller.forward();
+            /* widget.isPlaying = true; */
+          } */
+          widget.onTap(controller);
+        }, */
       ),
-      onPressed: () {
-        /* if (widget.isPlaying) {
-          controller.reverse();
-          /* widget.isPlaying = false; */
-        } else {
-          controller.forward();
-          /* widget.isPlaying = true; */
-        } */
-        widget.onTap(controller);
-      },
     );
   }
 }

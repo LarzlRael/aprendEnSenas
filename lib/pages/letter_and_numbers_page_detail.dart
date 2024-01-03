@@ -20,7 +20,7 @@ class LetterAndNumbersPageDetail extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SvgPicture.asset(
-                sing.pathImage, // Reemplaza con la ruta de tu archivo SVG
+                sing.icon, // Reemplaza con la ruta de tu archivo SVG
                 width: media.width * 0.30,
                 height: media.height * 0.30,
               ),

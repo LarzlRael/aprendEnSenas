@@ -1,11 +1,13 @@
+import 'package:asl/customs_icons/my_flutter_app_icons.dart';
 import 'package:asl/models/models.dart';
 import 'package:asl/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+const iconSize = 30.0;
 final items = <SelectGameCard>[
   SelectGameCard(
-    icon: Icons.ac_unit,
+    icon: MyFlutterApp.test_your_memory,
     title: GameType.prueba_tu_memoria.name,
     subtitle: "Adivina la palabra o número correcto",
     onSelected: (context) {
@@ -16,7 +18,7 @@ final items = <SelectGameCard>[
     },
   ),
   SelectGameCard(
-    icon: Icons.ac_unit,
+    icon: MyFlutterApp.guess_the_word,
     title: GameType.adivina_la_palabra.name,
     subtitle: "Prueba con conocimiento con las palabras",
     onSelected: (context) {
@@ -27,7 +29,7 @@ final items = <SelectGameCard>[
     },
   ),
   SelectGameCard(
-    icon: Icons.ac_unit,
+    icon: MyFlutterApp.flip_card,
     title: GameType.volteo_de_cartas.name,
     subtitle: "Voltea las cartas y encuentra la pareja",
     onSelected: (context) {
@@ -38,7 +40,7 @@ final items = <SelectGameCard>[
     },
   ),
   SelectGameCard(
-    icon: Icons.ac_unit,
+    icon: MyFlutterApp.word_in_sight,
     subtitle: "Desafiate a ti mismo y a tus amigos",
     title: GameType.palabra_a_la_vista.name,
     onSelected: (context) {

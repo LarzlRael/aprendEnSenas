@@ -77,7 +77,7 @@ class SelectDifficultyPage extends StatelessWidget {
                           children: listMessage
                               .map(
                                 (sign) => SvgPicture.asset(
-                                  sign.pathImage,
+                                  sign.icon,
                                   height: 30,
                                   width: 30,
                                   fit: BoxFit.contain,

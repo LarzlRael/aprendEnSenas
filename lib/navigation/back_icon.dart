@@ -30,7 +30,7 @@ class BackIcon extends StatelessWidget {
         ],
       ),
       child: IconButton(
-        onPressed: onPressed ?? () => context.pop(),
+        onPressed: onPressed ?? context.pop,
         icon: Icon(
           Icons.arrow_back_rounded,
           color: Colors.white,

@@ -18,7 +18,10 @@ class SendMessageWithSignPage extends HookWidget {
         actions: [
           IconButton(
             onPressed: () => context.push('/select_game_menu_page'),
-            icon: Icon(Icons.mic),
+            icon: Icon(
+              Icons.games,
+              color: Colors.green,
+            ),
           ),
           IconButton(
             onPressed: () => context.push('/settings_page'),
@@ -150,12 +153,11 @@ class SendMessageSlider extends HookConsumerWidget {
       /* return pageController.dispose; */
     }, [signProviderRef]);
 
-    startMessage() async {
+    startPageViewMessage() {
       ref
           .read(signProviderProvider.notifier)
           .setCurrentMessage(signProviderRef.currentMessage);
 
-      /* print("listOnlyLettersNumbers: ${listOnlyLettersNumbers.value}"); */
       pageController.jumpToPage(0);
 
       signProviderRef.timer = Timer.periodic(
@@ -231,7 +233,7 @@ class SendMessageSlider extends HookConsumerWidget {
                                     '/letter-and-numbers/detail',
                                     extra: sign),
                                 child: SvgPicture.asset(
-                                  sign.pathImage,
+                                  sign.icon,
                                   width: 200,
                                   height: 200,
                                 ),
@@ -252,8 +254,7 @@ class SendMessageSlider extends HookConsumerWidget {
                                   child: Card(
                                     child: SvgPicture.asset(
                                       signProviderRef
-                                          .listSigns[_currentIndex.value]
-                                          .pathImage,
+                                          .listSigns[_currentIndex.value].icon,
                                       key: ValueKey<int>(_currentIndex.value),
                                       /*   width: 200,
                                                     height: 200, */
@@ -313,17 +314,40 @@ class SendMessageSlider extends HookConsumerWidget {
                                   .setCurrentMessage(res);
                             },
                           )
-                        : AnimatedPlayButton(
-                            isPlaying: isPlaying.value,
-                            onTap: (controller) {
-                              if (isPlaying.value) {
-                                controller.reverse();
-                                isPlaying.value = false;
-                              } else {
-                                controller.forward();
-                                isPlaying.value = true;
-                              }
-                            },
+                        : InkWell(
+                            onTap: settings.typeDisplay ==
+                                    TypeDisplay.imageSwitcher
+                                ? () {
+                                    if (isPlaying.value) {
+                                      stopTimerAnimatedImages();
+                                    } else {
+                                      startTimerAnimatedImages();
+                                    }
+                                  }
+                                : () {
+                                    if (isPlaying.value) {
+                                      signProviderRef.timer?.cancel();
+                                      isPlaying.value = false;
+                                    } else {
+                                      startPageViewMessage();
+                                    }
+                                  },
+                            child: Container(
+                              width: 50.0,
+                              height: 50.0,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.green,
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  isPlaying.value ? Icons.pause : Icons.send,
+                                  size: 25.0,
+                                  color: Colors.white,
+                                  semanticLabel: 'Show menu',
+                                ),
+                              ),
+                            ),
                           ),
                   ),
                 ],
@@ -375,7 +399,7 @@ class SquareCard extends StatelessWidget {
       child: Column(
         children: [
           SvgPicture.asset(
-            sign.pathImage,
+            sign.icon,
             width: 70,
             height: 70,
           ),

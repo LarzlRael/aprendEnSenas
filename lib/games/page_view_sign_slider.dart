@@ -46,7 +46,7 @@ class PageViewSignSlider extends HookWidget {
               return Container(
                 child: Card(
                   child: SvgPicture.asset(
-                    singList[index].pathImage,
+                    singList[index].icon,
                   ),
                 ),
               );

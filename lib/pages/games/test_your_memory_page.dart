@@ -92,7 +92,7 @@ class TestYourMemoryPage extends HookWidget {
                             height: 100,
                             child: SvgPicture.asset(
                               letterWithSignArray
-                                  .pathImage, // Reemplaza con la ruta de tu archivo SVG
+                                  .icon, // Reemplaza con la ruta de tu archivo SVG
                             ),
                           ),
                         ),

@@ -52,7 +52,7 @@ class FlippingCardGame extends HookWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(border),
                 child: SvgPicture.asset(
-                  _data.value[index].pathImage,
+                  _data.value[index].icon,
                   fit: BoxFit.contain,
                   /* width: sizeWidth - 35,
                   height: sizeHeight - 35, */

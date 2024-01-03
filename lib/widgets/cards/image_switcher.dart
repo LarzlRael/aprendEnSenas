@@ -46,7 +46,7 @@ class ImageSwitcher extends HookWidget {
                         duration: const Duration(milliseconds: 500),
                         child: Card(
                           child: SvgPicture.asset(
-                            imagesPaths[_currentIndex.value].pathImage,
+                            imagesPaths[_currentIndex.value].icon,
                             key: ValueKey<int>(_currentIndex.value),
                             /*   width: 200,
                             height: 200, */

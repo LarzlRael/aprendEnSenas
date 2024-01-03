@@ -73,7 +73,7 @@ class ListRow extends StatelessWidget {
                 height: 150,
                 width: 150,
                 child: SvgPicture.asset(
-                  list.pathImage, // Reemplaza con la ruta de tu archivo SVG
+                  list.icon, // Reemplaza con la ruta de tu archivo SVG
                 ),
               ),
               title: Text(
@@ -112,7 +112,7 @@ class ListGrid extends StatelessWidget {
               height: 100,
               child: SvgPicture.asset(
                 letterWithSignArray[index]
-                    .pathImage, // Reemplaza con la ruta de tu archivo SVG
+                    .icon, // Reemplaza con la ruta de tu archivo SVG
               ),
             ),
           ),

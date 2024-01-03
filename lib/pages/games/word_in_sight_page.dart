@@ -80,7 +80,7 @@ class WordInSightPage extends HookWidget {
                     width: 75,
                     height: 75,
                     child: SvgPicture.asset(
-                      sign.pathImage,
+                      sign.icon,
                       width: 50,
                       height: 50,
                     ),

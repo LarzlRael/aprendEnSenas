@@ -58,16 +58,10 @@ class _SpeechButtonState extends State<SpeechButton> {
   bool _isPressed = false;
   @override
   Widget build(BuildContext context) {
-    return /* IconButton(
-      onPressed: () async {
-        await _speechToText.isNotListening
-            ? _startListening()
-            : _stopListening();
-      }, */
-        /* icon: Icon(
-        _speechToText.isNotListening ? Icons.mic_off : Icons.mic,
-      ), */
-        InkWell(
+    return InkWell(
+      customBorder: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(50),
+      ),
       onTapUp: (_) async {
         _isPressed = false;
         setState(() {});
@@ -83,9 +77,6 @@ class _SpeechButtonState extends State<SpeechButton> {
         _isPressed = false;
         setState(() {});
       },
-      customBorder: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(50),
-      ),
       child: AnimatedContainer(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),

@@ -36,15 +36,15 @@ class SelectGameCard extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                size: 75,
+                size: 50,
               ),
               SimpleText(
                 text: title.snakeCaseToWords().toCapitalize(),
                 fontSize: 15,
                 fontWeight: FontWeight.w500,
                 textAlign: TextAlign.center,
+                padding: EdgeInsets.symmetric(vertical: 10),
               ),
-              SizedBox(height: 5),
               SimpleText(
                 text: subtitle,
                 fontSize: 13,

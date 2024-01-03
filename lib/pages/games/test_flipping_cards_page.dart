@@ -179,7 +179,7 @@ class TestFlippingCardsPage extends HookWidget {
                           height: 100,
                           child: SvgPicture.asset(
                             state.value[index]
-                                .pathImage, // Reemplaza con la ruta de tu archivo SVG
+                                .icon, // Reemplaza con la ruta de tu archivo SVG
                           ),
                         ),
                       ),
