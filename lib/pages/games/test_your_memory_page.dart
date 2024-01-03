@@ -90,9 +90,9 @@ class TestYourMemoryPage extends HookWidget {
                             padding: EdgeInsets.all(10),
                             width: 100,
                             height: 100,
-                            child: SvgPicture.asset(
+                            child: Icon(
                               letterWithSignArray
-                                  .icon, // Reemplaza con la ruta de tu archivo SVG
+                                  .iconSign, // Reemplaza con la ruta de tu archivo SVG
                             ),
                           ),
                         ),

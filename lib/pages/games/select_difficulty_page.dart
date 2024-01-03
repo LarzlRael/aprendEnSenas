@@ -76,11 +76,9 @@ class SelectDifficultyPage extends StatelessWidget {
                         Wrap(
                           children: listMessage
                               .map(
-                                (sign) => SvgPicture.asset(
-                                  sign.icon,
-                                  height: 30,
-                                  width: 30,
-                                  fit: BoxFit.contain,
+                                (sign) => Icon(
+                                  sign.iconSign,
+                                  size: 25,
                                 ),
                               )
                               .toList(),

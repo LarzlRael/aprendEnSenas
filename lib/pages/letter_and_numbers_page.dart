@@ -69,16 +69,15 @@ class ListRow extends StatelessWidget {
                   onTap!(list);
                 }
               },
-              leading: Container(
-                height: 150,
-                width: 150,
-                child: SvgPicture.asset(
-                  list.icon, // Reemplaza con la ruta de tu archivo SVG
-                ),
+              leading: Icon(
+                list.iconSign,
+                size: 50,
+                color: Colors.black,
               ),
               title: Text(
                 list.letter,
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),
+                textAlign: TextAlign.center,
               ),
             ),
           ),
@@ -110,10 +109,7 @@ class ListGrid extends StatelessWidget {
               padding: EdgeInsets.all(10),
               width: 100,
               height: 100,
-              child: SvgPicture.asset(
-                letterWithSignArray[index]
-                    .icon, // Reemplaza con la ruta de tu archivo SVG
-              ),
+              child: Icon(letterWithSignArray[index].iconSign),
             ),
           ),
         );

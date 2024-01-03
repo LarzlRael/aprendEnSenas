@@ -20,7 +20,7 @@ extension SignTypeExtension on SignType {
 
 class Sign {
   String letter;
-  String pathImage;
+  IconData iconSign;
   SignType? type;
-  Sign(this.letter, this.pathImage, {this.type = SignType.letter});
+  Sign(this.letter, this.iconSign, {this.type = SignType.letter});
 }

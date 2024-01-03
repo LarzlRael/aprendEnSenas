@@ -19,10 +19,9 @@ class LetterAndNumbersPageDetail extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SvgPicture.asset(
-                sing.icon, // Reemplaza con la ruta de tu archivo SVG
-                width: media.width * 0.30,
-                height: media.height * 0.30,
+              Icon(
+                sing.iconSign,
+                size: 100,
               ),
               Text(sing.letter, style: style),
             ],

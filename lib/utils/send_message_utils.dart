@@ -13,7 +13,7 @@ List<Sign> generateListToMessageUtil(
     Sign correspondingSign = validLetters.contains(letter)
         ? listOnlySingAndNumbers
             .firstWhere((sign) => sign.letter.toLowerCase() == letter)
-        : Sign(letter, 'assets/signs/0_number.svg');
+        : Sign(letter, Icons.error, type: SignType.letter);
 
     return correspondingSign;
   }).toList();

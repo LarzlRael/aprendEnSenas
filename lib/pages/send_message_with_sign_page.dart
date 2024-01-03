@@ -232,10 +232,9 @@ class SendMessageSlider extends HookConsumerWidget {
                                 onTap: () => context.push(
                                     '/letter-and-numbers/detail',
                                     extra: sign),
-                                child: SvgPicture.asset(
-                                  sign.icon,
-                                  width: 200,
-                                  height: 200,
+                                child: Icon(
+                                  sign.iconSign,
+                                  size: 50,
                                 ),
                               );
                             },
@@ -252,9 +251,10 @@ class SendMessageSlider extends HookConsumerWidget {
                               child: AnimatedSwitcher(
                                   duration: const Duration(milliseconds: 500),
                                   child: Card(
-                                    child: SvgPicture.asset(
+                                    child: Icon(
                                       signProviderRef
-                                          .listSigns[_currentIndex.value].icon,
+                                          .listSigns[_currentIndex.value]
+                                          .iconSign,
                                       key: ValueKey<int>(_currentIndex.value),
                                       /*   width: 200,
                                                     height: 200, */
@@ -398,10 +398,9 @@ class SquareCard extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          SvgPicture.asset(
-            sign.icon,
-            width: 70,
-            height: 70,
+          Icon(
+            sign.iconSign,
+            size: 50,
           ),
           Text(sign.letter),
         ],

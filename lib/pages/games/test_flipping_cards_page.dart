@@ -177,9 +177,9 @@ class TestFlippingCardsPage extends HookWidget {
                           padding: EdgeInsets.all(10),
                           width: 100,
                           height: 100,
-                          child: SvgPicture.asset(
+                          child: Icon(
                             state.value[index]
-                                .icon, // Reemplaza con la ruta de tu archivo SVG
+                                .iconSign, // Reemplaza con la ruta de tu archivo SVG
                           ),
                         ),
                       ),

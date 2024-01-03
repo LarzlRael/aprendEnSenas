@@ -79,10 +79,9 @@ class WordInSightPage extends HookWidget {
                     padding: EdgeInsets.all(10),
                     width: 75,
                     height: 75,
-                    child: SvgPicture.asset(
-                      sign.icon,
-                      width: 50,
-                      height: 50,
+                    child: Icon(
+                      sign.iconSign,
+                      size: 30,
                     ),
                   ),
                 );
