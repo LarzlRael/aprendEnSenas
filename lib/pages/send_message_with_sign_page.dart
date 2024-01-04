@@ -98,9 +98,12 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
                 mainAxisSpacing: 5,
                 crossAxisSpacing: 5,
                 itemCount: listOnlyLettersNumbers.value.length,
-                itemBuilder: (context, int index) {
-                  return SquareCard(sign: listOnlyLettersNumbers.value[index]);
-                },
+                itemBuilder: (_, index) => SquareCard(
+                  sign: listOnlyLettersNumbers.value[index],
+                  onTap: (sign) => context.push(
+                    '/letter-and-numbers/detail/${sign.letter}',
+                  ),
+                ),
               ),
             ),
           ),
@@ -392,19 +395,29 @@ class CurrentSign extends StatelessWidget {
 
 class SquareCard extends StatelessWidget {
   final Sign sign;
-
-  const SquareCard({super.key, required this.sign});
+  final Function(Sign sign)? onTap;
+  const SquareCard({super.key, required this.sign, this.onTap});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Icon(
-            sign.iconSign,
-            size: 50,
-          ),
-          Text(sign.letter),
-        ],
+    return InkWell(
+      onTap: () {
+        if (onTap != null) {
+          onTap!(sign);
+        }
+      },
+      customBorder: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Container(
+        child: Column(
+          children: [
+            Icon(
+              sign.iconSign,
+              size: 50,
+            ),
+            Text(sign.letter),
+          ],
+        ),
       ),
     );
   }

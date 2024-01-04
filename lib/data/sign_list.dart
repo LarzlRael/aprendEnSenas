@@ -32,35 +32,6 @@ final signLowerLetters = <Sign>[
   Sign("z", MyFlutterApp.z_sign),
 ];
 
-final signUpperLetters = <Sign>[
-  Sign("A", MyFlutterApp.a_letter),
-  Sign("B", MyFlutterApp.b_letter),
-  Sign("C", MyFlutterApp.c_letter),
-  Sign("D", MyFlutterApp.d_letter),
-  Sign("E", MyFlutterApp.e_letter),
-  Sign("F", MyFlutterApp.f_letter),
-  Sign("G", MyFlutterApp.g_letter),
-  Sign("H", MyFlutterApp.h_letter),
-  Sign("I", MyFlutterApp.i_letter),
-  Sign("J", MyFlutterApp.j_letter),
-  Sign("K", MyFlutterApp.k_letter),
-  Sign("L", MyFlutterApp.l_letter),
-  Sign("M", MyFlutterApp.m_letter),
-  Sign("N", MyFlutterApp.n_letter),
-  Sign("Ñ", MyFlutterApp.nn_letter),
-  Sign("O", MyFlutterApp.o_letter),
-  Sign("P", MyFlutterApp.p_letter),
-  Sign("Q", MyFlutterApp.q_letter),
-  Sign("R", MyFlutterApp.r_letter),
-  Sign("S", MyFlutterApp.s_letter),
-  Sign("T", MyFlutterApp.t_letter),
-  Sign("U", MyFlutterApp.u_letter),
-  Sign("V", MyFlutterApp.v_letter),
-  Sign("W", MyFlutterApp.w_letter),
-  Sign("X", MyFlutterApp.x_letter),
-  Sign("Y", MyFlutterApp.y_letter),
-  Sign("Z", MyFlutterApp.z_letter),
-];
 final listOnlyNumers = <Sign>[
   Sign("0", MyFlutterApp.number_0, type: SignType.number),
   Sign("1", MyFlutterApp.number_0, type: SignType.number),
@@ -75,7 +46,6 @@ final listOnlyNumers = <Sign>[
   Sign("10", MyFlutterApp.number_10, type: SignType.number),
 ];
 final listOnlySingAndNumbers = <Sign>[
-  ...listOnlyNumers,
   Sign("a", MyFlutterApp.a_sign),
   Sign("b", MyFlutterApp.b_sign),
   Sign("c", MyFlutterApp.c_sign),
@@ -103,12 +73,12 @@ final listOnlySingAndNumbers = <Sign>[
   Sign("x", MyFlutterApp.x_sign),
   Sign("y", MyFlutterApp.y_sign),
   Sign("z", MyFlutterApp.z_sign),
+  ...listOnlyNumers,
 ];
 
 final listAllSign = <Sign>[
   ...listOnlyNumers,
   ...signLowerLetters,
-  ...signUpperLetters,
 ];
 
 Sign getIconSign(String letter) {

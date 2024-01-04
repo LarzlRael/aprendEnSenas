@@ -20,25 +20,43 @@ class LetterAndNumbersPageDetail extends HookWidget {
         /* color: Colors.amber, */
         /* width: media.width * 0.75,
         height: media.height * 0.65, */
-        child: Center(
-          child: Card(
-            child: Container(
-              width: media.width * 0.90,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Transform.translate(
-                    offset: Offset(0, -35),
-                    child: Text(sign.letter, style: style),
-                  ),
-                  Icon(
-                    sign.iconSign,
-                    size: 175,
-                  ),
-                ],
+        child: Stack(
+          children: [
+            Positioned(
+              right: 0,
+              top: 0,
+              child: Transform(
+                alignment: Alignment.center,
+                transform: Matrix4.rotationY(math.pi),
+                child: Icon(
+                  sign.iconSign,
+                  size: 225,
+                  color: Colors.grey.withOpacity(0.3),
+                ),
               ),
             ),
-          ),
+            Align(
+              alignment: Alignment.center,
+              child: Card(
+                child: Container(
+                  width: media.width * 0.90,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Transform.translate(
+                        offset: Offset(0, -35),
+                        child: Text(sign.letter, style: style),
+                      ),
+                      Icon(
+                        sign.iconSign,
+                        size: 175,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
