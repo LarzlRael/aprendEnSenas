@@ -39,3 +39,16 @@ final colorByDifficulty = {
   Difficulty.hard: Colors.orange,
   Difficulty.very_hard: Colors.red,
 };
+
+final iconByGameType = {
+  GameType.prueba_tu_memoria: Icons.memory,
+  GameType.adivina_la_palabra: Icons.text_fields,
+  GameType.volteo_de_cartas: Icons.flip_camera_android,
+  GameType.palabra_a_la_vista: Icons.visibility,
+};
+final iconByDifficulty = {
+  Difficulty.easy: CustomIcons.ic_easy,
+  Difficulty.medium: CustomIcons.ic_normal,
+  Difficulty.hard: CustomIcons.ic_hard,
+  Difficulty.very_hard: CustomIcons.ic_very_hard,
+};

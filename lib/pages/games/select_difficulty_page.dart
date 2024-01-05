@@ -30,137 +30,153 @@ class SelectDifficultyPage extends HookWidget {
         _movieCardPageController.removeListener(_movieCardPagePercentListener);
       };
     }, []);
-    return Scaffold(body: LayoutBuilder(
+    return Scaffold(
+      body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
-      final h = constraints.maxHeight;
-      final w = constraints.maxWidth;
-      return Stack(children: [
-        SafeArea(
-          child: Positioned(
-            left: 0,
-            top: 0,
-            child: BackIcon(
-              margin: EdgeInsets.all(10),
+          final h = constraints.maxHeight;
+          final w = constraints.maxWidth;
+          return Stack(children: [
+            SafeArea(
+              child: Positioned(
+                left: 0,
+                top: 0,
+                child: BackIcon(
+                  margin: EdgeInsets.all(10),
+                ),
+              ),
             ),
-          ),
-        ),
-        Positioned(
-          right: 10,
-          top: 10,
-          child: Icon(
-            iconGame,
-            size: 175,
-            color: Colors.grey.withOpacity(0.3),
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          width: double.infinity,
+            Positioned(
+              right: 10,
+              top: 10,
+              child: FadeIn(
+                duration: Duration(milliseconds: 1000),
+                child: Icon(
+                  iconGame,
+                  size: 175,
+                  color: Colors.grey.withOpacity(0.3),
+                ),
+              ),
+            ),
+            Container(
+              width: double.infinity,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SimpleText(
+                    text: gameTitle.snakeCaseToWords().toCapitalize(),
+                    fontSize: 25,
+                    fontWeight: FontWeight.w400,
+                    textAlign: TextAlign.center,
+                    lineHeight: 1,
+                  ),
+                  SimpleText(
+                    text: "Selecciona una dificultad",
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    textAlign: TextAlign.center,
+                    padding: EdgeInsets.symmetric(vertical: 15),
+                  ),
+                  SizedBox(
+                    height: h * 0.45,
+                    child: Swiper(
+                      loop: false,
+                      viewportFraction: 0.65,
+                      itemCount: Difficulty.values.length,
+                      itemBuilder: (context, index) {
+                        final difficulty = Difficulty.values[index];
+                        return CardDifficulty(
+                          difficulty: difficulty,
+                          onTap: (Difficulty selectedDiff) {
+                            context.push(
+                              '/games/$gameRouteDestinyPage',
+                              extra: selectedDiff,
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ]);
+        },
+      ),
+    );
+  }
+}
+
+class CardDifficulty extends StatelessWidget {
+  final Difficulty difficulty;
+  final Function(Difficulty selectedDiff) onTap;
+
+  const CardDifficulty({
+    super.key,
+    required this.difficulty,
+    required this.onTap,
+  });
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => onTap(difficulty),
+      child: Card(
+          color: colorByDifficulty[difficulty],
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SimpleText(
-                text: gameTitle.snakeCaseToWords().toCapitalize(),
+                text: difficulty.name.toUpperCase(),
                 fontSize: 25,
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
                 textAlign: TextAlign.center,
-                lineHeight: 1,
               ),
-              SimpleText(
-                text: "Selecciona una dificultad",
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                textAlign: TextAlign.center,
-                padding: EdgeInsets.symmetric(vertical: 15),
-              ),
-              SizedBox(
-                height: h * 0.6,
-                child: PageView.builder(
-                  controller: _movieCardPageController,
-                  clipBehavior: Clip.none,
-                  itemCount: Difficulty.values.length,
-                  onPageChanged: (page) {
-                    /* _movieDetailPageController.animateToPage(
-                    page,
-                    duration: const Duration(milliseconds: 1500),
-                    curve: const Interval(0.25, 1, curve: Curves.decelerate),
-                  ); */
-                  },
-                  itemBuilder: (_, index) {
-                    final movie = Difficulty.values[index];
-                    final progress = (_movieCardPage.value - index);
-                    final scale = ui.lerpDouble(1, .8, progress.abs())!;
-                    final isCurrentPage = index == _movieCardIndex.value;
-                    final isScrolling = _movieCardPageController
-                        .position.isScrollingNotifier.value;
-                    final isFirstPage = index == 0;
-
-                    return Transform.scale(
-                      alignment: Alignment.lerp(
-                        Alignment.topLeft,
-                        Alignment.center,
-                        -progress,
-                      ),
-                      scale: isScrolling && isFirstPage ? 1 - progress : scale,
-                      child: GestureDetector(
-                        onTap: () {
-                          /*  _showMovieDetails.value = !_showMovieDetails.value;
-                        const transitionDuration = Duration(milliseconds: 550);
-                        Navigator.of(context).push(
-                          PageRouteBuilder(
-                            transitionDuration: transitionDuration,
-                            reverseTransitionDuration: transitionDuration,
-                            pageBuilder: (_, animation, ___) {
-                              return FadeTransition(
-                                opacity: animation,
-                                child: MoviePage(movie: movie),
-                              );
-                            },
-                          ),
-                        );
-                        Future.delayed(transitionDuration, () {
-                          _showMovieDetails.value = !_showMovieDetails.value;
-                        }); */
-                        },
-                        child: Hero(
-                          tag: movie.name,
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.easeInOut,
-                            transform: Matrix4.identity()
-                              ..translate(
-                                isCurrentPage ? 0.0 : -20.0,
-                                isCurrentPage ? 0.0 : 60.0,
-                              ),
-                            decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(70),
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 25,
-                                  offset: const Offset(0, 25),
-                                  color: Colors.black.withOpacity(.2),
-                                ),
-                              ],
-                              /* image: DecorationImage(
-                                image: AssetImage(movie.name),
-                                fit: BoxFit.cover,
-                              ), */
-                            ),
-                            child: Center(child: Text(movie.name)),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 25),
+                child: Icon(
+                  iconByDifficulty[difficulty],
+                  size: 75,
+                  color: Colors.white,
                 ),
               ),
+              Wrap(
+                children: generateListToMessageUtil(listAllSign,
+                        difficulty.name.removeDiacriticsFromString())
+                    .map((e) => IconAndLetter(e: e))
+                    .toList(),
+              ),
             ],
-          ),
+          )),
+    );
+  }
+}
+
+class IconAndLetter extends StatelessWidget {
+  final Sign e;
+  const IconAndLetter({
+    super.key,
+    required this.e,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Icon(
+          e.iconSign,
+          size: 30,
+          color: Colors.white,
         ),
-      ]);
-    }));
+        SimpleText(
+          text: e.letter,
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
+          textAlign: TextAlign.center,
+          color: Colors.white,
+        ),
+      ],
+    );
   }
 }
