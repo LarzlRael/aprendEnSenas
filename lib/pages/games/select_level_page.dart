@@ -1,10 +1,10 @@
 part of '../pages.dart';
 
-class SelectDifficultyPage extends HookWidget {
+class SelectLevelPage extends HookWidget {
   final String gameTitle;
   final String? gameRouteDestinyPage;
   final IconData? iconGame;
-  const SelectDifficultyPage({
+  const SelectLevelPage({
     super.key,
     this.gameRouteDestinyPage,
     this.iconGame,
@@ -14,7 +14,7 @@ class SelectDifficultyPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final _movieCardPageController = usePageController(viewportFraction: .77);
-
+    final size = MediaQuery.of(context).size;
     final _movieCardPage = useState<double>(0.0);
     final _movieCardIndex = useState<int>(0);
 
@@ -31,79 +31,71 @@ class SelectDifficultyPage extends HookWidget {
       };
     }, []);
     return Scaffold(
-      body: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          final h = constraints.maxHeight;
-          final w = constraints.maxWidth;
-          return Stack(children: [
-            SafeArea(
-              child: Positioned(
-                left: 0,
-                top: 0,
-                child: BackIcon(
-                  margin: EdgeInsets.all(10),
-                ),
-              ),
-            ),
-            Positioned(
-              right: 10,
-              top: 10,
-              child: FadeIn(
-                duration: Duration(milliseconds: 1000),
-                child: Icon(
-                  iconGame,
-                  size: 175,
-                  color: Colors.grey.withOpacity(0.3),
-                ),
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SimpleText(
-                    text: gameTitle.snakeCaseToWords().toCapitalize(),
-                    fontSize: 25,
-                    fontWeight: FontWeight.w400,
-                    textAlign: TextAlign.center,
-                    lineHeight: 1,
-                  ),
-                  SimpleText(
-                    text: "Selecciona una dificultad",
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    textAlign: TextAlign.center,
-                    padding: EdgeInsets.symmetric(vertical: 15),
-                  ),
-                  SizedBox(
-                    height: h * 0.45,
-                    child: Swiper(
-                      loop: false,
-                      viewportFraction: 0.65,
-                      itemCount: Difficulty.values.length,
-                      itemBuilder: (context, index) {
-                        final difficulty = Difficulty.values[index];
-                        return CardDifficulty(
-                          difficulty: difficulty,
-                          onTap: (Difficulty selectedDiff) {
-                            context.push(
-                              '/games/$gameRouteDestinyPage',
-                              extra: selectedDiff,
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ]);
-        },
+        body: SizedBox.expand(
+            child: Stack(children: [
+      Positioned(
+        left: 0,
+        top: kToolbarHeight,
+        child: BackIcon(
+          margin: EdgeInsets.all(10),
+        ),
       ),
-    );
+      Positioned(
+        right: 10,
+        top: 10,
+        child: FadeIn(
+          duration: Duration(milliseconds: 1000),
+          child: Icon(
+            iconGame,
+            size: 175,
+            color: Colors.grey.withOpacity(0.3),
+          ),
+        ),
+      ),
+      Container(
+        width: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SimpleText(
+              text: gameTitle.snakeCaseToWords().toCapitalize(),
+              fontSize: 25,
+              fontWeight: FontWeight.w400,
+              textAlign: TextAlign.center,
+              lineHeight: 1,
+            ),
+            SimpleText(
+              text: "Selecciona una dificultad",
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+              textAlign: TextAlign.center,
+              padding: EdgeInsets.symmetric(vertical: 15),
+            ),
+            SizedBox(
+              height: size.height * 0.45,
+              child: Swiper(
+                loop: false,
+                viewportFraction: 0.65,
+                itemCount: Difficulty.values.length,
+                itemBuilder: (context, index) {
+                  final difficulty = Difficulty.values[index];
+                  return CardDifficulty(
+                    difficulty: difficulty,
+                    onTap: (Difficulty selectedDiff) {
+                      context.push(
+                        '/games/$gameRouteDestinyPage',
+                        extra: selectedDiff,
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    ])));
   }
 }
 

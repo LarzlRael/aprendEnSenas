@@ -31,6 +31,7 @@ enum GameType {
   adivina_la_palabra,
   volteo_de_cartas,
   palabra_a_la_vista,
+  arrastra_y_suelta,
 }
 
 final colorByDifficulty = {

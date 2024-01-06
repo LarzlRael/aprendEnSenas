@@ -47,9 +47,12 @@ class LetterAndNumbersPageDetail extends HookWidget {
                         offset: Offset(0, -35),
                         child: Text(sign.letter, style: style),
                       ),
-                      Icon(
-                        sign.iconSign,
-                        size: 175,
+                      Hero(
+                        tag: 'tag-${sign.letter}',
+                        child: Icon(
+                          sign.iconSign,
+                          size: 175,
+                        ),
                       ),
                     ],
                   ),

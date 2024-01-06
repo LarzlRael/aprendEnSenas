@@ -50,6 +50,17 @@ final items = <SelectGameCard>[
       );
     },
   ),
+  SelectGameCard(
+    icon: CustomIcons.ic_word_in_sight,
+    subtitle: "Arraga y suelta las letras para formar la palabra correcta",
+    title: GameType.arrastra_y_suelta.name,
+    onSelected: (context) {
+      context.push(
+        '/games/drag_and_drop_game',
+        extra: CustomIcons.ic_flip_card,
+      );
+    },
+  ),
 ];
 
 final commonWords = <String>[

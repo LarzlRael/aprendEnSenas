@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../pages/pages.dart';
 
 final appRouter = GoRouter(
-  initialLocation: '/letter-and-numbers',
+  initialLocation: '/send_message_with_sign_page',
   /* refreshListenable: goRouterNotifier, */
   routes: [
     ///* Primera pantalla
@@ -13,11 +13,11 @@ final appRouter = GoRouter(
       builder: (context, state) => HomePage(),
     ),
     GoRoute(
-      path: '/letter-and-numbers',
+      path: '/letter_and_numbers',
       builder: (context, state) => LetterAndNumbersPage(),
     ),
     GoRoute(
-      path: '/letter-and-numbers/detail/:letter',
+      path: '/letter_and_numbers/detail/:letter',
       builder: (context, state) {
         final letter = state.params['letter'];
         return LetterAndNumbersPageDetail(signChar: letter!);
@@ -36,7 +36,7 @@ final appRouter = GoRouter(
           final gameTitle = state.params['gameTitle'];
           final gameDestinty = state.params['gameDestinty'];
           final iconGame = state.extra as IconData;
-          return SelectDifficultyPage(
+          return SelectLevelPage(
             gameTitle: gameTitle!,
             gameRouteDestinyPage: gameDestinty,
             iconGame: iconGame,
@@ -75,6 +75,12 @@ final appRouter = GoRouter(
             return FlippingCardGame(
               difficulty: difficulty,
             );
+          },
+        ),
+        GoRoute(
+          path: 'drag_and_drop_game',
+          builder: (_, state) {
+            return MatchImageGame();
           },
         ),
       ],

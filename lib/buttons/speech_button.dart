@@ -1,5 +1,7 @@
 part of '../widgets/widgets.dart';
 
+const sizeWhileIsListening = 75.0;
+
 class SpeechButton extends StatefulWidget {
   final void Function(String result) onSpeechResult;
   const SpeechButton({super.key, required this.onSpeechResult});
@@ -83,8 +85,10 @@ class _SpeechButtonState extends State<SpeechButton> {
           color: Colors.green,
         ),
         duration: Duration(milliseconds: 200),
-        width: _isPressed ? 75.0 : 50.0, // Change these values as needed
-        height: _isPressed ? 75.0 : 50.0,
+        width: _isPressed
+            ? sizeWhileIsListening
+            : 50.0, // Change these values as needed
+        height: _isPressed ? sizeWhileIsListening : 50.0,
         child: Flash(
           animate: _isPressed,
           infinite: _isPressed,

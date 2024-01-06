@@ -4,6 +4,7 @@ import 'package:asl/data/sign_list.dart';
 import 'package:asl/models/models.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:diacritic/diacritic.dart';
 
@@ -13,3 +14,4 @@ part 'send_message_utils.dart';
 part 'gammes_classes.dart';
 part 'flipping_cards_utils.dart';
 part 'shared_preferences_utils.dart';
+part 'drag_and_drop_game_utils.dart';

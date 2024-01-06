@@ -8,7 +8,7 @@ class LetterAndNumbersPage extends StatelessWidget {
       body: SafeArea(
         child: MyStatelessWidget(
           onSelected: (selected) {
-            context.push('/letter-and-numbers/detail/${selected.letter}');
+            context.push('/letter_and_numbers/detail/${selected.letter}');
           },
         ),
       ),

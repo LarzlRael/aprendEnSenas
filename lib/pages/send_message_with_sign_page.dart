@@ -101,7 +101,7 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
                 itemBuilder: (_, index) => SquareCard(
                   sign: listOnlyLettersNumbers.value[index],
                   onTap: (sign) => context.push(
-                    '/letter-and-numbers/detail/${sign.letter}',
+                    '/letter_and_numbers/detail/${sign.letter}',
                   ),
                 ),
               ),
@@ -233,7 +233,7 @@ class SendMessageSlider extends HookConsumerWidget {
                               final sign = signProviderRef.listSigns[index];
                               return InkWell(
                                 onTap: () => context.push(
-                                    '/letter-and-numbers/detail/${sign.letter}'),
+                                    '/letter_and_numbers/detail/${sign.letter}'),
                                 child: Card(
                                   child: Icon(
                                     sign.iconSign,
@@ -304,6 +304,7 @@ class SendMessageSlider extends HookConsumerWidget {
                       ),
                     ),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(child: TextFieldSendMessage()),
                   const SizedBox(width: 2),
@@ -438,6 +439,8 @@ class TextFieldSendMessage extends HookConsumerWidget {
         maxLines: 2,
         controller: controller,
         decoration: InputDecoration(
+          /* isDense: true, // Added this
+          contentPadding: EdgeInsets.all(8), */
           suffix: AnimatedOpacity(
             duration: const Duration(milliseconds: 500),
             opacity:
