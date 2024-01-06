@@ -26,12 +26,12 @@ class WordInSightGame {
   );
 }
 
-class TestYourMemoryGameDifficulty {
+class TestYourMemoryGameLevel {
   final int lifes;
   final int numberOptions;
   final int rows;
 
-  TestYourMemoryGameDifficulty(this.lifes, this.numberOptions, this.rows);
+  TestYourMemoryGameLevel(this.lifes, this.numberOptions, this.rows);
 }
 
 class FlipCardGame {

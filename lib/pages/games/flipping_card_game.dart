@@ -16,9 +16,9 @@ final style = TextStyle(
 );
 
 class FlippingCardGame extends HookWidget {
-  final Difficulty difficulty;
+  final Level level;
 
-  FlippingCardGame({required this.difficulty});
+  FlippingCardGame({required this.level});
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +89,7 @@ class FlippingCardGame extends HookWidget {
     }
 
     void initializeGameData() {
-      diff.value = getFlipCardGameDifficulty(difficulty);
+      diff.value = getFlipCardGameLevel(level);
       _data.value = createShuffledListFromImageSource(diff.value!.options);
       _cardFlips.value = getInitialItemStateList((diff.value!.options * 2));
       _cardStateKeys.value =
@@ -113,7 +113,7 @@ class FlippingCardGame extends HookWidget {
     return _isFinished.value
         ? GameOverScreen(
             duration: gameDuration.value,
-            difficulty: difficulty,
+            level: level,
           )
         : Scaffold(
             appBar: AppBar(

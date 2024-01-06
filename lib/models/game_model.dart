@@ -1,17 +1,17 @@
 part of 'models.dart';
 
-enum Difficulty { easy, medium, hard, very_hard }
+enum Level { easy, medium, hard, very_hard }
 
-extension DifficultyExtension on Difficulty {
+extension LevelExtension on Level {
   String get name {
     switch (this) {
-      case Difficulty.easy:
+      case Level.easy:
         return 'Fácil';
-      case Difficulty.medium:
+      case Level.medium:
         return 'Medio';
-      case Difficulty.hard:
+      case Level.hard:
         return 'Difícil';
-      case Difficulty.very_hard:
+      case Level.very_hard:
         return 'Muy difícil';
       default:
         return '';
@@ -19,9 +19,9 @@ extension DifficultyExtension on Difficulty {
   }
 }
 
-Difficulty getNextDifficulty(Difficulty currentDifficulty) {
-  final values = Difficulty.values;
-  final currentIndex = values.indexOf(currentDifficulty);
+Level getNextLevel(Level currenLevel) {
+  final values = Level.values;
+  final currentIndex = values.indexOf(currenLevel);
 
   return values[(currentIndex + 1) % values.length];
 }
@@ -34,11 +34,11 @@ enum GameType {
   arrastra_y_suelta,
 }
 
-final colorByDifficulty = {
-  Difficulty.easy: Colors.green,
-  Difficulty.medium: Colors.yellow,
-  Difficulty.hard: Colors.orange,
-  Difficulty.very_hard: Colors.red,
+final colorByLevel = {
+  Level.easy: Colors.green,
+  Level.medium: Colors.yellow,
+  Level.hard: Colors.orange,
+  Level.very_hard: Colors.red,
 };
 
 final iconByGameType = {
@@ -47,9 +47,9 @@ final iconByGameType = {
   GameType.volteo_de_cartas: Icons.flip_camera_android,
   GameType.palabra_a_la_vista: Icons.visibility,
 };
-final iconByDifficulty = {
-  Difficulty.easy: CustomIcons.ic_easy,
-  Difficulty.medium: CustomIcons.ic_normal,
-  Difficulty.hard: CustomIcons.ic_hard,
-  Difficulty.very_hard: CustomIcons.ic_very_hard,
+final iconByLevel = {
+  Level.easy: CustomIcons.ic_easy,
+  Level.medium: CustomIcons.ic_normal,
+  Level.hard: CustomIcons.ic_hard,
+  Level.very_hard: CustomIcons.ic_very_hard,
 };

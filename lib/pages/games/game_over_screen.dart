@@ -2,10 +2,10 @@ part of '../pages.dart';
 
 class GameOverScreen extends HookWidget {
   final int duration;
-  final Difficulty difficulty;
+  final Level level;
   const GameOverScreen({
     super.key,
-    required this.difficulty,
+    required this.level,
     required this.duration,
   });
 
@@ -67,7 +67,7 @@ class GameOverScreen extends HookWidget {
                   onPressed: () {
                     context.push(
                       '/games/flipping_cards_page',
-                      extra: getNextDifficulty(difficulty),
+                      extra: getNextLevel(level),
                     );
                   },
                   child: const Text("Ve al siguiente nivel"),

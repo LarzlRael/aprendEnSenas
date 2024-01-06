@@ -1,20 +1,21 @@
 part of '../pages.dart';
 
-class TestYourMemoryPage extends HookWidget {
+class TestYourMemoryPage extends HookConsumerWidget {
   const TestYourMemoryPage({
     super.key,
-    required this.difficulty,
+    required this.level,
   });
-  final Difficulty difficulty;
+  final Level level;
 
   @override
-  Widget build(BuildContext context) {
-    final generate = getTestYourMemoryGameDifficulty(difficulty);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final generate = getTestYourMemoryGameLevel(level);
     final createTestYourGameState = useState<TestYourGame>(
       createTestYourGame(listOnlySingAndNumbers, generate.numberOptions),
     );
     final lifes = useState<int>(generate.lifes);
     final correctAnswer = createTestYourGameState.value.correctAnswer;
+    final settings = ref.watch(settingsProviderProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -29,7 +30,7 @@ class TestYourMemoryPage extends HookWidget {
                 fontWeight: FontWeight.w500,
               ),
               SimpleText(
-                text: 'Dificultad: ${difficulty.name}',
+                text: 'Nivel: ${level.name}',
                 fontSize: 15,
                 fontWeight: FontWeight.w400,
               ),
@@ -79,43 +80,50 @@ class TestYourMemoryPage extends HookWidget {
               textAlign: TextAlign.center,
             ),
             Expanded(
-              child: AlignedGridView.count(
-                crossAxisCount: generate.rows,
-                mainAxisSpacing: 5,
-                crossAxisSpacing: 5,
-                itemCount: createTestYourGameState.value.options.length,
-                itemBuilder: (context, int index) {
-                  final letterWithSignArray =
-                      createTestYourGameState.value.options[index];
-                  return InkWell(
-                    customBorder: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    onTap: () {
-                      if (letterWithSignArray.letter ==
-                          createTestYourGameState.value.correctAnswer.letter) {
-                        createTestYourGameState.value =
-                            createTestYourGame(listOnlySingAndNumbers, 3);
-                      } else {
-                        lifes.value--;
-                        if (lifes.value == 0) {
-                          context.pop();
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 15),
+                child: AlignedGridView.count(
+                  crossAxisCount: generate.rows,
+                  mainAxisSpacing: 5,
+                  crossAxisSpacing: 5,
+                  itemCount: createTestYourGameState.value.options.length,
+                  itemBuilder: (context, int index) {
+                    final letterWithSignArray =
+                        createTestYourGameState.value.options[index];
+                    return InkWell(
+                      customBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      onTap: () {
+                        if (letterWithSignArray.letter ==
+                            createTestYourGameState
+                                .value.correctAnswer.letter) {
+                          createTestYourGameState.value =
+                              createTestYourGame(listOnlySingAndNumbers, 3);
+                        } else {
+                          if (settings.isVibrationActive) {
+                            VibrateServiceImp().vibrate(millisec: 250);
+                          }
+                          lifes.value--;
+                          if (lifes.value == 0) {
+                            context.pop();
+                          }
                         }
-                      }
-                    },
-                    child: Card(
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        width: 100,
-                        height: 100,
-                        child: Icon(
-                          letterWithSignArray.iconSign,
-                          size: 55,
+                      },
+                      child: Card(
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          width: 100,
+                          height: 100,
+                          child: Icon(
+                            letterWithSignArray.iconSign,
+                            size: 55,
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             )
           ],

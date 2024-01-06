@@ -12,7 +12,7 @@ final items = <SelectGameCard>[
     subtitle: "Adivina la palabra o número correcto",
     onSelected: (context) {
       context.push(
-        '/select_difficulty_page/${GameType.prueba_tu_memoria.name}/test_your_memory_page',
+        '/select_level_page/${GameType.prueba_tu_memoria.name}/test_your_memory_page',
         extra: CustomIcons.ic_test_your_memory,
       );
     },
@@ -34,7 +34,7 @@ final items = <SelectGameCard>[
     subtitle: "Voltea las cartas y encuentra la pareja",
     onSelected: (context) {
       context.push(
-        '/select_difficulty_page/${GameType.volteo_de_cartas.name}/flipping_cards_page',
+        '/select_level_page/${GameType.volteo_de_cartas.name}/flipping_cards_page',
         extra: CustomIcons.ic_flip_card,
       );
     },

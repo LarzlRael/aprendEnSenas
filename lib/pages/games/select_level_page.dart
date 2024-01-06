@@ -66,7 +66,7 @@ class SelectLevelPage extends HookWidget {
               lineHeight: 1,
             ),
             SimpleText(
-              text: "Selecciona una dificultad",
+              text: "Selecciona el nivel de dificultad",
               fontSize: 16,
               fontWeight: FontWeight.w400,
               textAlign: TextAlign.center,
@@ -77,15 +77,15 @@ class SelectLevelPage extends HookWidget {
               child: Swiper(
                 loop: false,
                 viewportFraction: 0.65,
-                itemCount: Difficulty.values.length,
+                itemCount: Level.values.length,
                 itemBuilder: (context, index) {
-                  final difficulty = Difficulty.values[index];
-                  return CardDifficulty(
-                    difficulty: difficulty,
-                    onTap: (Difficulty selectedDiff) {
+                  final level = Level.values[index];
+                  return CardLevel(
+                    level: level,
+                    onTap: (Level level) {
                       context.push(
                         '/games/$gameRouteDestinyPage',
-                        extra: selectedDiff,
+                        extra: level,
                       );
                     },
                   );
@@ -99,27 +99,27 @@ class SelectLevelPage extends HookWidget {
   }
 }
 
-class CardDifficulty extends StatelessWidget {
-  final Difficulty difficulty;
-  final Function(Difficulty selectedDiff) onTap;
+class CardLevel extends StatelessWidget {
+  final Level level;
+  final Function(Level selectedLevel) onTap;
 
-  const CardDifficulty({
+  const CardLevel({
     super.key,
-    required this.difficulty,
+    required this.level,
     required this.onTap,
   });
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => onTap(difficulty),
+      onTap: () => onTap(level),
       child: Card(
-          color: colorByDifficulty[difficulty],
+          color: colorByLevel[level],
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SimpleText(
-                text: difficulty.name.toUpperCase(),
+                text: level.name.toUpperCase(),
                 fontSize: 25,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -128,14 +128,14 @@ class CardDifficulty extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 25),
                 child: Icon(
-                  iconByDifficulty[difficulty],
+                  iconByLevel[level],
                   size: 75,
                   color: Colors.white,
                 ),
               ),
               Wrap(
-                children: generateListToMessageUtil(listAllSign,
-                        difficulty.name.removeDiacriticsFromString())
+                children: generateListToMessageUtil(
+                        listAllSign, level.name.removeDiacriticsFromString())
                     .map((e) => IconAndLetter(e: e))
                     .toList(),
               ),

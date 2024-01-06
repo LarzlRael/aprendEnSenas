@@ -31,7 +31,7 @@ final appRouter = GoRouter(
         path: '/select_game_menu_page',
         builder: (_, __) => SelectGameMenuPage()),
     GoRoute(
-        path: '/select_difficulty_page/:gameTitle/:gameDestinty',
+        path: '/select_level_page/:gameTitle/:gameDestinty',
         builder: (_, state) {
           final gameTitle = state.params['gameTitle'];
           final gameDestinty = state.params['gameDestinty'];
@@ -54,9 +54,9 @@ final appRouter = GoRouter(
         GoRoute(
           path: 'test_your_memory_page',
           builder: (_, state) {
-            final difficulty = state.extra as Difficulty;
+            final level = state.extra as Level;
             return TestYourMemoryPage(
-              difficulty: difficulty,
+              level: level,
             );
           },
         ),
@@ -71,9 +71,9 @@ final appRouter = GoRouter(
         GoRoute(
           path: 'flipping_cards_page',
           builder: (_, state) {
-            final difficulty = state.extra as Difficulty;
+            final level = state.extra as Level;
             return FlippingCardGame(
-              difficulty: difficulty,
+              level: level,
             );
           },
         ),

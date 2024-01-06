@@ -56,19 +56,18 @@ hard 3 lifes and 9 options
 very hard 2 lifes and 12 options 3 rows
  */
 
-TestYourMemoryGameDifficulty getTestYourMemoryGameDifficulty(
-    Difficulty gameDifficulty) {
-  switch (gameDifficulty) {
-    case Difficulty.easy:
-      return TestYourMemoryGameDifficulty(7, 4, 2);
-    case Difficulty.medium:
-      return TestYourMemoryGameDifficulty(5, 6, 2);
-    case Difficulty.hard:
-      return TestYourMemoryGameDifficulty(3, 9, 3);
-    case Difficulty.very_hard:
-      return TestYourMemoryGameDifficulty(2, 12, 3);
+TestYourMemoryGameLevel getTestYourMemoryGameLevel(Level gameLevel) {
+  switch (gameLevel) {
+    case Level.easy:
+      return TestYourMemoryGameLevel(7, 4, 2);
+    case Level.medium:
+      return TestYourMemoryGameLevel(5, 6, 2);
+    case Level.hard:
+      return TestYourMemoryGameLevel(3, 9, 3);
+    case Level.very_hard:
+      return TestYourMemoryGameLevel(2, 12, 3);
     default:
-      return TestYourMemoryGameDifficulty(7, 4, 2);
+      return TestYourMemoryGameLevel(7, 4, 2);
   }
 }
 
@@ -80,15 +79,15 @@ time 60 seconds 5x5 rows
  
 */
 
-FlipCardGame getFlipCardGameDifficulty(Difficulty gameDifficulty) {
-  switch (gameDifficulty) {
-    case Difficulty.easy:
+FlipCardGame getFlipCardGameLevel(Level gameLevel) {
+  switch (gameLevel) {
+    case Level.easy:
       return FlipCardGame(3, 3, Duration(seconds: 90));
-    case Difficulty.medium:
+    case Level.medium:
       return FlipCardGame(6, 4, Duration(seconds: 60));
-    case Difficulty.hard:
+    case Level.hard:
       return FlipCardGame(8, 4, Duration(seconds: 45));
-    case Difficulty.very_hard:
+    case Level.very_hard:
       return FlipCardGame(25, 5, Duration(seconds: 60));
     default:
       return FlipCardGame(6, 2, Duration(seconds: 90));
