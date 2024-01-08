@@ -29,6 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   animate_do: ^3.0.2
+  animated_text_kit: ^4.2.2
   confetti: ^0.7.0
   cupertino_icons: ^1.0.2
   diacritic: ^0.1.5

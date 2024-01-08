@@ -1,21 +1,24 @@
 part of '../pages.dart';
 
-class WordInSightPage extends HookWidget {
+const borderRadious = 10.0;
+
+class WordInSightPage extends HookConsumerWidget {
   const WordInSightPage({super.key});
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     final state =
         useState<WordInSightGame>(createWordInSightGame(commonWords, 4));
     final isCorrect = useState(false);
+    final settings = ref.watch(settingsProviderProvider);
 
-    final indexState = useState(-1);
+    final selectedCardIndex = useState(-1);
 
     final lifesCounter = useState(5);
     final status = useState<double>(0.0);
     useEffect(() {
       if (isCorrect.value) {
         state.value = createWordInSightGame(commonWords, 4);
-        indexState.value = -1;
+        selectedCardIndex.value = -1;
       }
       isCorrect.value = false;
     }, [isCorrect.value]);
@@ -95,20 +98,27 @@ class WordInSightPage extends HookWidget {
                 itemCount: state.value.options.length,
                 itemBuilder: (context, int index) {
                   return InkWell(
+                    customBorder: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(borderRadious),
+                    ),
                     onTap: () {
-                      indexState.value = index;
+                      selectedCardIndex.value = index;
                     },
                     child: Card(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        side: BorderSide(
-                          width: 5,
-                          color: indexState.value == index
-                              ? Colors.green
-                              : Colors.transparent,
-                        ),
+                        borderRadius: BorderRadius.circular(borderRadious),
                       ),
-                      child: Container(
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(borderRadious),
+                          border: Border.all(
+                            color: selectedCardIndex.value == index
+                                ? Colors.green
+                                : Colors.transparent,
+                            width: 4,
+                          ),
+                        ),
                         padding: EdgeInsets.all(10),
                         width: 100,
                         height: 100,
@@ -129,11 +139,15 @@ class WordInSightPage extends HookWidget {
               height: 50,
               child: FilledButton(
                 child: Text('Verificar'),
-                onPressed: indexState.value == -1
+                onPressed: selectedCardIndex.value == -1
                     ? null
                     : () {
+                        if (settings.isVibrationActive) {
+                          VibrateServiceImp().vibrate(millisec: 250);
+                        }
+
                         final value = state.value;
-                        if (value.options[indexState.value] ==
+                        if (value.options[selectedCardIndex.value] ==
                             value.correctAnswerString) {
                           isCorrect.value = true;
                           status.value = status.value + 0.1;
@@ -155,28 +169,58 @@ class WordInSightPage extends HookWidget {
   }
 }
 
-class LifesAndCounter extends StatelessWidget {
+const millisecondsAnimation = 250;
+
+class LifesAndCounter extends HookWidget {
   final int lifes;
 
   const LifesAndCounter({super.key, required this.lifes});
   @override
   Widget build(BuildContext context) {
+    final key = useState<ValueKey<String>>(ValueKey<String>(lifes.toString()));
+    useEffect(() {
+      key.value = ValueKey<String>(lifes.toString());
+      return null;
+    }, [lifes]);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Icon(
-          Icons.favorite,
-          color: Colors.red,
-          size: 25,
+        ScaleAnimation(
+          duration: const Duration(milliseconds: millisecondsAnimation),
+          key: key.value,
+          children: Icon(
+            Icons.favorite,
+            color: Colors.red,
+            size: 25,
+          ),
         ),
-        SimpleText(
+        /* SimpleText(
           text: lifes.toString(),
           color: Colors.red,
           fontSize: 18,
           fontWeight: FontWeight.w500,
           padding: EdgeInsets.symmetric(horizontal: 5),
-        ),
+        ), */
+        AnimatedSwitcher(
+          duration: Duration(milliseconds: millisecondsAnimation),
+          transitionBuilder: (Widget child, Animation<double> animation) {
+            return SlideTransition(
+              child: child,
+              position:
+                  Tween<Offset>(begin: Offset(0.0, -0.5), end: Offset(0.0, 0.0))
+                      .animate(animation),
+            );
+          },
+          child: SimpleText(
+            text: lifes.toString(),
+            key: key.value,
+            color: Colors.red,
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+            padding: EdgeInsets.symmetric(horizontal: 5),
+          ),
+        )
       ],
     );
   }
