@@ -21,12 +21,12 @@ WordInSightGame createWordInSightGame(List<String> options, int amountOptions) {
     ..add(correctAnswer);
   final correct = Random().nextInt(amountOptions);
   return WordInSightGame(
-    selectedOptions,
-    generateListToMessageUtil(
+    options: selectedOptions,
+    correctAnswerList: generateListToMessageUtil(
       listOnlySingAndNumbers,
       selectedOptions[correct],
     ),
-    selectedOptions[correct],
+    correctAnswerString: selectedOptions[correct].removeDiacriticsFromString(),
   );
 }
 

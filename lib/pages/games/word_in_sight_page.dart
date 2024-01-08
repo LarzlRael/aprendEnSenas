@@ -9,7 +9,7 @@ class WordInSightPage extends HookConsumerWidget {
     final state =
         useState<WordInSightGame>(createWordInSightGame(commonWords, 4));
     final isCorrect = useState(false);
-    final settings = ref.watch(settingsProviderProvider);
+    final settings = ref.watch(settingsProvider);
 
     final selectedCardIndex = useState(-1);
 
@@ -152,6 +152,7 @@ class WordInSightPage extends HookConsumerWidget {
                           isCorrect.value = true;
                           status.value = status.value + 0.1;
                         } else {
+                          selectedCardIndex.value = -1;
                           lifesCounter.value--;
                           if (lifesCounter.value == 0) {
                             context.pop();

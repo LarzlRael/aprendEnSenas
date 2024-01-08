@@ -15,8 +15,8 @@ class TestYourMemoryPage extends HookConsumerWidget {
     );
     final lifes = useState<int>(generate.lifes);
     final correctAnswer = createTestYourGameState.value.correctAnswer;
-    final settings = ref.watch(settingsProviderProvider);
-    final reff = ref.read(settingsProviderProvider.notifier);
+    final settings = ref.watch(settingsProvider);
+    final reff = ref.read(settingsProvider.notifier);
     final isCorrect = useState<bool>(false);
 
     useEffect(() {

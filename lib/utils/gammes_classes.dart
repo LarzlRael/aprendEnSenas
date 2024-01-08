@@ -19,11 +19,11 @@ class WordInSightGame {
   final List<Sign> correctAnswerList;
   final String correctAnswerString;
 
-  WordInSightGame(
-    this.options,
-    this.correctAnswerList,
-    this.correctAnswerString,
-  );
+  WordInSightGame({
+    required this.options,
+    required this.correctAnswerList,
+    required this.correctAnswerString,
+  });
 }
 
 class TestYourMemoryGameLevel {

@@ -14,7 +14,7 @@ class GameOverScreen extends HookConsumerWidget {
     final _confettiController = useState<ConfettiController>(
         ConfettiController(duration: const Duration(seconds: 12)));
     ref
-        .watch(settingsProviderProvider.notifier)
+        .watch(settingsProvider.notifier)
         .playSound("assets/sounds/win_sound.wav");
     useEffect(() {
       _confettiController.value.play();

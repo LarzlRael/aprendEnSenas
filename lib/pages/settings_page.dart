@@ -4,8 +4,8 @@ class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
   @override
   Widget build(BuildContext context, ref) {
-    final settings = ref.watch(settingsProviderProvider);
-    final reff = ref.read(settingsProviderProvider.notifier);
+    final settings = ref.watch(settingsProvider);
+    final reff = ref.read(settingsProvider.notifier);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

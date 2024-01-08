@@ -134,7 +134,7 @@ class SendMessageSlider extends HookConsumerWidget {
   const SendMessageSlider({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final settings = ref.watch(settingsProviderProvider);
+    final settings = ref.watch(settingsProvider);
     final signProviderRef = ref.watch(signProviderProvider);
     final isPlaying = useState(false);
 
@@ -214,7 +214,7 @@ class SendMessageSlider extends HookConsumerWidget {
         child: Container(
           /* width: double.infinity,
           height: double.infinity, */
-          color: Colors.grey[200],
+          /* color: Colors.grey[200], */
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
