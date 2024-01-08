@@ -20,13 +20,16 @@ WordInSightGame createWordInSightGame(List<String> options, int amountOptions) {
   final selectedOptions = randomOptions.take(amountOptions).toList()
     ..add(correctAnswer);
   final correct = Random().nextInt(amountOptions);
+  final correctAnswerString =
+      selectedOptions[correct].removeDiacriticsFromString();
   return WordInSightGame(
-    options: selectedOptions,
+    options:
+        selectedOptions.map((e) => e.removeDiacriticsFromString()).toList(),
     correctAnswerList: generateListToMessageUtil(
       listOnlySingAndNumbers,
-      selectedOptions[correct],
+      correctAnswerString,
     ),
-    correctAnswerString: selectedOptions[correct].removeDiacriticsFromString(),
+    correctAnswerString: correctAnswerString,
   );
 }
 

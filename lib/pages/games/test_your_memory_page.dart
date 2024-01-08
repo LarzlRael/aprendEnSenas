@@ -13,7 +13,10 @@ class TestYourMemoryPage extends HookConsumerWidget {
     final createTestYourGameState = useState<TestYourGame>(
       createTestYourGame(listOnlySingAndNumbers, generate.numberOptions),
     );
-    final lifes = useState<int>(generate.lifes);
+
+    final totalLifes = generate.lifes;
+    final lifesRemaing = useState<int>(generate.lifes);
+
     final correctAnswer = createTestYourGameState.value.correctAnswer;
     final settings = ref.watch(settingsProvider);
     final reff = ref.read(settingsProvider.notifier);
@@ -74,7 +77,8 @@ class TestYourMemoryPage extends HookConsumerWidget {
               ],
             ), */
             LifesCounter(
-              lifes: lifes.value,
+              totalLifes: totalLifes,
+              lifesRemaining: lifesRemaing.value,
               margin: EdgeInsets.symmetric(vertical: 20),
             ),
             SimpleText(
@@ -116,8 +120,8 @@ class TestYourMemoryPage extends HookConsumerWidget {
                           isCorrect.value = false;
                           reff.playSoundAndVibration(
                               'assets/sounds/wrong_sound_1.mp3');
-                          lifes.value--;
-                          if (lifes.value == 0) {
+                          lifesRemaing.value--;
+                          if (lifesRemaing.value == 0) {
                             context.pop();
                           }
                         }
@@ -146,29 +150,34 @@ class TestYourMemoryPage extends HookConsumerWidget {
 }
 
 class LifesCounter extends StatelessWidget {
-  final int lifes;
+  final int totalLifes;
+  final int lifesRemaining;
+
   final EdgeInsets? margin;
   const LifesCounter({
     super.key,
-    required this.lifes,
+    required this.totalLifes,
+    required this.lifesRemaining,
     this.margin = const EdgeInsets.symmetric(vertical: 10),
   });
+
   @override
   Widget build(BuildContext context) {
-    final totalLifes = lifes;
     final size = 30.0;
+    final filledHeartCount = totalLifes - lifesRemaining;
+
     return Container(
       margin: margin,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          for (int i = 0; i < lifes; i++)
+          for (int i = totalLifes - 1; i >= filledHeartCount; i--)
             Icon(
               Icons.favorite,
               color: Colors.red,
               size: size,
             ),
-          for (int i = lifes; i < 5; i++)
+          for (int i = 0; i < filledHeartCount; i++)
             Icon(
               Icons.favorite_border,
               color: Colors.red,

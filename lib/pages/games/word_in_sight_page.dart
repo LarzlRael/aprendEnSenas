@@ -15,12 +15,14 @@ class WordInSightPage extends HookConsumerWidget {
 
     final lifesCounter = useState(5);
     final status = useState<double>(0.0);
+    final key = useState<UniqueKey>(UniqueKey());
     useEffect(() {
       if (isCorrect.value) {
         state.value = createWordInSightGame(commonWords, 4);
         selectedCardIndex.value = -1;
       }
       isCorrect.value = false;
+      key.value = UniqueKey();
     }, [isCorrect.value]);
     /* useEffect(() {
       if (lifesCounter.value == 0) {
@@ -33,41 +35,45 @@ class WordInSightPage extends HookConsumerWidget {
         child: Container(
             child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                BackIcon(),
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: GestureDetector(
-                      onTap: () {
-                        status.value = status.value + 0.1;
-                        print(status.value);
-                      },
-                      child: /* LinearProgressIndicator(
-                        borderRadius: BorderRadius.circular(10),
-                        minHeight: 20,
-                        value: status.value,
-                      ), */
-                          TweenAnimationBuilder<double>(
-                        duration: const Duration(milliseconds: 250),
-                        curve: Curves.easeInOut,
-                        tween: Tween<double>(
-                          begin: 0,
-                          end: status.value,
-                        ),
-                        builder: (context, value, _) => LinearProgressIndicator(
-                          value: value,
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 250),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  BackIcon(),
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: GestureDetector(
+                        onTap: () {
+                          status.value = status.value + 0.1;
+                          print(status.value);
+                        },
+                        child: /* LinearProgressIndicator(
                           borderRadius: BorderRadius.circular(10),
                           minHeight: 20,
+                          value: status.value,
+                        ), */
+                            TweenAnimationBuilder<double>(
+                          duration: const Duration(milliseconds: 250),
+                          curve: Curves.easeInOut,
+                          tween: Tween<double>(
+                            begin: 0,
+                            end: status.value,
+                          ),
+                          builder: (context, value, _) =>
+                              LinearProgressIndicator(
+                            value: value,
+                            borderRadius: BorderRadius.circular(10),
+                            minHeight: 20,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                LifesAndCounter(lifes: lifesCounter.value),
-              ],
+                  LifesAndCounter(lifes: lifesCounter.value),
+                ],
+              ),
             ),
             SimpleText(
               text: '¿Cual es la palabra?',
