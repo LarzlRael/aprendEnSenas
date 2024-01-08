@@ -16,6 +16,16 @@ class TestYourMemoryPage extends HookConsumerWidget {
     final lifes = useState<int>(generate.lifes);
     final correctAnswer = createTestYourGameState.value.correctAnswer;
     final settings = ref.watch(settingsProviderProvider);
+    final reff = ref.read(settingsProviderProvider.notifier);
+    final isCorrect = useState<bool>(false);
+
+    useEffect(() {
+      if (isCorrect.value) {
+        createTestYourGameState.value =
+            createTestYourGame(listOnlySingAndNumbers, 3);
+        isCorrect.value = false;
+      }
+    }, [isCorrect.value]);
 
     return Scaffold(
       appBar: AppBar(
@@ -98,12 +108,14 @@ class TestYourMemoryPage extends HookConsumerWidget {
                         if (letterWithSignArray.letter ==
                             createTestYourGameState
                                 .value.correctAnswer.letter) {
-                          createTestYourGameState.value =
-                              createTestYourGame(listOnlySingAndNumbers, 3);
+                          /* createTestYourGameState.value =
+                              createTestYourGame(listOnlySingAndNumbers, 3); */
+                          isCorrect.value = true;
+                          reff.playSound('assets/sounds/correct_sound_2.mp3');
                         } else {
-                          if (settings.isVibrationActive) {
-                            VibrateServiceImp().vibrate(millisec: 250);
-                          }
+                          isCorrect.value = false;
+                          reff.playSoundAndVibration(
+                              'assets/sounds/wrong_sound_1.mp3');
                           lifes.value--;
                           if (lifes.value == 0) {
                             context.pop();

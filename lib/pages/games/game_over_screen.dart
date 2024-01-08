@@ -1,6 +1,6 @@
 part of '../pages.dart';
 
-class GameOverScreen extends HookWidget {
+class GameOverScreen extends HookConsumerWidget {
   final int duration;
   final Level level;
   const GameOverScreen({
@@ -10,10 +10,12 @@ class GameOverScreen extends HookWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     final _confettiController = useState<ConfettiController>(
         ConfettiController(duration: const Duration(seconds: 12)));
-
+    ref
+        .watch(settingsProviderProvider.notifier)
+        .playSound("assets/sounds/win_sound.wav");
     useEffect(() {
       _confettiController.value.play();
       return () => _confettiController.dispose();

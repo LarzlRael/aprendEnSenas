@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:asl/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -60,6 +61,27 @@ class SettingsProvider extends _$SettingsProvider {
       default:
         state = state.copyWith(
             sliderDirection: Axis.horizontal, selectedAxiosOption: value);
+    }
+  }
+
+  void playSoundAndVibration(String assetPath) {
+    if (state.isVibrationActive) {
+      this.startVibrate();
+    }
+    if (state.isSoundActive) {
+      this.playSound(assetPath);
+    }
+  }
+
+  void playSound(String assetPath) {
+    if (state.isSoundActive) {
+      SoundServiceImpl().playSound(assetPath);
+    }
+  }
+
+  void startVibrate({int millisec = 500}) {
+    if (state.isVibrationActive) {
+      VibrateServiceImp().vibrate(millisec: millisec);
     }
   }
 }

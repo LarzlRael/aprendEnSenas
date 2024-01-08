@@ -30,6 +30,7 @@ environment:
 dependencies:
   animate_do: ^3.0.2
   animated_text_kit: ^4.2.2
+  assets_audio_player: ^3.1.1
   confetti: ^0.7.0
   cupertino_icons: ^1.0.2
   diacritic: ^0.1.5
@@ -108,6 +109,7 @@ flutter:
     - .env
     - assets/signs/
     - assets/signs_png/
+    - assets/sounds/
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
