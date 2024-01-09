@@ -8,10 +8,13 @@ class TestYourGame {
 }
 
 class GuessTheWord {
-  final List<Sign> correctWord;
-  final String word;
+  final List<Sign> correctWordSignList;
+  final String correctWordString;
 
-  GuessTheWord(this.correctWord, this.word);
+  GuessTheWord({
+    required this.correctWordSignList,
+    required this.correctWordString,
+  });
 }
 
 class WordInSightGame {

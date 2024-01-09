@@ -1,24 +1,28 @@
 part of '../pages.dart';
 
-class GuessTheWordPage extends HookWidget {
+const fontSize = 45.0;
+
+class GuessTheWordPage extends HookConsumerWidget {
   const GuessTheWordPage({super.key});
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     final mediaQuery = MediaQuery.of(context).size;
-    final textTheme = Theme.of(context).textTheme;
+    final settingNotifier = ref.watch(settingsProvider.notifier);
 
     final randomCommonWord =
         useState<GuessTheWord>(getRandomWordFromStringList(commonWords));
     final currentWord = useState("");
     final isCorrect = useState(false);
-    final onEditing = useState(true);
+
     final restartKey = useState(UniqueKey());
+    final textEditingController = useTextEditingController();
 
     useEffect(() {
       if (isCorrect.value) {
         randomCommonWord.value = getRandomWordFromStringList(commonWords);
         currentWord.value = "";
         restartKey.value = UniqueKey();
+        textEditingController.clear();
       }
       isCorrect.value = false;
       return null;
@@ -50,10 +54,10 @@ class GuessTheWordPage extends HookWidget {
                   height: mediaQuery.height * 0.60,
                   child: PageViewSignSlider(
                     key: restartKey.value,
-                    singList: randomCommonWord.value.correctWord,
+                    singList: randomCommonWord.value.correctWordSignList,
                   ),
                 ),
-                VerificationCode(
+                /* VerificationCode(
                   key: restartKey.value,
                   fullBorder: true,
                   itemSize: 55,
@@ -83,6 +87,43 @@ class GuessTheWordPage extends HookWidget {
                   onEditing: (bool value) {
                     onEditing.value = value;
                     if (!onEditing.value) FocusScope.of(context).unfocus();
+                  },
+                ), */
+                TextField(
+                  controller: textEditingController,
+                  maxLength: randomCommonWord.value.correctWordString.length,
+                  decoration: InputDecoration(
+                    label: SimpleText(
+                      text: randomCommonWord.value.correctWordString,
+
+                      /* text: replaceMiddleWithUnderscores(
+                        randomCommonWord.value.word
+                            .removeDiacriticsFromString(),
+                      ), */
+                      fontSize: fontSize,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  style: TextStyle(
+                    fontSize: fontSize,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  onChanged: (value) {
+                    if (textEditingController.value.text.length ==
+                        randomCommonWord.value.correctWordString.length) {
+                      if (textEditingController.value.text ==
+                          randomCommonWord.value.correctWordString) {
+                        /* Sound correct */
+                        settingNotifier
+                            .playSound('assets/sounds/correct_sound_3.wav');
+                        isCorrect.value = true;
+                      } else {
+                        settingNotifier.startVibrate(millisec: 250);
+                        isCorrect.value = false;
+                      }
+                    }
                   },
                 ),
               ],

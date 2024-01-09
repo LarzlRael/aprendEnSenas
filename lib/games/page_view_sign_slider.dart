@@ -58,7 +58,7 @@ class PageViewSignSlider extends HookWidget {
           ),
         ),
         Container(
-          margin: const EdgeInsets.symmetric(vertical: 10),
+          margin: const EdgeInsets.symmetric(vertical: 15),
           height: 50,
           child: FilledButton.icon(
             onPressed: isInProgress.value ? null : restartTimer,

@@ -24,9 +24,9 @@ class Settings extends _$Settings {
   @override
   ProviderState build() {
     return ProviderState(
-      false,
-      false,
-      false,
+      true,
+      true,
+      true,
       0.0,
       Axis.horizontal,
       0,
@@ -154,13 +154,14 @@ class ProviderState {
   final TypeDisplay typeDisplay;
 
   ProviderState(
-      this.isDarkMode,
-      this.isSoundActive,
-      this.isVibrationActive,
-      this.transitionTime,
-      this.sliderDirection,
-      this.selectedAxiosOption,
-      this.typeDisplay);
+    this.isDarkMode,
+    this.isSoundActive,
+    this.isVibrationActive,
+    this.transitionTime,
+    this.sliderDirection,
+    this.selectedAxiosOption,
+    this.typeDisplay,
+  );
 
   ProviderState copyWith({
     bool? isDarkMode,

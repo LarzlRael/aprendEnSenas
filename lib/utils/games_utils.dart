@@ -34,10 +34,14 @@ WordInSightGame createWordInSightGame(List<String> options, int amountOptions) {
 }
 
 GuessTheWord getRandomWordFromStringList(List<String> list) {
-  final randomWord = list[Random().nextInt(list.length)];
+  /* Get one string word list */
+  final randomWord =
+      list[Random().nextInt(list.length)].removeDiacriticsFromString();
+
   return GuessTheWord(
-    generateListToMessageUtil(listOnlySingAndNumbers, randomWord),
-    randomWord,
+    correctWordSignList:
+        generateListToMessageUtil(listOnlySingAndNumbers, randomWord),
+    correctWordString: randomWord,
   );
 }
 
