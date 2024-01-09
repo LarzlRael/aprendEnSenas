@@ -100,6 +100,18 @@ class SettingsPage extends ConsumerWidget {
                     reff.setSelectedDisplayOption(2);
                   },
                 ),
+                SimpleText(
+                  text: 'Color de fondo',
+                  style: Theme.of(context).textTheme.titleSmall,
+                  padding: EdgeInsets.symmetric(vertical: 5),
+                ),
+                MaterialColorPicker(
+                  onColorChange: (Color color) {
+                    // Handle color changes
+                    reff.setIconColor(color);
+                  },
+                  selectedColor: settings.color,
+                )
               ],
             )
           ],

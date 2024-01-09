@@ -235,9 +235,9 @@ class SendMessageSlider extends HookConsumerWidget {
                                 onTap: () => context.push(
                                     '/letter_and_numbers/detail/${sign.letter}'),
                                 child: Card(
-                                  child: Icon(
-                                    sign.iconSign,
-                                    size: 100,
+                                  child: ColoredIcon(
+                                    icon: sign.iconSign,
+                                    size: 250,
                                   ),
                                 ),
                               );
@@ -267,7 +267,11 @@ class SendMessageSlider extends HookConsumerWidget {
                             ),
                     ),
               signProviderRef.listSigns.isEmpty
-                  ? const SimpleText(text: "No hay mensaje")
+                  ? const SimpleText(
+                      text: "No hay mensaje",
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    )
                   : RichText(
                       text: TextSpan(
                         style: TextStyle(
@@ -375,9 +379,30 @@ class CurrentSign extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
+    return RichText(
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: currenSign?.type!.name.toCapitalize() ?? "",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              /* color: Colors.black, */
+            ),
+          ),
+          const TextSpan(text: " "),
+          TextSpan(
+            text: currenSign?.letter ?? "",
+            style: TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+              /* color: Colors.green, */
+            ),
+          ),
+        ],
+      ),
+
+      /* children: [
         SimpleText(
           text: currenSign?.type!.name ?? "",
           fontSize: 20,
@@ -389,7 +414,7 @@ class CurrentSign extends StatelessWidget {
           fontSize: 20,
           fontWeight: FontWeight.bold,
         ),
-      ],
+      ], */
     );
   }
 }
@@ -412,8 +437,8 @@ class SquareCard extends StatelessWidget {
       child: Container(
         child: Column(
           children: [
-            Icon(
-              sign.iconSign,
+            ColoredIcon(
+              icon: sign.iconSign,
               size: 50,
             ),
             Text(sign.letter),

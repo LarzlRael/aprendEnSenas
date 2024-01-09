@@ -131,8 +131,8 @@ class TestYourMemoryPage extends HookConsumerWidget {
                           padding: EdgeInsets.all(10),
                           width: 100,
                           height: 100,
-                          child: Icon(
-                            letterWithSignArray.iconSign,
+                          child: ColoredIcon(
+                            icon: letterWithSignArray.iconSign,
                             size: 55,
                           ),
                         ),

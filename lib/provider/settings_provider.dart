@@ -31,6 +31,7 @@ class Settings extends _$Settings {
       Axis.horizontal,
       0,
       TypeDisplay.pageView,
+      Colors.blue,
     );
   }
 
@@ -51,18 +52,12 @@ class Settings extends _$Settings {
     TypeDisplay typeDisplay =
         TypeDisplay.pageView; // Ajusta según sea necesario */
 
-    return ProviderState(
-      isDarkMode,
-      isSoundActive,
-      isVibrationActive,
-      transitionTime,
-      Axis.horizontal,
-      0,
-      TypeDisplay.pageView,
-      /* sliderDirection,
+    return ProviderState(isDarkMode, isSoundActive, isVibrationActive,
+        transitionTime, Axis.horizontal, 0, TypeDisplay.pageView, Colors.blue
+        /* sliderDirection,
       selectedAxiosOption,
       typeDisplay, */
-    );
+        );
   }
 
   Future<void> initializeStateAsync() async {
@@ -94,6 +89,11 @@ class Settings extends _$Settings {
   void setTransitionTime(double value) async {
     state = state.copyWith(transitionTime: value);
     await keyValueStorageService.setKeyValue<double>(TRANSITION_TIME, value);
+  }
+
+  void setIconColor(Color color) async {
+    state = state.copyWith(color: color);
+    /* await keyValueStorageService.setKeyValue<double>(TRANSITION_TIME, value); */
   }
 
   void setSelectedDisplayOption(int value) {
@@ -152,6 +152,7 @@ class ProviderState {
   final Axis sliderDirection;
   final int selectedAxiosOption;
   final TypeDisplay typeDisplay;
+  final Color color;
 
   ProviderState(
     this.isDarkMode,
@@ -161,6 +162,7 @@ class ProviderState {
     this.sliderDirection,
     this.selectedAxiosOption,
     this.typeDisplay,
+    this.color,
   );
 
   ProviderState copyWith({
@@ -171,6 +173,7 @@ class ProviderState {
     Axis? sliderDirection,
     int? selectedAxiosOption,
     TypeDisplay? typeDisplay,
+    Color? color,
   }) {
     return ProviderState(
       isDarkMode ?? this.isDarkMode,
@@ -180,6 +183,7 @@ class ProviderState {
       sliderDirection ?? this.sliderDirection,
       selectedAxiosOption ?? this.selectedAxiosOption,
       typeDisplay ?? this.typeDisplay,
+      color ?? this.color,
     );
   }
 }

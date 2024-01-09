@@ -72,9 +72,9 @@ class MatchImageGame extends HookWidget {
                               color: Colors.teal,
                               size: 50,
                             ),
-                            child: Icon(
-                              item.icon,
-                              color: Colors.teal,
+                            child: ColoredIcon(
+                              icon: item.icon,
+                              /* color: Colors.teal, */
                               size: 50,
                             ),
                           ),

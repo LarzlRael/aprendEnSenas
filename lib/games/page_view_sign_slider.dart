@@ -32,7 +32,9 @@ class PageViewSignSlider extends HookWidget {
 
     useEffect(() {
       restartTimer();
-      return pagerController.dispose;
+      return () {
+        pagerController.dispose();
+      };
     }, [singList]);
 
     return Column(
@@ -48,8 +50,8 @@ class PageViewSignSlider extends HookWidget {
                   /* child: SvgPicture.asset(
                     singList[index].icon,
                   ), */
-                  child: Icon(
-                    singList[index].iconSign,
+                  child: ColoredIcon(
+                    icon: singList[index].iconSign,
                     size: 300,
                   ),
                 ),
