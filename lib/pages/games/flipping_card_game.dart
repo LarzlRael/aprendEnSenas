@@ -112,8 +112,14 @@ class FlippingCardGame extends HookWidget {
     final theme = Theme.of(context).textTheme;
     return _isFinished.value
         ? GameOverScreen(
-            duration: gameDuration.value,
             level: level,
+            title: Text("¡Ganaste!"),
+            subtitle: Text("¡Has completado el nivel ${level.name}!"),
+            titleButton: "Ir al siguiente nivel",
+            action: () => context.push(
+              '/games/flipping_cards_page',
+              extra: getNextLevel(level),
+            ),
           )
         : Scaffold(
             appBar: AppBar(

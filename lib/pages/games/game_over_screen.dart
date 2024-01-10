@@ -1,12 +1,19 @@
 part of '../pages.dart';
 
 class GameOverScreen extends HookConsumerWidget {
-  final int duration;
   final Level level;
+  final Widget title;
+  final Widget subtitle;
+  final String? titleButton;
+  final Function()? action;
+
   const GameOverScreen({
     super.key,
     required this.level,
-    required this.duration,
+    required this.title,
+    required this.subtitle,
+    this.titleButton,
+    this.action,
   });
 
   @override
@@ -23,69 +30,39 @@ class GameOverScreen extends HookConsumerWidget {
 
     final theme = Theme.of(context).textTheme;
     return Scaffold(
-      body: Stack(
-        alignment: Alignment.topCenter,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(18.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    text: "Under",
-                    style: theme.bodyLarge,
-                    children: [
-                      TextSpan(
-                        text: " ${duration} ",
-                        style: theme.displaySmall,
-                      ),
-                      TextSpan(text: "Segundos", style: theme.bodySmall),
-                    ],
+      body: SizedBox.expand(
+        child: Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  title,
+                  subtitle,
+                  const SizedBox(
+                    height: 20,
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    text: "Felicidades!",
-                    style: theme.bodyLarge,
-                    children: [
-                      TextSpan(
-                        text:
-                            "You've successfully completed the Flutter memory game. Your sharp memory and quick thinking have helped you emerge victorious. Keep up the good work and keep challenging yourself as you learn Flutter and continue to improve your skills.",
-                        style: theme.bodySmall,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    context.push(
-                      '/games/flipping_cards_page',
-                      extra: getNextLevel(level),
-                    );
-                  },
-                  child: const Text("Ve al siguiente nivel"),
-                ),
-              ],
+                  action != null
+                      ? ElevatedButton(
+                          onPressed: action,
+                          child: Text(titleButton ?? "Volver a jugar"),
+                        )
+                      : SizedBox(),
+                ],
+              ),
             ),
-          ),
-          ConfettiWidget(
-            numberOfParticles: 30,
-            minBlastForce: 10,
-            maxBlastForce: 20,
-            blastDirectionality: BlastDirectionality.explosive,
-            confettiController: _confettiController.value,
-            gravity: 0.1,
-          ),
-        ],
+            ConfettiWidget(
+              numberOfParticles: 30,
+              minBlastForce: 10,
+              maxBlastForce: 20,
+              blastDirectionality: BlastDirectionality.explosive,
+              confettiController: _confettiController.value,
+              gravity: 0.1,
+            ),
+          ],
+        ),
       ),
     );
   }

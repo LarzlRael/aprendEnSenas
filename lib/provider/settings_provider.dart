@@ -12,6 +12,7 @@ const TRANSITION_TIME = "TRANSITION_TIME";
 const SLIDER_DIRECTION = "SLIDER_DIRECTION";
 const SELECTED_AXIOS_OPTION = "SELECTED_AXIOS_OPTION";
 const TYPE_DISPLAY = "TYPE_DISPLAY";
+const COLOR_HANDS = "COLOR_HANDS";
 
 enum TypeDisplay {
   pageView,
@@ -93,7 +94,7 @@ class Settings extends _$Settings {
 
   void setIconColor(Color color) async {
     state = state.copyWith(color: color);
-    /* await keyValueStorageService.setKeyValue<double>(TRANSITION_TIME, value); */
+    await keyValueStorageService.setKeyValue<int>(COLOR_HANDS, color.value);
   }
 
   void setSelectedDisplayOption(int value) {

@@ -17,7 +17,7 @@ final items = <SelectGameCard>[
       );
     },
   ),
-  SelectGameCard(
+  /* SelectGameCard(
     icon: CustomIcons.ic_guess_the_word,
     title: GameType.adivina_la_palabra.name,
     subtitle: "Prueba con conocimiento con las palabras",
@@ -27,7 +27,7 @@ final items = <SelectGameCard>[
         extra: CustomIcons.ic_guess_the_word,
       );
     },
-  ),
+  ), */
   SelectGameCard(
     icon: CustomIcons.ic_flip_card,
     title: GameType.volteo_de_cartas.name,

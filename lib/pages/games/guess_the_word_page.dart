@@ -111,18 +111,20 @@ class GuessTheWordPage extends HookConsumerWidget {
                     fontWeight: FontWeight.w400,
                   ),
                   onChanged: (value) {
-                    if (textEditingController.value.text.length ==
-                        randomCommonWord.value.correctWordString.length) {
-                      if (textEditingController.value.text ==
-                          randomCommonWord.value.correctWordString) {
-                        /* Sound correct */
-                        settingNotifier
-                            .playSound('assets/sounds/correct_sound_3.wav');
-                        isCorrect.value = true;
-                      } else {
-                        settingNotifier.startVibrate(millisec: 250);
-                        isCorrect.value = false;
-                      }
+                    final correctWordString =
+                        randomCommonWord.value.correctWordString;
+                    if (value == correctWordString) {
+                      // La cadena ingresada es correcta
+                      settingNotifier
+                          .playSound('assets/sounds/correct_sound_3.wav');
+                      isCorrect.value = true;
+                    } else if (value.length == correctWordString.length) {
+                      // La longitud de la cadena ingresada es correcta pero no coincide con la palabra correcta
+                      settingNotifier.startVibrate(millisec: 250);
+                      isCorrect.value = false;
+                    } else {
+                      // La longitud de la cadena ingresada es diferente de la palabra correcta
+                      isCorrect.value = false;
                     }
                   },
                 ),

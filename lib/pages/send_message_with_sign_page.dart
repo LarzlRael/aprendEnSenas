@@ -277,7 +277,7 @@ class SendMessageSlider extends HookConsumerWidget {
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          /* color: Colors.black, */
                         ),
                         children: signProviderRef.listSigns.map((e) {
                           if (_currentIndex.value ==
@@ -296,9 +296,9 @@ class SendMessageSlider extends HookConsumerWidget {
                                 child: Text(
                                   e.letter,
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 25,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.black,
+                                    /* color: Colors.black, */
                                   ),
                                 ),
                               ),
@@ -317,7 +317,6 @@ class SendMessageSlider extends HookConsumerWidget {
                     child: signProviderRef.listSigns.isEmpty
                         ? SpeechButton(
                             onSpeechResult: (res) {
-                              print("res: $res");
                               ref
                                   .read(signProviderProvider.notifier)
                                   .setCurrentMessage(res);

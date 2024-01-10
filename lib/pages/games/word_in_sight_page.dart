@@ -10,6 +10,7 @@ class WordInSightPage extends HookConsumerWidget {
         useState<WordInSightGame>(createWordInSightGame(commonWords, 4));
     final isCorrect = useState(false);
     final settings = ref.watch(settingsProvider);
+    final settingsNotifier = ref.read(settingsProvider.notifier);
 
     final selectedCardIndex = useState(-1);
 
@@ -30,149 +31,157 @@ class WordInSightPage extends HookConsumerWidget {
       }
       return null;
     }, [lifesCounter.value]); */
-    return Scaffold(
-      body: SafeArea(
-        child: Container(
-            child: Column(
-          children: [
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 250),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return status.value > 1.0
+        ? GameOverScreen(
+            title: Text('¡Felicidades!'),
+            subtitle: Text('Has ganado'),
+            level: Level.easy,
+          )
+        : Scaffold(
+            body: SafeArea(
+              child: Container(
+                  child: Column(
                 children: [
-                  BackIcon(),
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      child: GestureDetector(
-                        onTap: () {
-                          status.value = status.value + 0.1;
-                          print(status.value);
-                        },
-                        child: /* LinearProgressIndicator(
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 250),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        BackIcon(),
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child: GestureDetector(
+                              onTap: () {
+                                status.value = status.value + 0.2;
+                                print(status.value);
+                              },
+                              child: /* LinearProgressIndicator(
                           borderRadius: BorderRadius.circular(10),
                           minHeight: 20,
                           value: status.value,
                         ), */
-                            TweenAnimationBuilder<double>(
-                          duration: const Duration(milliseconds: 250),
-                          curve: Curves.easeInOut,
-                          tween: Tween<double>(
-                            begin: 0,
-                            end: status.value,
-                          ),
-                          builder: (context, value, _) =>
-                              LinearProgressIndicator(
-                            value: value,
-                            borderRadius: BorderRadius.circular(10),
-                            minHeight: 20,
+                                  TweenAnimationBuilder<double>(
+                                duration: const Duration(milliseconds: 250),
+                                curve: Curves.easeInOut,
+                                tween: Tween<double>(
+                                  begin: 0,
+                                  end: status.value,
+                                ),
+                                builder: (context, value, _) =>
+                                    LinearProgressIndicator(
+                                  value: value,
+                                  borderRadius: BorderRadius.circular(10),
+                                  minHeight: 20,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                        LifesAndCounter(lifes: lifesCounter.value),
+                      ],
                     ),
                   ),
-                  LifesAndCounter(lifes: lifesCounter.value),
-                ],
-              ),
-            ),
-            SimpleText(
-              text: '¿Cual es la palabra?',
-              fontSize: 17,
-              fontWeight: FontWeight.w600,
-              padding: EdgeInsets.symmetric(vertical: 10),
-            ),
-            Wrap(
-              children: state.value.correctAnswerList.map((sign) {
-                return Card(
-                  child: Container(
-                    padding: EdgeInsets.all(10),
-                    width: 75,
-                    height: 75,
-                    child: ColoredIcon(
-                      icon: sign.iconSign,
-                      size: 45,
-                    ),
+                  SimpleText(
+                    text: '¿Cual es la palabra?',
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
+                    padding: EdgeInsets.symmetric(vertical: 10),
                   ),
-                );
-              }).toList(),
-            ),
-            Expanded(
-              child: AlignedGridView.count(
-                crossAxisCount: 2,
-                mainAxisSpacing: 5,
-                crossAxisSpacing: 5,
-                itemCount: state.value.options.length,
-                itemBuilder: (context, int index) {
-                  return InkWell(
-                    customBorder: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(borderRadious),
-                    ),
-                    onTap: () {
-                      selectedCardIndex.value = index;
-                    },
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(borderRadious),
-                      ),
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(borderRadious),
-                          border: Border.all(
-                            color: selectedCardIndex.value == index
-                                ? Colors.green
-                                : Colors.transparent,
-                            width: 4,
+                  Wrap(
+                    children: state.value.correctAnswerList.map((sign) {
+                      return Card(
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          width: 75,
+                          height: 75,
+                          child: ColoredIcon(
+                            icon: sign.iconSign,
+                            size: 45,
                           ),
                         ),
-                        padding: EdgeInsets.all(10),
-                        width: 100,
-                        height: 100,
-                        child: Center(
-                          child: SimpleText(
-                            text: state.value.options[index],
-                            textAlign: TextAlign.center,
+                      );
+                    }).toList(),
+                  ),
+                  Expanded(
+                    child: AlignedGridView.count(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 5,
+                      crossAxisSpacing: 5,
+                      itemCount: state.value.options.length,
+                      itemBuilder: (context, int index) {
+                        return InkWell(
+                          customBorder: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(borderRadious),
                           ),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: FilledButton(
-                child: Text('Verificar'),
-                onPressed: selectedCardIndex.value == -1
-                    ? null
-                    : () {
-                        if (settings.isVibrationActive) {
-                          VibrateServiceImp().vibrate(millisec: 250);
-                        }
-
-                        final value = state.value;
-                        if (value.options[selectedCardIndex.value] ==
-                            value.correctAnswerString) {
-                          isCorrect.value = true;
-                          status.value = status.value + 0.1;
-                        } else {
-                          selectedCardIndex.value = -1;
-                          lifesCounter.value--;
-                          if (lifesCounter.value == 0) {
-                            context.pop();
-                          }
-                        }
+                          onTap: () {
+                            selectedCardIndex.value = index;
+                          },
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(borderRadious),
+                            ),
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 300),
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.circular(borderRadious),
+                                border: Border.all(
+                                  color: selectedCardIndex.value == index
+                                      ? Colors.green
+                                      : Colors.transparent,
+                                  width: 4,
+                                ),
+                              ),
+                              padding: EdgeInsets.all(10),
+                              width: 100,
+                              height: 100,
+                              child: Center(
+                                child: SimpleText(
+                                  text: state.value.options[index],
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
                       },
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
-              ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: FilledButton(
+                      child: Text('Verificar'),
+                      onPressed: selectedCardIndex.value == -1
+                          ? null
+                          : () {
+                              settingsNotifier.playSound(
+                                  "assets/sounds/correct_sound_3.wav");
+                              final value = state.value;
+                              if (value.options[selectedCardIndex.value] ==
+                                  value.correctAnswerString) {
+                                isCorrect.value = true;
+                                status.value = status.value + 0.1;
+                              } else {
+                                settingsNotifier.startVibrate(millisec: 250);
+                                selectedCardIndex.value = -1;
+                                lifesCounter.value--;
+                                if (lifesCounter.value == 0) {
+                                  context.pop();
+                                }
+                              }
+                            },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                ],
+              )),
             ),
-            SizedBox(height: 10),
-          ],
-        )),
-      ),
-    );
+          );
   }
 }
 
