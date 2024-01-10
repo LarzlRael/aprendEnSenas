@@ -37,7 +37,9 @@ class FlippingCardGame extends HookWidget {
     final _data = useState<List<Sign>>([]);
 
     final _cardFlips = useState<List<bool>>([]);
-
+    final getRecord = useFuture(
+      getGameScore(GameType.volteo_de_cartas, level),
+    );
     final _cardStateKeys = useState<List<GlobalKey<FlipCardState>>>([]);
     final diff = useState<FlipCardGame?>(null);
     Widget getItem(int index) {
@@ -123,11 +125,18 @@ class FlippingCardGame extends HookWidget {
           )
         : Scaffold(
             appBar: AppBar(
-                title: Text(
-                  'Flipping Cards',
-                ),
-                /* centerTitle: true, */
-                leading: BackIcon(size: 20)),
+              title: Text(
+                'Flipping Cards',
+              ),
+              /* centerTitle: true, */
+              leading: BackIcon(size: 20),
+              actions: [
+                TextSpanHit(
+                  text: 'Record: ',
+                  score: getRecord.data ?? 0,
+                )
+              ],
+            ),
             body: SafeArea(
               child: Container(
                 /* color: Colors.blue, */
@@ -172,7 +181,7 @@ class FlippingCardGame extends HookWidget {
                         itemBuilder: (context, index) => _start.value
                             ? FlipCard(
                                 key: _cardStateKeys.value[index],
-                                onFlip: () {
+                                onFlip: () async {
                                   if (!_flip.value) {
                                     _flip.value = true;
                                     _previousIndex.value = index;
@@ -220,6 +229,11 @@ class FlippingCardGame extends HookWidget {
 
                                             _durationTimer.value?.cancel();
                                           });
+                                          await saveGameScore(
+                                            GameType.volteo_de_cartas,
+                                            gameDuration.value,
+                                            level,
+                                          );
                                         }
                                       }
                                     }

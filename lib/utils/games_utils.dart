@@ -100,3 +100,20 @@ FlipCardGame getFlipCardGameLevel(Level gameLevel) {
       return FlipCardGame(6, 2, Duration(seconds: 90));
   }
 }
+
+Future<void> saveGameScore(
+  GameType gameType,
+  int score,
+  Level level,
+) async {
+  await KeyValueStorageServiceImpl().setKeyValue<int>(
+    "${gameType.name}-${level.name}",
+    score,
+  );
+}
+
+Future<int?> getGameScore(GameType gameType, Level level) async {
+  return await KeyValueStorageServiceImpl().getValue<int>(
+    "${gameType.name}-${level.name}",
+  );
+}

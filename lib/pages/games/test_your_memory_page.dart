@@ -22,11 +22,21 @@ class TestYourMemoryPage extends HookConsumerWidget {
     final reff = ref.read(settingsProvider.notifier);
     final isCorrect = useState<bool>(false);
 
+    final currentScore = useState<int>(0);
+    final currentRecord =
+        useFuture(getGameScore(GameType.prueba_tu_memoria, level));
+
+    final key = useState(UniqueKey());
+
     useEffect(() {
       if (isCorrect.value) {
         createTestYourGameState.value =
             createTestYourGame(listOnlySingAndNumbers, 3);
+        reff.playSound('assets/sounds/correct_sound_2.mp3');
+        currentScore.value = currentScore.value + 10;
         isCorrect.value = false;
+        /* Reset the animation */
+        key.value = UniqueKey();
       }
     }, [isCorrect.value]);
 
@@ -37,15 +47,14 @@ class TestYourMemoryPage extends HookConsumerWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SimpleText(
-                text: 'Hits',
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
+              TextSpanHit(
+                text: 'Hits: ',
+                score: currentScore.value,
+                key: key.value,
               ),
-              SimpleText(
-                text: 'Nivel: ${level.name}',
-                fontSize: 15,
-                fontWeight: FontWeight.w400,
+              TextSpanHit(
+                text: 'Record: ',
+                score: currentRecord.data ?? 0,
               ),
             ],
           ),
@@ -108,20 +117,24 @@ class TestYourMemoryPage extends HookConsumerWidget {
                       customBorder: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      onTap: () {
+                      onTap: () async {
                         if (letterWithSignArray.letter ==
                             createTestYourGameState
                                 .value.correctAnswer.letter) {
                           /* createTestYourGameState.value =
                               createTestYourGame(listOnlySingAndNumbers, 3); */
                           isCorrect.value = true;
-                          reff.playSound('assets/sounds/correct_sound_2.mp3');
                         } else {
                           isCorrect.value = false;
                           reff.playSoundAndVibration(
                               'assets/sounds/wrong_sound_1.mp3');
                           lifesRemaing.value--;
                           if (lifesRemaing.value == 0) {
+                            await saveGameScore(
+                              GameType.prueba_tu_memoria,
+                              currentScore.value,
+                              level,
+                            );
                             context.pop();
                           }
                         }
@@ -184,6 +197,40 @@ class LifesCounter extends StatelessWidget {
               size: size,
             ),
         ],
+      ),
+    );
+  }
+}
+
+class TextSpanHit extends StatelessWidget {
+  const TextSpanHit({super.key, required this.text, required this.score});
+  final String text;
+  final int score;
+  @override
+  Widget build(BuildContext context) {
+    return ScaleAnimation(
+      end: 1.5,
+      duration: Duration(milliseconds: 250),
+      child: RichText(
+        key: key,
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: text,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            TextSpan(
+              text: score.toString(),
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

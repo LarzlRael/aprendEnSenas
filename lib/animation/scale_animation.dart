@@ -1,12 +1,16 @@
 part of '../widgets/widgets.dart';
 
 class ScaleAnimation extends StatefulWidget {
-  final Widget children;
+  final Widget child;
   final Duration duration;
+  final double? begin;
+  final double? end;
   const ScaleAnimation({
     super.key,
-    required this.children,
+    required this.child,
     this.duration = const Duration(milliseconds: 500),
+    this.begin = 1,
+    this.end = 2,
   });
 
   @override
@@ -25,7 +29,8 @@ class _ScaleAnimationState extends State<ScaleAnimation>
       vsync: this,
       duration: widget.duration,
     );
-    _animation = Tween<double>(begin: 1, end: 2).animate(_controller);
+    _animation = Tween<double>(begin: widget.begin, end: widget.end)
+        .animate(_controller);
 
     // Agrega un listener para detectar cuando la animación ha completado
     _controller.addStatusListener((status) {
@@ -53,7 +58,7 @@ class _ScaleAnimationState extends State<ScaleAnimation>
       builder: (_, __) {
         return Transform.scale(
           scale: _animation.value,
-          child: widget.children,
+          child: widget.child,
           key: widget.key,
         );
       },

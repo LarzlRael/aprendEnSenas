@@ -205,7 +205,7 @@ class LifesAndCounter extends HookWidget {
         ScaleAnimation(
           duration: const Duration(milliseconds: millisecondsAnimation),
           key: key.value,
-          children: Icon(
+          child: Icon(
             Icons.favorite,
             color: Colors.red,
             size: 25,
