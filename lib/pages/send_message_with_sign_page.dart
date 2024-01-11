@@ -196,6 +196,8 @@ class SendMessageSlider extends HookConsumerWidget {
 
         if (_currentIndex.value == signProviderRef.listSigns.length) {
           stopTimerAnimatedImages();
+          /* TODO change this */
+          /* ref.read(signProviderProvider.notifier).setCurrentSign(null); */
         }
       });
     }
@@ -215,7 +217,7 @@ class SendMessageSlider extends HookConsumerWidget {
                     child: settings.typeDisplay == TypeDisplay.pageView
                         ? Container(
                             width: 300,
-                            height: size.height * 0.50,
+                            height: size.height * 0.60,
                             child: PageView.builder(
                               controller: pageController,
                               scrollDirection: settings.sliderDirection,

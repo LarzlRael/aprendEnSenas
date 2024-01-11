@@ -19,11 +19,13 @@ class WordInSightPage extends HookConsumerWidget {
     final key = useState<UniqueKey>(UniqueKey());
     useEffect(() {
       if (isCorrect.value) {
-        state.value = createWordInSightGame(commonWords, 4);
+        settingsNotifier.playSound("assets/sounds/correct_sound_3.wav");
         selectedCardIndex.value = -1;
+        state.value = createWordInSightGame(commonWords, 4);
+        status.value = status.value + 0.1;
+        key.value = UniqueKey();
       }
       isCorrect.value = false;
-      key.value = UniqueKey();
     }, [isCorrect.value]);
     /* useEffect(() {
       if (lifesCounter.value == 0) {
@@ -157,13 +159,10 @@ class WordInSightPage extends HookConsumerWidget {
                       onPressed: selectedCardIndex.value == -1
                           ? null
                           : () {
-                              settingsNotifier.playSound(
-                                  "assets/sounds/correct_sound_3.wav");
                               final value = state.value;
                               if (value.options[selectedCardIndex.value] ==
                                   value.correctAnswerString) {
                                 isCorrect.value = true;
-                                status.value = status.value + 0.1;
                               } else {
                                 settingsNotifier.startVibrate(millisec: 250);
                                 selectedCardIndex.value = -1;
