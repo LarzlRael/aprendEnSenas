@@ -84,13 +84,6 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
             divisions: 10,
             label: "Velocidad",
           ),
-
-          /* TextFieldSendMessage((value) {
-            message.value = value;
-            /* Fix this */
-            /* ref.read(signProviderProvider.notifier).generateListToMessage(value);
-            ref.read(currentMessageProvider.notifier).setCurrentMessage(value); */
-          }), */
           Expanded(
             child: Card(
               child: AlignedGridView.count(
@@ -210,159 +203,166 @@ class SendMessageSlider extends HookConsumerWidget {
     final size = MediaQuery.of(context).size;
 
     return Expanded(
-      child: SingleChildScrollView(
-        child: Container(
-          /* width: double.infinity,
-          height: double.infinity, */
-          /* color: Colors.grey[200], */
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+      child: Stack(
+        children: [
+          ListView(
             children: [
-              CurrentSign(currenSign: signProviderRef.currentSign),
-              settings.typeDisplay == TypeDisplay.pageView
-                  ? Column(
-                      children: [
-                        Container(
-                          width: 300,
-                          height: size.height * 0.63,
-                          child: PageView.builder(
-                            controller: pageController,
-                            scrollDirection: settings.sliderDirection,
-                            itemCount: signProviderRef.listSigns.length,
-                            itemBuilder: (context, int index) {
-                              final sign = signProviderRef.listSigns[index];
-                              return InkWell(
-                                onTap: () => context.push(
-                                    '/letter_and_numbers/detail/${sign.letter}'),
-                                child: Card(
-                                  child: ColoredIcon(
-                                    icon: sign.iconSign,
-                                    size: 250,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    )
-                  : Container(
-                      width: 300,
-                      height: 400,
-                      child: signProviderRef.listSigns.isEmpty
-                          ? const SizedBox()
-                          : Expanded(
-                              child: AnimatedSwitcher(
-                                  duration: const Duration(milliseconds: 500),
-                                  child: Card(
-                                    child: Icon(
-                                      signProviderRef
-                                          .listSigns[_currentIndex.value]
-                                          .iconSign,
-                                      key: ValueKey<int>(_currentIndex.value),
-                                      /*   width: 200,
-                                                    height: 200, */
-                                    ),
-                                  )),
-                            ),
-                    ),
-              signProviderRef.listSigns.isEmpty
-                  ? const SimpleText(
-                      text: "No hay mensaje",
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                    )
-                  : RichText(
-                      text: TextSpan(
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          /* color: Colors.black, */
-                        ),
-                        children: signProviderRef.listSigns.map((e) {
-                          if (_currentIndex.value ==
-                              signProviderRef.listSigns[_currentIndex.value]) {
-                            return TextSpan(
-                                text: e.letter,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.green,
-                                ));
-                          } else {
-                            return WidgetSpan(
-                              child: Transform.translate(
-                                offset: const Offset(0.0, 0.0),
-                                child: Text(
-                                  e.letter,
-                                  style: TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold,
-                                    /* color: Colors.black, */
-                                  ),
-                                ),
-                              ),
-                            );
-                          }
-                        }).toList(),
-                      ),
-                    ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+              Column(
                 children: [
-                  Expanded(child: TextFieldSendMessage()),
-                  const SizedBox(width: 2),
-                  AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 500),
-                    child: signProviderRef.listSigns.isEmpty
-                        ? SpeechButton(
-                            onSpeechResult: (res) {
-                              ref
-                                  .read(signProviderProvider.notifier)
-                                  .setCurrentMessage(res);
-                            },
-                          )
-                        : InkWell(
-                            onTap: settings.typeDisplay ==
-                                    TypeDisplay.imageSwitcher
-                                ? () {
-                                    if (isPlaying.value) {
-                                      stopTimerAnimatedImages();
-                                    } else {
-                                      startTimerAnimatedImages();
-                                    }
-                                  }
-                                : () {
-                                    if (isPlaying.value) {
-                                      signProviderRef.timer?.cancel();
-                                      isPlaying.value = false;
-                                    } else {
-                                      startPageViewMessage();
-                                    }
-                                  },
-                            child: Container(
-                              width: 50.0,
-                              height: 50.0,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.green,
-                              ),
-                              child: Center(
-                                child: Icon(
-                                  isPlaying.value ? Icons.pause : Icons.send,
-                                  size: 25.0,
-                                  color: Colors.white,
-                                  semanticLabel: 'Show menu',
-                                ),
-                              ),
+                  CurrentSign(currenSign: signProviderRef.currentSign),
+                  Align(
+                    alignment: Alignment.center,
+                    child: settings.typeDisplay == TypeDisplay.pageView
+                        ? Container(
+                            width: 300,
+                            height: size.height * 0.50,
+                            child: PageView.builder(
+                              controller: pageController,
+                              scrollDirection: settings.sliderDirection,
+                              itemCount: signProviderRef.listSigns.length,
+                              itemBuilder: (context, int index) {
+                                final sign = signProviderRef.listSigns[index];
+                                return InkWell(
+                                  onTap: () => context.push(
+                                      '/letter_and_numbers/detail/${sign.letter}'),
+                                  child: Card(
+                                    child: ColoredIcon(
+                                      icon: sign.iconSign,
+                                      size: 250,
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
+                          )
+                        : Container(
+                            width: 300,
+                            height: 400,
+                            child: signProviderRef.listSigns.isEmpty
+                                ? const SizedBox()
+                                : Expanded(
+                                    child: AnimatedSwitcher(
+                                        duration:
+                                            const Duration(milliseconds: 500),
+                                        child: Card(
+                                          child: Icon(
+                                            signProviderRef
+                                                .listSigns[_currentIndex.value]
+                                                .iconSign,
+                                            key: ValueKey<int>(
+                                                _currentIndex.value),
+                                            /*   width: 200,
+                                                          height: 200, */
+                                          ),
+                                        )),
+                                  ),
                           ),
                   ),
+                  signProviderRef.listSigns.isEmpty
+                      ? const SimpleText(
+                          text: "No hay mensaje",
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        )
+                      : RichText(
+                          text: TextSpan(
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              /* color: Colors.black, */
+                            ),
+                            children: signProviderRef.listSigns.map((e) {
+                              if (_currentIndex.value ==
+                                  signProviderRef
+                                      .listSigns[_currentIndex.value]) {
+                                return TextSpan(
+                                    text: e.letter,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.green,
+                                    ));
+                              } else {
+                                return WidgetSpan(
+                                  child: Transform.translate(
+                                    offset: const Offset(0.0, 0.0),
+                                    child: Text(
+                                      e.letter,
+                                      style: TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold,
+                                        /* color: Colors.black, */
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
+                            }).toList(),
+                          ),
+                        ),
                 ],
               ),
             ],
           ),
-        ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(child: TextFieldSendMessage()),
+                const SizedBox(width: 2),
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 500),
+                  child: signProviderRef.listSigns.isEmpty
+                      ? SpeechButton(
+                          onSpeechResult: (res) {
+                            ref
+                                .read(signProviderProvider.notifier)
+                                .setCurrentMessage(res);
+                          },
+                        )
+                      : InkWell(
+                          onTap:
+                              settings.typeDisplay == TypeDisplay.imageSwitcher
+                                  ? () {
+                                      FocusScope.of(context).unfocus();
+                                      if (isPlaying.value) {
+                                        stopTimerAnimatedImages();
+                                      } else {
+                                        startTimerAnimatedImages();
+                                      }
+                                    }
+                                  : () {
+                                      FocusScope.of(context).unfocus();
+                                      if (isPlaying.value) {
+                                        signProviderRef.timer?.cancel();
+                                        isPlaying.value = false;
+                                      } else {
+                                        startPageViewMessage();
+                                      }
+                                    },
+                          child: Container(
+                            width: 50.0,
+                            height: 50.0,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.green,
+                            ),
+                            child: Center(
+                              child: Icon(
+                                isPlaying.value ? Icons.pause : Icons.send,
+                                size: 25.0,
+                                color: Colors.white,
+                                semanticLabel: 'Show menu',
+                              ),
+                            ),
+                          ),
+                        ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -443,65 +443,6 @@ class SquareCard extends StatelessWidget {
             Text(sign.letter),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class TextFieldSendMessage extends HookConsumerWidget {
-  TextFieldSendMessage({super.key});
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final controller = useTextEditingController()
-      ..value = TextEditingValue(
-          text: ref.watch(signProviderProvider).currentMessage);
-
-    return SizedBox(
-      /* height: 45, */
-      child: TextField(
-        minLines: 1,
-        maxLines: 2,
-        controller: controller,
-        decoration: InputDecoration(
-          /* isDense: true, // Added this
-          contentPadding: EdgeInsets.all(8), */
-          suffix: AnimatedOpacity(
-            duration: const Duration(milliseconds: 500),
-            opacity:
-                ref.watch(signProviderProvider).currentMessage.isEmpty ? 0 : 1,
-            child: IconButton(
-              color: Colors.grey,
-              onPressed: () {
-                controller.clear();
-                ref.read(signProviderProvider.notifier).setCurrentMessage("");
-              },
-              icon: Icon(Icons.cancel),
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(35.0),
-            borderSide: BorderSide(
-              color: Colors.orange,
-            ),
-          ),
-          /* filled: true,
-                        fillColor: Colors.black, */
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(35.0),
-          ),
-          hintText: "Escribe tu mensaje",
-          hintStyle: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        onChanged: (val) {
-          ref
-              .read(
-                signProviderProvider.notifier,
-              )
-              .setCurrentMessage(val);
-        },
       ),
     );
   }

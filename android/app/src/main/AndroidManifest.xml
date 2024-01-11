@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.VIBRATE" />
    <application
-    android:label="app_name_CHANGE_ME"
+    android:label="Sign Language"
     android:name="${applicationName}"
     android:icon="@mipmap/ic_launcher"
   >
