@@ -6,12 +6,14 @@ class GameOverScreen extends HookConsumerWidget {
   final Widget subtitle;
   final String? titleButton;
   final Function()? action;
+  final ResultGameType resultType;
 
   const GameOverScreen({
     super.key,
     required this.level,
     required this.title,
     required this.subtitle,
+    required this.resultType,
     this.titleButton,
     this.action,
   });
@@ -20,11 +22,16 @@ class GameOverScreen extends HookConsumerWidget {
   Widget build(BuildContext context, ref) {
     final _confettiController = useState<ConfettiController>(
         ConfettiController(duration: const Duration(seconds: 12)));
-    ref
-        .watch(settingsProvider.notifier)
-        .playSound("assets/sounds/win_sound.wav");
+    void playSound() => ref.read(settingsProvider.notifier).playSound(
+        resultType == ResultGameType.win
+            ? getRandomSound(winSoundsList)
+            : getRandomSound(loseSoundsList));
+
     useEffect(() {
-      _confettiController.value.play();
+      if (resultType == ResultGameType.win) {
+        _confettiController.value.play();
+      }
+      playSound();
       return () => _confettiController.dispose();
     }, const []);
 

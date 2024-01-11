@@ -1,6 +1,7 @@
 part of '../pages.dart';
 
 const borderRadious = 10.0;
+const stepValue = 0.2;
 
 class WordInSightPage extends HookConsumerWidget {
   const WordInSightPage({super.key});
@@ -9,7 +10,7 @@ class WordInSightPage extends HookConsumerWidget {
     final state =
         useState<WordInSightGame>(createWordInSightGame(commonWords, 4));
     final isCorrect = useState(false);
-    final settings = ref.watch(settingsProvider);
+
     final settingsNotifier = ref.read(settingsProvider.notifier);
 
     final selectedCardIndex = useState(-1);
@@ -17,12 +18,13 @@ class WordInSightPage extends HookConsumerWidget {
     final lifesCounter = useState(5);
     final status = useState<double>(0.0);
     final key = useState<UniqueKey>(UniqueKey());
+
     useEffect(() {
       if (isCorrect.value) {
         settingsNotifier.playSound("assets/sounds/correct_sound_3.wav");
         selectedCardIndex.value = -1;
         state.value = createWordInSightGame(commonWords, 4);
-        status.value = status.value + 0.1;
+        status.value = status.value + stepValue;
         key.value = UniqueKey();
       }
       isCorrect.value = false;
@@ -33,11 +35,18 @@ class WordInSightPage extends HookConsumerWidget {
       }
       return null;
     }, [lifesCounter.value]); */
-    return status.value > 1.0
-        ? GameOverScreen(
-            title: Text('¡Felicidades!'),
-            subtitle: Text('Has ganado'),
-            level: Level.easy,
+    /* TODO check and verfy this code */
+    return status.value > 1.0 || lifesCounter.value == 0
+        ? ResultScreen(
+            resultType: lifesCounter.value > 0
+                ? ResultGameType.win
+                : status.value > 1.0
+                    ? ResultGameType.win
+                    : ResultGameType.lose,
+            winTitle: '¡Felicidades!',
+            winSubtitle: 'Has ganado',
+            loseTitle: '¡Lo siento!',
+            loseSubtitle: 'Has perdido',
           )
         : Scaffold(
             body: SafeArea(
@@ -53,29 +62,18 @@ class WordInSightPage extends HookConsumerWidget {
                         Expanded(
                           child: Container(
                             padding: EdgeInsets.symmetric(horizontal: 10),
-                            child: GestureDetector(
-                              onTap: () {
-                                status.value = status.value + 0.2;
-                                print(status.value);
-                              },
-                              child: /* LinearProgressIndicator(
-                          borderRadius: BorderRadius.circular(10),
-                          minHeight: 20,
-                          value: status.value,
-                        ), */
-                                  TweenAnimationBuilder<double>(
-                                duration: const Duration(milliseconds: 250),
-                                curve: Curves.easeInOut,
-                                tween: Tween<double>(
-                                  begin: 0,
-                                  end: status.value,
-                                ),
-                                builder: (context, value, _) =>
-                                    LinearProgressIndicator(
-                                  value: value,
-                                  borderRadius: BorderRadius.circular(10),
-                                  minHeight: 20,
-                                ),
+                            child: TweenAnimationBuilder<double>(
+                              duration: const Duration(milliseconds: 250),
+                              curve: Curves.easeInOut,
+                              tween: Tween<double>(
+                                begin: 0,
+                                end: status.value,
+                              ),
+                              builder: (context, value, _) =>
+                                  LinearProgressIndicator(
+                                value: value,
+                                borderRadius: BorderRadius.circular(10),
+                                minHeight: 20,
                               ),
                             ),
                           ),
@@ -164,12 +162,12 @@ class WordInSightPage extends HookConsumerWidget {
                                   value.correctAnswerString) {
                                 isCorrect.value = true;
                               } else {
-                                settingsNotifier.startVibrate(millisec: 250);
+                                settingsNotifier.startVibrate(millisec: 150);
                                 selectedCardIndex.value = -1;
                                 lifesCounter.value--;
-                                if (lifesCounter.value == 0) {
+                                /* if (lifesCounter.value == 0) {
                                   context.pop();
-                                }
+                                } */
                               }
                             },
                       style: ElevatedButton.styleFrom(
@@ -238,5 +236,42 @@ class LifesAndCounter extends HookWidget {
         )
       ],
     );
+  }
+}
+
+enum ResultGameType { win, lose }
+
+class ResultScreen extends StatelessWidget {
+  final ResultGameType resultType;
+  final String winTitle;
+  final String winSubtitle;
+  final String loseTitle;
+  final String loseSubtitle;
+  const ResultScreen({
+    Key? key,
+    required this.resultType,
+    required this.winTitle,
+    required this.winSubtitle,
+    required this.loseTitle,
+    required this.loseSubtitle,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    if (resultType == ResultGameType.win) {
+      return GameOverScreen(
+        resultType: ResultGameType.win,
+        title: Text(winTitle),
+        subtitle: Text(winSubtitle),
+        level: Level.easy,
+      );
+    } else {
+      return GameOverScreen(
+        resultType: ResultGameType.lose,
+        title: Text(loseTitle),
+        subtitle: Text(loseSubtitle),
+        level: Level.easy,
+      );
+    }
   }
 }
