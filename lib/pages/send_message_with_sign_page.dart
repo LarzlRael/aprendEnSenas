@@ -1,6 +1,6 @@
 part of 'pages.dart';
 
-const timeMiliseconds = 1500;
+/* const timeMiliseconds = 1500; */
 
 class SendMessageWithSignPage extends HookWidget {
   const SendMessageWithSignPage({super.key});
@@ -157,12 +157,13 @@ class SendMessageSlider extends HookConsumerWidget {
       pageController.jumpToPage(0);
 
       signProviderRef.timer = Timer.periodic(
-          Duration(milliseconds: timeMiliseconds), (Timer timer) {
+          Duration(milliseconds: settings.transitionTime.toInt()),
+          (Timer timer) {
         if (pageController.page!.toInt() <
             signProviderRef.listSigns.length - 1) {
           isPlaying.value = true;
           pageController.nextPage(
-            duration: Duration(milliseconds: timeMiliseconds),
+            duration: Duration(milliseconds: settings.transitionTime.toInt()),
             curve: Curves.easeInOut,
           );
         } else {
@@ -186,8 +187,9 @@ class SendMessageSlider extends HookConsumerWidget {
     }
 
     void startTimerAnimatedImages() {
-      signProviderRef.timer =
-          Timer.periodic(const Duration(seconds: 1), (timer) async {
+      signProviderRef.timer = Timer.periodic(
+          Duration(milliseconds: settings.transitionTime.toInt()),
+          (timer) async {
         isPlaying.value = true;
         ref
             .read(signProviderProvider.notifier)
