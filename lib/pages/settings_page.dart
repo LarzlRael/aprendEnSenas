@@ -51,6 +51,8 @@ class SettingsPage extends ConsumerWidget {
               children: [
                 Text('Tiempo de retraso de transicion'),
                 Slider(
+                    min: 250,
+                    max: 2500,
                     divisions: 10,
                     label: settings.transitionTime.toString(),
                     value: settings.transitionTime,

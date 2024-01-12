@@ -20,6 +20,8 @@ class KeyValueStorageServiceImpl implements KeyValueStorageService {
 
       case List<String>:
         return prefs.getStringList(key) as T?;
+      case double:
+        return prefs.getDouble(key) as T?;
 
       default:
         throw UnimplementedError(
@@ -39,6 +41,9 @@ class KeyValueStorageServiceImpl implements KeyValueStorageService {
     switch (T) {
       case int:
         prefs.setInt(key, value as int);
+        break;
+      case double:
+        prefs.setDouble(key, value as double);
         break;
       case String:
         prefs.setString(key, value as String);

@@ -1,9 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:asl/services/services.dart';
 import 'package:flutter/material.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-
-part 'settings_provider.g.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 const IS_DARKMODE = "IS_DARK_MODE";
 const IS_SOUNDACTIVE = "IS_SOUND_ACTIVE";
@@ -19,72 +16,69 @@ enum TypeDisplay {
   imageSwitcher,
 }
 
-@riverpod
-class Settings extends _$Settings {
+final settingsProvider = StateNotifierProvider<SettingsNotifier, SettingsState>(
+  (ref) => SettingsNotifier(),
+);
+
+class SettingsNotifier extends StateNotifier<SettingsState> {
   final keyValueStorageService = KeyValueStorageServiceImpl();
-  @override
-  ProviderState build() {
-    return ProviderState(
-      true,
-      true,
-      true,
-      0.0,
-      Axis.horizontal,
-      0,
-      TypeDisplay.pageView,
-      Colors.blue,
+  SettingsNotifier()
+      : super(SettingsState(
+          false,
+          false,
+          false,
+          250.0,
+          Axis.horizontal,
+          0,
+          TypeDisplay.pageView,
+          Colors.blue,
+        )) {
+    asyncInit();
+  }
+
+  void asyncInit() async {
+    final isDarkMode = await keyValueStorageService.getValue<bool>(IS_DARKMODE);
+    final isSoundActive =
+        await keyValueStorageService.getValue<bool>(IS_SOUNDACTIVE);
+    final isVibrationActive =
+        await keyValueStorageService.getValue<bool>(IS_VIBRATIONACTIVE);
+    final transitionTime =
+        await keyValueStorageService.getValue<double>(TRANSITION_TIME);
+    final color = await keyValueStorageService.getValue<int>(COLOR_HANDS);
+    final selectedDisplayOption =
+        await keyValueStorageService.getValue<int>(TYPE_DISPLAY);
+
+    final selectedAxiosOption =
+        await keyValueStorageService.getValue<int>(SELECTED_AXIOS_OPTION);
+
+    state = state.copyWith(
+      isDarkMode: isDarkMode ?? state.isDarkMode,
+      isSoundActive: isSoundActive ?? state.isSoundActive,
+      isVibrationActive: isVibrationActive ?? state.isVibrationActive,
+      transitionTime: transitionTime ?? state.transitionTime,
+      selectedAxiosOption: selectedAxiosOption ?? state.selectedAxiosOption,
+      color: Color(color ?? state.color.value),
     );
-  }
-
-  Future<ProviderState> initBuildAsync() async {
-    bool isDarkMode =
-        await keyValueStorageService.getValue<bool>(IS_DARKMODE) ?? false;
-    bool isSoundActive =
-        await keyValueStorageService.getValue<bool>(IS_SOUNDACTIVE) ?? false;
-    bool isVibrationActive =
-        await keyValueStorageService.getValue<bool>(IS_VIBRATIONACTIVE) ??
-            false;
-    double transitionTime =
-        await keyValueStorageService.getValue<double>(TRANSITION_TIME) ?? 0.0;
-    /* Axis sliderDirection = Axis.horizontal; // Ajusta según sea necesario
-    int selectedAxiosOption =
-        await keyValueStorageService.getValue<int>(SELECTED_AXIOS_OPTION) ??
-            0;
-    TypeDisplay typeDisplay =
-        TypeDisplay.pageView; // Ajusta según sea necesario */
-
-    return ProviderState(isDarkMode, isSoundActive, isVibrationActive,
-        transitionTime, Axis.horizontal, 0, TypeDisplay.pageView, Colors.blue
-        /* sliderDirection,
-      selectedAxiosOption,
-      typeDisplay, */
-        );
-  }
-
-  Future<void> initializeStateAsync() async {
-    state = await initBuildAsync();
-  }
-
-  void initializeState() {
-    initializeStateAsync();
+    setSelectedDisplayOption(
+        selectedDisplayOption ?? state.selectedAxiosOption);
   }
 
   void toggleDarkMode() async {
     state = state.copyWith(isDarkMode: !state.isDarkMode);
     await keyValueStorageService.setKeyValue<bool>(
-        IS_DARKMODE, !state.isDarkMode);
+        IS_DARKMODE, state.isDarkMode);
   }
 
   void toggleSound() async {
     state = state.copyWith(isSoundActive: !state.isSoundActive);
     await keyValueStorageService.setKeyValue<bool>(
-        IS_SOUNDACTIVE, !state.isSoundActive);
+        IS_SOUNDACTIVE, state.isSoundActive);
   }
 
   void toggleVibration() async {
     state = state.copyWith(isVibrationActive: !state.isVibrationActive);
     await keyValueStorageService.setKeyValue<bool>(
-        IS_VIBRATIONACTIVE, !state.isVibrationActive);
+        IS_VIBRATIONACTIVE, state.isVibrationActive);
   }
 
   void setTransitionTime(double value) async {
@@ -97,13 +91,14 @@ class Settings extends _$Settings {
     await keyValueStorageService.setKeyValue<int>(COLOR_HANDS, color.value);
   }
 
-  void setSelectedDisplayOption(int value) {
+  void setSelectedDisplayOption(int value) async {
     switch (value) {
       case 0:
         state = state.copyWith(
-            sliderDirection: Axis.horizontal,
-            selectedAxiosOption: value,
-            typeDisplay: TypeDisplay.pageView);
+          sliderDirection: Axis.horizontal,
+          selectedAxiosOption: value,
+          typeDisplay: TypeDisplay.pageView,
+        );
         break;
       case 1:
         state = state.copyWith(
@@ -121,6 +116,7 @@ class Settings extends _$Settings {
         state = state.copyWith(
             sliderDirection: Axis.horizontal, selectedAxiosOption: value);
     }
+    await keyValueStorageService.setKeyValue<int>(TYPE_DISPLAY, value);
   }
 
   void playSoundAndVibration(String assetPath) {
@@ -145,17 +141,17 @@ class Settings extends _$Settings {
   }
 }
 
-class ProviderState {
+class SettingsState {
   final bool isDarkMode;
   final bool isSoundActive;
   final bool isVibrationActive;
   final double transitionTime;
   final Axis sliderDirection;
-  final int selectedAxiosOption;
   final TypeDisplay typeDisplay;
+  final int selectedAxiosOption;
   final Color color;
 
-  ProviderState(
+  SettingsState(
     this.isDarkMode,
     this.isSoundActive,
     this.isVibrationActive,
@@ -166,7 +162,7 @@ class ProviderState {
     this.color,
   );
 
-  ProviderState copyWith({
+  SettingsState copyWith({
     bool? isDarkMode,
     bool? isSoundActive,
     bool? isVibrationActive,
@@ -176,7 +172,7 @@ class ProviderState {
     TypeDisplay? typeDisplay,
     Color? color,
   }) {
-    return ProviderState(
+    return SettingsState(
       isDarkMode ?? this.isDarkMode,
       isSoundActive ?? this.isSoundActive,
       isVibrationActive ?? this.isVibrationActive,

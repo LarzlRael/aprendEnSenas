@@ -35,6 +35,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   diacritic: ^0.1.5
   firebase_core: ^2.24.2
+  firebase_messaging: ^14.7.10
   flip_card: ^0.7.0
   flutter:
     sdk: flutter
@@ -60,15 +61,15 @@ dependencies:
 
 flutter_native_splash:
   color: '#ffffff'
-  image: assets/yourPathLogo.png
+  image: 'assets/icons/app_logo.png'
   #branding: assets/branding-development.png
   color_dark: '#15141b'
-  image_dark: assets/yourPathLogo.png
+  image_dark: 'assets/icons/app_logo.png'
   #branding_dark: assets/branding-development.png
   android_12:
-    image: assets/yourPathLogo.png
+    image: 'assets/icons/app_logo.png'
     icon_background_color: '#ffffff'
-    image_dark: assets/yourPathLogo.png
+    image_dark: 'assets/icons/app_logo.png'
     icon_background_color_dark: '#ffffff'
 
   web: false
@@ -86,7 +87,7 @@ dev_dependencies:
 flutter_icons:
   android: 'launcher_icon'
   ios: true
-  image_path: 'assets/yourPathIcon.png'
+  image_path: 'assets/icons/app_logo.png'
   min_sdk_android: 21
 
   # The "flutter_lints" package below contains a set of recommended lints to
