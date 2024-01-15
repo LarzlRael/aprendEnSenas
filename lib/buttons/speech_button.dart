@@ -14,7 +14,7 @@ class _SpeechButtonState extends State<SpeechButton> {
   SpeechToText _speechToText = SpeechToText();
   bool _speechEnabled = false;
   String _lastWords = '';
-  void _initSpeech() async {
+  Future<void> _initSpeech() async {
     _speechEnabled = await _speechToText.initialize();
     setState(() {});
   }
@@ -28,11 +28,16 @@ class _SpeechButtonState extends State<SpeechButton> {
 
   /// Each time to start a speech recognition session
   void _startListening() async {
-    await _speechToText.listen(
-      onResult: _onSpeechResult,
-      localeId: 'es_ES',
-    );
-    setState(() {});
+    await _initSpeech();
+    if (!_speechEnabled) {
+      await _initSpeech();
+    } else {
+      await _speechToText.listen(
+        onResult: _onSpeechResult,
+        localeId: 'es_ES',
+      );
+      setState(() {});
+    }
   }
 
   /// Manually stop the active speech recognition session
@@ -44,11 +49,11 @@ class _SpeechButtonState extends State<SpeechButton> {
     setState(() {});
   }
 
-  @override
+  /*  @override
   initState() {
     super.initState();
     _initSpeech();
-  }
+  } */
 
   @override
   void dispose() {
@@ -67,7 +72,6 @@ class _SpeechButtonState extends State<SpeechButton> {
       onTapUp: (_) async {
         _isPressed = false;
         setState(() {});
-
         _stopListening();
       },
       onTapDown: (_) {

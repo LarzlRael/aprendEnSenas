@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../pages/pages.dart';
 
 final appRouter = GoRouter(
-  initialLocation: '/send_message_with_sign_page',
+  initialLocation: '/letter_and_numbers',
   /* refreshListenable: goRouterNotifier, */
   routes: [
     ///* Primera pantalla

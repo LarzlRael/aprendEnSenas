@@ -59,6 +59,10 @@ class LetterAndNumbersPageDetail extends HookWidget {
                 ),
               ),
             ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: BannerAd(),
+            ),
           ],
         ),
       ),

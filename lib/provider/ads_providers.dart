@@ -87,10 +87,10 @@ void addCounterIntersitialAd(Function callBack) async {
   const MAXCOUNT = 4;
   final keyValueStorageServiceImpl = KeyValueStorageServiceImpl();
   final getCurrentCounterAdd =
-      await keyValueStorageServiceImpl.getValue<int>(COUNTER_ADD);
+      await keyValueStorageServiceImpl.getValue<int>(COUNTER_ADD) ?? 0;
 
-  keyValueStorageServiceImpl.setKeyValue<int>(
-      COUNTER_ADD, getCurrentCounterAdd! + 1);
+  await keyValueStorageServiceImpl.setKeyValue<int>(
+      COUNTER_ADD, getCurrentCounterAdd + 1);
 
   if (getCurrentCounterAdd == MAXCOUNT) {
     callBack();

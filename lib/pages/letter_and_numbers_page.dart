@@ -72,10 +72,9 @@ class ListRow extends StatelessWidget {
                   onTap!(list);
                 }
               },
-              leading: Icon(
-                list.iconSign,
+              leading: ColoredIcon(
+                icon: list.iconSign,
                 size: 50,
-                color: Colors.black,
               ),
               title: Text(
                 list.letter,
@@ -126,8 +125,8 @@ class ListGrid extends StatelessWidget {
                   padding: EdgeInsets.all(10),
                   width: 100,
                   height: 100,
-                  child: Icon(
-                    listIndex.iconSign,
+                  child: ColoredIcon(
+                    icon: listIndex.iconSign,
                     size: 50,
                   ),
                 ),
