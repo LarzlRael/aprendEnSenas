@@ -30,6 +30,7 @@ final signLowerLetters = <Sign>[
   Sign("x", CustomIcons.x_sign),
   Sign("y", CustomIcons.y_sign),
   Sign("z", CustomIcons.z_sign),
+  Sign(" ", Icons.space_bar, type: SignType.space),
 ];
 
 final listOnlyNumers = <Sign>[
@@ -73,7 +74,7 @@ final listOnlySingAndNumbers = <Sign>[
   Sign("x", CustomIcons.x_sign),
   Sign("y", CustomIcons.y_sign),
   Sign("z", CustomIcons.z_sign),
-  Sign(" ", Icons.space_bar),
+  Sign(" ", Icons.space_bar, type: SignType.space),
   ...listOnlyNumers,
 ];
 

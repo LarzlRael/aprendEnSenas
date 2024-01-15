@@ -26,6 +26,7 @@ class ColoredIcon extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final settings = ref.watch(settingsProvider);
+
     return Icon(
       icon,
       color: settings.color,

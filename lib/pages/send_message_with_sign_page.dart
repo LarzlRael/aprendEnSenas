@@ -2,17 +2,17 @@ part of 'pages.dart';
 
 /* const timeMiliseconds = 1500; */
 
-class SendMessageWithSignPage extends HookWidget {
+class SendMessageWithSignPage extends HookConsumerWidget {
   const SendMessageWithSignPage({super.key});
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     final isSwitched = useState(false);
+    useEffect(() {
+      ref.read(interstiatAdProvider.notifier).loadAd();
+      return null;
+    }, []);
 
     return Scaffold(
-      /* floatingActionButton: FloatingActionButton(
-        onPressed: () => context.push('/letter-and-numbers'),
-        child: Icon(Icons.mic),
-      ), */
       appBar: AppBar(
         title: Text("Enviar mensaje"),
         actions: [
@@ -82,7 +82,6 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
             min: 1,
             max: 10,
             divisions: 10,
-            label: "Velocidad",
           ),
           Expanded(
             child: Card(
@@ -92,6 +91,7 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
                 crossAxisSpacing: 5,
                 itemCount: listOnlyLettersNumbers.value.length,
                 itemBuilder: (_, index) => SquareCard(
+                  size: 250,
                   sign: listOnlyLettersNumbers.value[index],
                   onTap: (sign) => context.push(
                     '/letter_and_numbers/detail/${sign.letter}',
@@ -108,7 +108,6 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
                 const SizedBox(width: 2),
                 SpeechButton(
                   onSpeechResult: (res) {
-                    print("res: $res");
                     ref
                         .read(signProviderProvider.notifier)
                         .setCurrentMessage(res);
@@ -230,10 +229,16 @@ class SendMessageSlider extends HookConsumerWidget {
                                   onTap: () => context.push(
                                       '/letter_and_numbers/detail/${sign.letter}'),
                                   child: Card(
-                                    child: ColoredIcon(
-                                      icon: sign.iconSign,
-                                      size: 250,
-                                    ),
+                                    child: sign.type == SignType.space
+                                        ? const Icon(
+                                            Icons.space_bar,
+                                            size: 250,
+                                            color: Colors.transparent,
+                                          )
+                                        : ColoredIcon(
+                                            icon: sign.iconSign,
+                                            size: 250,
+                                          ),
                                   ),
                                 );
                               },
@@ -346,8 +351,9 @@ class SendMessageSlider extends HookConsumerWidget {
                                       } else {
                                         startPageViewMessage();
                                       }
-                                      addCounterIntersitialAd(
-                                          () => InterstitialAdManager.showAd());
+                                      addCounterIntersitialAd(() => ref
+                                          .read(interstiatAdProvider.notifier)
+                                          .showAd());
                                     },
                           child: Container(
                             width: 50.0,
@@ -429,7 +435,13 @@ class CurrentSign extends StatelessWidget {
 class SquareCard extends StatelessWidget {
   final Sign sign;
   final Function(Sign sign)? onTap;
-  const SquareCard({super.key, required this.sign, this.onTap});
+  final double size;
+  const SquareCard({
+    super.key,
+    this.onTap,
+    required this.sign,
+    required this.size,
+  });
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -444,10 +456,16 @@ class SquareCard extends StatelessWidget {
       child: Container(
         child: Column(
           children: [
-            ColoredIcon(
-              icon: sign.iconSign,
-              size: 50,
-            ),
+            sign.type == SignType.space
+                ? Icon(
+                    Icons.space_bar,
+                    size: size,
+                    color: Colors.transparent,
+                  )
+                : ColoredIcon(
+                    icon: sign.iconSign,
+                    size: size,
+                  ),
             Text(sign.letter),
           ],
         ),

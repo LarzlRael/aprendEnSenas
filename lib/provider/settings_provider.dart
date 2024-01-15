@@ -27,7 +27,7 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
           false,
           false,
           false,
-          250.0,
+          750.0,
           Axis.horizontal,
           0,
           TypeDisplay.pageView,

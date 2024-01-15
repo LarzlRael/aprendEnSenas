@@ -1,7 +1,9 @@
-import 'package:asl/plugin/admob_plugin.dart';
-import 'package:asl/services/services.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+
+import 'package:asl/plugin/admob_plugin.dart';
+import 'package:asl/services/services.dart';
 
 const COUNTER_ADD = 'COUNTER_ADD';
 
@@ -84,7 +86,7 @@ class InterstitialAdManager {
 }
 
 void addCounterIntersitialAd(Function callBack) async {
-  const MAXCOUNT = 4;
+  const MAXCOUNT = 2;
   final keyValueStorageServiceImpl = KeyValueStorageServiceImpl();
   final getCurrentCounterAdd =
       await keyValueStorageServiceImpl.getValue<int>(COUNTER_ADD) ?? 0;
@@ -104,3 +106,82 @@ final couterAdProvider = FutureProvider<int>((ref) async {
       await keyValueStorageServiceImpl.getValue<int>(COUNTER_ADD);
   return getCurrentCounterAdd ?? 0;
 });
+
+final interstiatAdProvider =
+    StateNotifierProvider<IntersitialAdNotifier, InterstialState>((ref) {
+  return IntersitialAdNotifier();
+});
+
+class IntersitialAdNotifier extends StateNotifier<InterstialState> {
+  IntersitialAdNotifier()
+      : super(InterstialState(isAdLoaded: false, interstitialAd: null));
+
+  void loadAd() {
+    if (!state.isAdLoaded) {
+      InterstitialAd.load(
+        adUnitId: "ca-app-pub-3940256099942544/1033173712",
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          onAdLoaded: (ad) {
+            ad.fullScreenContentCallback = FullScreenContentCallback(
+              onAdShowedFullScreenContent: (ad) {},
+              onAdImpression: (ad) {},
+              onAdFailedToShowFullScreenContent: (ad, err) {
+                ad.dispose();
+              },
+              onAdDismissedFullScreenContent: (ad) {
+                ad.dispose();
+                state = state.copyWith(isAdLoaded: false);
+              },
+              onAdClicked: (ad) {},
+            );
+
+            state = state.copyWith(interstitialAd: ad, isAdLoaded: true);
+          },
+          onAdFailedToLoad: (LoadAdError error) {
+            state = state.copyWith(isAdLoaded: false);
+          },
+        ),
+      );
+    }
+  }
+
+  void showAd() {
+    if (state.interstitialAd != null && state.isAdLoaded) {
+      state.interstitialAd!.show();
+    } else {
+      loadAd();
+      state.interstitialAd?.fullScreenContentCallback =
+          FullScreenContentCallback(
+        onAdDismissedFullScreenContent: (ad) {
+          state.interstitialAd?.dispose();
+          state = state.copyWith(interstitialAd: null);
+        },
+      );
+    }
+  }
+
+  void disposeAd() {
+    state.interstitialAd?.dispose();
+    state = state.copyWith(interstitialAd: null, isAdLoaded: false);
+  }
+}
+
+class InterstialState {
+  final InterstitialAd? interstitialAd;
+  final bool isAdLoaded;
+  InterstialState({
+    required this.interstitialAd,
+    required this.isAdLoaded,
+  });
+
+  InterstialState copyWith({
+    InterstitialAd? interstitialAd,
+    bool? isAdLoaded,
+  }) {
+    return InterstialState(
+      interstitialAd: interstitialAd ?? this.interstitialAd,
+      isAdLoaded: isAdLoaded ?? this.isAdLoaded,
+    );
+  }
+}

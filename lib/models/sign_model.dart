@@ -3,6 +3,7 @@ part of 'models.dart';
 enum SignType {
   letter,
   number,
+  space,
 }
 
 extension SignTypeExtension on SignType {
@@ -12,6 +13,8 @@ extension SignTypeExtension on SignType {
         return 'letra';
       case SignType.number:
         return 'número';
+      case SignType.space:
+        return 'espacio';
       default:
         return '';
     }

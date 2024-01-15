@@ -30,7 +30,7 @@ class SettingsPage extends ConsumerWidget {
                   },
                 ),
                 OptionSetting(
-                    title: 'Vibracion',
+                    title: 'Vibración',
                     subTitle: 'Activado',
                     value: settings.isVibrationActive,
                     onTap: () {

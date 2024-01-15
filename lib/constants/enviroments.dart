@@ -9,4 +9,10 @@ class Enviroment {
 
   static String googleMapsApiKey =
       dotenv.env['GOOGLE_MAPS_API_KEY'] ?? 'No está configurado el API_URL';
+
+  static String adBannerId =
+      dotenv.env['AD_BANNER_ID'] ?? "ca-app-pub-3940256099942544/6300978111";
+
+  static String adIntersitialId = dotenv.env['AD_INTERSITIAL_ID'] ??
+      "ca-app-pub-3940256099942544/1033173712";
 }

@@ -1,10 +1,11 @@
 import 'dart:async';
 
+import 'package:asl/constants/enviroments.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 /* change this for env   */
-const adBannerId = "ca-app-pub-3940256099942544/6300978111";
-const adIntersitialId = "ca-app-pub-3940256099942544/1033173712";
+final adBannerId = Enviroment.adBannerId;
+final adIntersitialId = Enviroment.adIntersitialId;
 
 class AdmobPlugin {
   static Future<void> initialize() async {
