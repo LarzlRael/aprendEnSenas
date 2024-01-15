@@ -328,15 +328,17 @@ class SendMessageSlider extends HookConsumerWidget {
                       : InkWell(
                           onTap:
                               settings.typeDisplay == TypeDisplay.imageSwitcher
-                                  ? () {
+                                  ? () async {
                                       FocusScope.of(context).unfocus();
                                       if (isPlaying.value) {
                                         stopTimerAnimatedImages();
                                       } else {
                                         startTimerAnimatedImages();
                                       }
+                                      addCounterIntersitialAd(
+                                          () => InterstitialAdManager.showAd());
                                     }
-                                  : () {
+                                  : () async {
                                       FocusScope.of(context).unfocus();
                                       if (isPlaying.value) {
                                         signProviderRef.timer?.cancel();
@@ -344,6 +346,8 @@ class SendMessageSlider extends HookConsumerWidget {
                                       } else {
                                         startPageViewMessage();
                                       }
+                                      addCounterIntersitialAd(
+                                          () => InterstitialAdManager.showAd());
                                     },
                           child: Container(
                             width: 50.0,

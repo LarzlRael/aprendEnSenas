@@ -1,4 +1,5 @@
 import 'package:asl/firebase_options.dart';
+import 'package:asl/plugin/admob_plugin.dart';
 import 'package:asl/provider/notification_provider.dart';
 import 'package:asl/provider/settings_provider.dart';
 import 'package:asl/theme/theme.dart';
@@ -12,6 +13,7 @@ import 'constants/enviroments.dart';
 
 void main() async {
   await Enviroment.initEnviroment();
+  await AdmobPlugin.initialize();
   await UserPreferences.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

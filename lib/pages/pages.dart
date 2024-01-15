@@ -8,6 +8,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:asl/data/games_data.dart';
 import 'package:asl/data/sign_list.dart';
 import 'package:asl/models/models.dart';
+import 'package:asl/provider/ads_providers.dart';
 
 import 'package:asl/provider/providers.dart';
 import 'package:asl/provider/settings_provider.dart';
