@@ -1,15 +1,7 @@
 import 'package:asl/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-const IS_DARKMODE = "IS_DARK_MODE";
-const IS_SOUNDACTIVE = "IS_SOUND_ACTIVE";
-const IS_VIBRATIONACTIVE = "IS_VIBRATION_ACTIVE";
-const TRANSITION_TIME = "TRANSITION_TIME";
-const SLIDER_DIRECTION = "SLIDER_DIRECTION";
-const SELECTED_AXIOS_OPTION = "SELECTED_AXIOS_OPTION";
-const TYPE_DISPLAY = "TYPE_DISPLAY";
-const COLOR_HANDS = "COLOR_HANDS";
+import 'package:asl/constants/key_value_names.dart';
 
 enum TypeDisplay {
   pageView,
@@ -23,16 +15,8 @@ final settingsProvider = StateNotifierProvider<SettingsNotifier, SettingsState>(
 class SettingsNotifier extends StateNotifier<SettingsState> {
   final keyValueStorageService = KeyValueStorageServiceImpl();
   SettingsNotifier()
-      : super(SettingsState(
-          false,
-          false,
-          false,
-          750.0,
-          Axis.horizontal,
-          0,
-          TypeDisplay.pageView,
-          Colors.blue,
-        )) {
+      : super(SettingsState(false, false, false, 750.0, Axis.horizontal, 0,
+            TypeDisplay.pageView, Colors.blue, false)) {
     asyncInit();
   }
 
@@ -50,6 +34,8 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
 
     final selectedAxiosOption =
         await keyValueStorageService.getValue<int>(SELECTED_AXIOS_OPTION);
+    final isMainDisplayInPageView = await keyValueStorageService
+        .getValue<bool>(IS_MAIN_DISPLAY_IN_PAGE_VIEW);
 
     state = state.copyWith(
       isDarkMode: isDarkMode ?? state.isDarkMode,
@@ -58,6 +44,8 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
       transitionTime: transitionTime ?? state.transitionTime,
       selectedAxiosOption: selectedAxiosOption ?? state.selectedAxiosOption,
       color: Color(color ?? state.color.value),
+      isMainDisplayInPageView:
+          isMainDisplayInPageView ?? state.isMainDisplayInPageView,
     );
     setSelectedDisplayOption(
         selectedDisplayOption ?? state.selectedAxiosOption);
@@ -79,6 +67,13 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
     state = state.copyWith(isVibrationActive: !state.isVibrationActive);
     await keyValueStorageService.setKeyValue<bool>(
         IS_VIBRATIONACTIVE, state.isVibrationActive);
+  }
+
+  Future<void> toggleMainDisplayInPageView() async {
+    state =
+        state.copyWith(isMainDisplayInPageView: !state.isMainDisplayInPageView);
+    await keyValueStorageService.setKeyValue<bool>(
+        IS_MAIN_DISPLAY_IN_PAGE_VIEW, state.isMainDisplayInPageView);
   }
 
   void setTransitionTime(double value) async {
@@ -150,6 +145,7 @@ class SettingsState {
   final TypeDisplay typeDisplay;
   final int selectedAxiosOption;
   final Color color;
+  final bool isMainDisplayInPageView;
 
   SettingsState(
     this.isDarkMode,
@@ -160,6 +156,7 @@ class SettingsState {
     this.selectedAxiosOption,
     this.typeDisplay,
     this.color,
+    this.isMainDisplayInPageView,
   );
 
   SettingsState copyWith({
@@ -171,6 +168,7 @@ class SettingsState {
     int? selectedAxiosOption,
     TypeDisplay? typeDisplay,
     Color? color,
+    bool? isMainDisplayInPageView,
   }) {
     return SettingsState(
       isDarkMode ?? this.isDarkMode,
@@ -181,6 +179,7 @@ class SettingsState {
       selectedAxiosOption ?? this.selectedAxiosOption,
       typeDisplay ?? this.typeDisplay,
       color ?? this.color,
+      isMainDisplayInPageView ?? this.isMainDisplayInPageView,
     );
   }
 }

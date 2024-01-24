@@ -6,7 +6,8 @@ class SendMessageWithSignPage extends HookConsumerWidget {
   const SendMessageWithSignPage({super.key});
   @override
   Widget build(BuildContext context, ref) {
-    final isSwitched = useState(false);
+    final settingsN = ref.read(settingsProvider.notifier);
+    final settingsS = ref.watch(settingsProvider);
     useEffect(() {
       ref.read(interstiatAdProvider.notifier).loadAd();
       return null;
@@ -40,14 +41,14 @@ class SendMessageWithSignPage extends HookConsumerWidget {
               children: [
                 Text('Cambiar vista'),
                 Switch(
-                  value: isSwitched.value,
-                  onChanged: (value) {
-                    isSwitched.value = value;
+                  value: settingsS.isMainDisplayInPageView,
+                  onChanged: (value) async {
+                    await settingsN.toggleMainDisplayInPageView();
                   },
                 ),
               ],
             ),
-            isSwitched.value
+            settingsS.isMainDisplayInPageView
                 ? SendMessageWithStaticImages()
                 : SendMessageSlider(),
           ],

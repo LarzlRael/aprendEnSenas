@@ -1,6 +1,7 @@
 <resources>
   <string name="app_name">Sign Language</string>
-  <string name="admob_application_id">ca-app-pub-3940256099942544~3347511713</string>
+  <string name="admob_application_id">ca-app-pub-8271313080297168~6490265739</string>
+  
   <!-- Agrega más cadenas según sea necesario -->
-  <!-- Add more string  -->
+  
 </resources>
