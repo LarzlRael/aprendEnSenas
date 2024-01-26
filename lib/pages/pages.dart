@@ -6,6 +6,7 @@ import 'dart:ui' as ui;
 import 'package:animate_do/animate_do.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:asl/constants/constant.dart';
+import 'package:asl/customs_icons/icons_custom_icons.dart';
 import 'package:asl/data/games_data.dart';
 import 'package:asl/data/sign_list.dart';
 import 'package:asl/models/models.dart';
