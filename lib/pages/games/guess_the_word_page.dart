@@ -115,8 +115,7 @@ class GuessTheWordPage extends HookConsumerWidget {
                         randomCommonWord.value.correctWordString;
                     if (value == correctWordString) {
                       // La cadena ingresada es correcta
-                      settingNotifier
-                          .playSound('assets/sounds/correct_sound_3.wav');
+                      settingNotifier.playSound(correctsSounds[2]);
                       isCorrect.value = true;
                     } else if (value.length == correctWordString.length) {
                       // La longitud de la cadena ingresada es correcta pero no coincide con la palabra correcta

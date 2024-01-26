@@ -21,7 +21,7 @@ class WordInSightPage extends HookConsumerWidget {
 
     useEffect(() {
       if (isCorrect.value) {
-        settingsNotifier.playSound("assets/sounds/correct_sound_3.wav");
+        settingsNotifier.playSound(correctsSounds[2]);
         selectedCardIndex.value = -1;
         state.value = createWordInSightGame(commonWords, 4);
         status.value = status.value + stepValue;

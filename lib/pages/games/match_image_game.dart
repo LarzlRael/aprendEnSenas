@@ -1,13 +1,13 @@
 part of '../pages.dart';
 
-class MatchImageGame extends HookWidget {
+class MatchImageGame extends HookConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     final items = useState<List<ItemModel>>([]);
     final items2 = useState<List<ItemModel>>([]);
     final score = useState<int>(0);
     final gameOver = useState<bool>(false);
-
+    final settingsNotifier = ref.watch(settingsProvider.notifier);
     initGame() {
       gameOver.value = false;
       score.value = 0;
@@ -20,20 +20,31 @@ class MatchImageGame extends HookWidget {
     useEffect(() {
       initGame();
     }, []);
+    /* Future<void> saveRecord() async {
+      await saveGameScore(GameType.arrastra_y_suelta, score.value, Level.easy);
+    }
 
+    */
+
+    useEffect(() {
+      if (gameOver.value) {
+        addCounterIntersitialAd(() => InterstitialAdManager.showAd());
+      }
+    }, [gameOver.value]);
     if (items.value.length == 0) gameOver.value = true;
     return Scaffold(
       appBar: AppBar(
+        leading: BackIcon(),
         centerTitle: true,
-        title: Text('Matching Game'),
+        title: Text('Arrastra y suelta'),
         actions: [
           Column(
             children: [
-              SimpleText(text: "Puntaje:"),
+              SimpleText(text: "Puntaje"),
               SimpleText(
                 text: "${score.value}",
                 style: TextStyle(
-                  color: Colors.green,
+                  color: score.value > 0 ? Colors.green : Colors.red,
                   fontWeight: FontWeight.bold,
                   fontSize: 25.0,
                 ),
@@ -83,6 +94,7 @@ class MatchImageGame extends HookWidget {
                                 ),
                               ),
                               feedback: Image.asset(
+                                opacity: const AlwaysStoppedAnimation(.9),
                                 item.pathAssetImage,
                                 fit: BoxFit.cover,
                                 height: 50,
@@ -106,8 +118,9 @@ class MatchImageGame extends HookWidget {
                               items2.value.remove(item);
                               score.value += 10;
                               item.accepting = false;
+                              settingsNotifier.playSound(correctsSounds[2]);
                             } else {
-                              VibrateServiceImp().vibrate(millisec: 250);
+                              settingsNotifier.startVibrate();
                               score.value -= 5;
                               item.accepting = false;
                             }

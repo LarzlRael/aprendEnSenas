@@ -136,6 +136,7 @@ class SendMessageSlider extends HookConsumerWidget {
 
     pageController.addListener(() {
       if (pageController.page!.toInt() < signProviderRef.listSigns.length) {
+        _currentIndex.value = pageController.page!.toInt();
         ref.read(signProviderProvider.notifier).setCurrentSign(
             signProviderRef.listSigns[pageController.page!.toInt()]);
       }
@@ -268,48 +269,51 @@ class SendMessageSlider extends HookConsumerWidget {
                                   ),
                           ),
                   ),
-                  signProviderRef.listSigns.isEmpty
-                      ? const SimpleText(
-                          text: "No hay mensaje",
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                        )
-                      : RichText(
-                          text: TextSpan(
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              /* color: Colors.black, */
-                            ),
-                            children: signProviderRef.listSigns.map((e) {
-                              if (_currentIndex.value ==
-                                  signProviderRef
-                                      .listSigns[_currentIndex.value]) {
-                                return TextSpan(
-                                    text: e.letter,
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.green,
-                                    ));
-                              } else {
-                                return WidgetSpan(
-                                  child: Transform.translate(
-                                    offset: const Offset(0.0, 0.0),
-                                    child: Text(
-                                      e.letter,
-                                      style: TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold,
-                                        /* color: Colors.black, */
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 10),
+                    child: signProviderRef.listSigns.isEmpty
+                        ? const SimpleText(
+                            text: "No hay mensaje",
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                          )
+                        : RichText(
+                            text: TextSpan(
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                /* color: Colors.black, */
+                              ),
+                              children: signProviderRef.listSigns
+                                  .mapIndexed((index, e) {
+                                if (_currentIndex.value == index) {
+                                  return WidgetSpan(
+                                    alignment: PlaceholderAlignment.middle,
+                                    child: Transform.translate(
+                                      offset: const Offset(0.0, 0.0),
+                                      child: Text(
+                                        e.letter,
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.green,
+                                          /* color: Colors.black, */
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                );
-                              }
-                            }).toList(),
+                                  );
+                                } else {
+                                  return TextSpan(
+                                      text: e.letter,
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ));
+                                }
+                              }).toList(),
+                            ),
                           ),
-                        ),
+                  ),
                 ],
               ),
             ],

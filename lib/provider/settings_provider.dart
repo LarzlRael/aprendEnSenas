@@ -15,7 +15,7 @@ final settingsProvider = StateNotifierProvider<SettingsNotifier, SettingsState>(
 class SettingsNotifier extends StateNotifier<SettingsState> {
   final keyValueStorageService = KeyValueStorageServiceImpl();
   SettingsNotifier()
-      : super(SettingsState(false, false, false, 750.0, Axis.horizontal, 0,
+      : super(SettingsState(false, true, true, 750.0, Axis.horizontal, 0,
             TypeDisplay.pageView, Colors.blue, false)) {
     asyncInit();
   }
