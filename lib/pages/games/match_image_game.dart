@@ -8,12 +8,6 @@ class MatchImageGame extends HookWidget {
     final score = useState<int>(0);
     final gameOver = useState<bool>(false);
 
-    /*   @override
-    void initState() {
-      super.initState();
-      initGame();
-    } */
-
     initGame() {
       gameOver.value = false;
       score.value = 0;
@@ -35,7 +29,7 @@ class MatchImageGame extends HookWidget {
         actions: [
           Column(
             children: [
-              SimpleText(text: "Puntaje: "),
+              SimpleText(text: "Puntaje:"),
               SimpleText(
                 text: "${score.value}",
                 style: TextStyle(
@@ -51,33 +45,55 @@ class MatchImageGame extends HookWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          children: <Widget>[
+          children: [
             gameOver.value
-                ? GameOverThisGame()
+                ? Container(
+                    width: double.infinity,
+                    height: 600,
+                    child: ResultScreen(
+                      resultType: score.value > 0
+                          ? ResultGameType.win
+                          : ResultGameType.lose,
+                      loseSubtitle:
+                          'El puntaje es menor a 0, vuelve a intentarlo',
+                      loseTitle: 'Perdiste',
+                      winSubtitle:
+                          '¡Felicidades! tu puntaje es de ${score.value}',
+                      winTitle: '¡Ganaste!',
+                      callBackOnLose: initGame,
+                      callBackOnWin: initGame,
+                    ),
+                  )
                 : Row(
-                    children: <Widget>[
+                    children: [
                       Column(
                           children: items.value.map((item) {
                         return Container(
                           margin: const EdgeInsets.all(8.0),
                           child: Draggable<ItemModel>(
-                            data: item,
-                            childWhenDragging: Icon(
-                              item.icon,
-                              color: Colors.grey,
-                              size: 50.0,
-                            ),
-                            feedback: Icon(
-                              item.icon,
-                              color: Colors.teal,
-                              size: 50,
-                            ),
-                            child: ColoredIcon(
-                              icon: item.icon,
-                              /* color: Colors.teal, */
-                              size: 50,
-                            ),
-                          ),
+                              data: item,
+                              childWhenDragging: ClipRRect(
+                                child: FadeInImage(
+                                  placeholder: const AssetImage(
+                                      'assets/icons/app_logo.png'),
+                                  image: AssetImage(item.pathAssetImage),
+                                  fit: BoxFit.cover,
+                                  height: 50,
+                                  width: 50,
+                                ),
+                              ),
+                              feedback: Image.asset(
+                                item.pathAssetImage,
+                                fit: BoxFit.cover,
+                                height: 50,
+                                width: 50,
+                              ),
+                              child: Image.asset(
+                                item.pathAssetImage,
+                                fit: BoxFit.cover,
+                                height: 50,
+                                width: 50,
+                              )),
                         );
                       }).toList()),
                       Spacer(),
@@ -136,38 +152,6 @@ class MatchImageGame extends HookWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class GameOverThisGame extends StatelessWidget {
-  const GameOverThisGame({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          "GameOver",
-          style: TextStyle(
-            color: Colors.red,
-            fontWeight: FontWeight.bold,
-            fontSize: 24.0,
-          ),
-        ),
-        Center(
-          child: TextButton(
-            /* textColor: Colors.white,
-        color: Colors.pink, */
-            child: Text("New Game"),
-            onPressed: () {
-              /* initGame(); */
-            },
-          ),
-        )
-      ],
     );
   }
 }

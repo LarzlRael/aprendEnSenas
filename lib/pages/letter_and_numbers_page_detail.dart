@@ -45,7 +45,12 @@ class LetterAndNumbersPageDetail extends HookWidget {
                     children: [
                       Transform.translate(
                         offset: Offset(0, -35),
-                        child: Text(sign.letter, style: style),
+                        child: Text(
+                          sign.letter,
+                          style: sign.letter.length > 1
+                              ? style.copyWith(fontSize: 100)
+                              : style,
+                        ),
                       ),
                       Hero(
                         tag: 'tag-${sign.letter}',

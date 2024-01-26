@@ -115,9 +115,16 @@ class FlippingCardGame extends HookWidget {
     return _isFinished.value
         ? GameOverScreen(
             resultType: ResultGameType.win,
-            level: level,
-            title: Text("¡Ganaste!"),
-            subtitle: Text("¡Has completado el nivel ${level.name}!"),
+            title: SimpleText(
+              text: "¡Nivel completado!",
+              style: theme.headlineSmall,
+            ),
+            subtitle: SimpleText(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              text: "¡Has completado el nivel ${level.name}!",
+              /* Add Icon to show  */
+              style: theme.bodyMedium,
+            ),
             titleButton: "Ir al siguiente nivel",
             action: () => context.push(
               '/games/flipping_cards_page',

@@ -4,12 +4,12 @@ part of 'utils.dart';
 class ItemModel {
   final String name;
   String? value;
-  IconData icon;
+  final String pathAssetImage;
   bool? accepting;
 
   ItemModel({
     required this.name,
-    required this.icon,
+    required this.pathAssetImage,
     String? value,
     this.accepting = false,
   }) : value = value ?? name.toLowerCase().removeDiacriticsFromString();
@@ -17,31 +17,42 @@ class ItemModel {
   ItemModel copyWith({
     String? name,
     String? value,
-    IconData? icon,
+    String? pathAssetImage,
     bool? accepting,
   }) {
     return ItemModel(
       name: name ?? this.name,
       value: value ?? this.value,
-      icon: icon ?? this.icon,
+      pathAssetImage: pathAssetImage ?? this.pathAssetImage,
       accepting: accepting ?? this.accepting,
     );
   }
 }
 
 final dataDragNDrop = <ItemModel>[
-  ItemModel(icon: FontAwesomeIcons.hippo, name: 'Hipopotamo'),
-  ItemModel(icon: FontAwesomeIcons.dog, name: "Perro"),
-  ItemModel(icon: FontAwesomeIcons.cat, name: "Gato"),
-  ItemModel(icon: FontAwesomeIcons.fish, name: "Pez"),
-  ItemModel(icon: FontAwesomeIcons.dragon, name: "Dragon"),
-  ItemModel(icon: FontAwesomeIcons.worm, name: "Gusano"),
-  ItemModel(icon: FontAwesomeIcons.spider, name: "Araña"),
-  ItemModel(icon: FontAwesomeIcons.horse, name: "Caballo"),
-  ItemModel(icon: FontAwesomeIcons.frog, name: "Rana"),
-  ItemModel(icon: FontAwesomeIcons.dove, name: "Pajaro"),
-  ItemModel(icon: FontAwesomeIcons.crow, name: "Cuervo"),
-  ItemModel(icon: FontAwesomeIcons.cow, name: "Vaca"),
+  ItemModel(pathAssetImage: 'assets/animals/abeja.png', name: 'abeja'),
+  ItemModel(pathAssetImage: 'assets/animals/llama.png', name: 'llama'),
+  ItemModel(pathAssetImage: 'assets/animals/pez-payaso.png', name: 'pez'),
+  ItemModel(pathAssetImage: 'assets/animals/castor.png', name: 'castor'),
+  ItemModel(pathAssetImage: 'assets/animals/mapache.png', name: 'mapache'),
+  ItemModel(pathAssetImage: 'assets/animals/rana.png', name: 'rana'),
+  ItemModel(pathAssetImage: 'assets/animals/cebra.png', name: 'cebra'),
+  ItemModel(pathAssetImage: 'assets/animals/medusa.png', name: 'medusa'),
+  ItemModel(pathAssetImage: 'assets/animals/raton.png', name: 'raton'),
+  ItemModel(pathAssetImage: 'assets/animals/cerdo.png', name: 'cerdo'),
+  ItemModel(pathAssetImage: 'assets/animals/mono.png', name: 'mono'),
+  ItemModel(pathAssetImage: 'assets/animals/tortuga.png', name: 'tortuga'),
+  ItemModel(pathAssetImage: 'assets/animals/gallina.png', name: 'gallina'),
+  ItemModel(pathAssetImage: 'assets/animals/morsa.png', name: 'morsa'),
+  ItemModel(pathAssetImage: 'assets/animals/tucan.png', name: 'tucan'),
+  ItemModel(pathAssetImage: 'assets/animals/ganso.png', name: 'ganso'),
+  ItemModel(pathAssetImage: 'assets/animals/oso.png', name: 'oso'),
+  ItemModel(pathAssetImage: 'assets/animals/vaca.png', name: 'vaca'),
+  ItemModel(pathAssetImage: 'assets/animals/gato.png', name: 'gato'),
+  ItemModel(pathAssetImage: 'assets/animals/oveja.png', name: 'oveja'),
+  ItemModel(pathAssetImage: 'assets/animals/zorro.png', name: 'zorro'),
+  ItemModel(pathAssetImage: 'assets/animals/jirafa.png', name: 'jirafa'),
+  ItemModel(pathAssetImage: 'assets/animals/perro.png', name: 'perro')
 ];
 
 List<ItemModel> getNelemets(int n) {

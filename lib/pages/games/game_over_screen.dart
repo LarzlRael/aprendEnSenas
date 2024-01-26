@@ -1,7 +1,6 @@
 part of '../pages.dart';
 
 class GameOverScreen extends HookConsumerWidget {
-  final Level level;
   final Widget title;
   final Widget subtitle;
   final String? titleButton;
@@ -10,7 +9,6 @@ class GameOverScreen extends HookConsumerWidget {
 
   const GameOverScreen({
     super.key,
-    required this.level,
     required this.title,
     required this.subtitle,
     required this.resultType,

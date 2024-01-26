@@ -23,42 +23,36 @@ class SettingsPage extends ConsumerWidget {
               children: [
                 OptionSetting(
                   title: 'Tema',
-                  subTitle: 'Thme oscuro',
+                  subTitle: 'Tema oscuro',
                   value: settings.isDarkMode,
-                  onTap: () {
-                    reff.toggleDarkMode();
-                  },
+                  onTap: reff.toggleDarkMode,
                 ),
                 OptionSetting(
-                    title: 'Vibración',
-                    subTitle: 'Activado',
-                    value: settings.isVibrationActive,
-                    onTap: () {
-                      reff.toggleVibration();
-                    }),
+                  title: 'Vibración',
+                  subTitle: 'Activado',
+                  value: settings.isVibrationActive,
+                  onTap: reff.toggleVibration,
+                ),
               ],
             ),
             OptionSetting(
               title: 'Sonido',
               subTitle: 'Activado',
               value: settings.isSoundActive,
-              onTap: () {
-                reff.toggleSound();
-              },
+              onTap: reff.toggleSound,
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Tiempo de retraso de transicion'),
                 Slider(
-                    min: 250,
-                    max: 2500,
-                    divisions: 10,
-                    label: settings.transitionTime.toString(),
-                    value: settings.transitionTime,
-                    onChanged: (value) {
-                      reff.setTransitionTime(value);
-                    }),
+                  min: 250,
+                  max: 2500,
+                  divisions: 10,
+                  label: settings.transitionTime.toString(),
+                  value: settings.transitionTime,
+                  onChanged: (value) => reff.setTransitionTime(value),
+                ),
                 Text('Tiempo actual: ${settings.transitionTime}'),
                 Text('Transicion'),
                 /* TextButton(
@@ -84,23 +78,17 @@ class SettingsPage extends ConsumerWidget {
                 CustomCheckBox(
                   label: 'Horizontal',
                   value: settings.selectedAxiosOption == 0,
-                  onTap: () {
-                    reff.setSelectedDisplayOption(0);
-                  },
+                  onTap: () => reff.setSelectedDisplayOption(0),
                 ),
                 CustomCheckBox(
                   label: 'Vertical',
                   value: settings.selectedAxiosOption == 1,
-                  onTap: () {
-                    reff.setSelectedDisplayOption(1);
-                  },
+                  onTap: () => reff.setSelectedDisplayOption(1),
                 ),
                 CustomCheckBox(
                   label: 'Imagenes',
                   value: settings.selectedAxiosOption == 2,
-                  onTap: () {
-                    reff.setSelectedDisplayOption(2);
-                  },
+                  onTap: () => reff.setSelectedDisplayOption(2),
                 ),
                 SimpleText(
                   text: 'Color de fondo',
@@ -108,10 +96,7 @@ class SettingsPage extends ConsumerWidget {
                   padding: EdgeInsets.symmetric(vertical: 5),
                 ),
                 MaterialColorPicker(
-                  onColorChange: (Color color) {
-                    // Handle color changes
-                    reff.setIconColor(color);
-                  },
+                  onColorChange: reff.setIconColor,
                   selectedColor: settings.color,
                 )
               ],

@@ -29,13 +29,7 @@ class WordInSightPage extends HookConsumerWidget {
       }
       isCorrect.value = false;
     }, [isCorrect.value]);
-    /* useEffect(() {
-      if (lifesCounter.value == 0) {
-        context.pop();
-      }
-      return null;
-    }, [lifesCounter.value]); */
-    /* TODO check and verfy this code */
+
     return status.value > 1.0 || lifesCounter.value == 0
         ? ResultScreen(
             resultType: lifesCounter.value > 0
@@ -45,8 +39,13 @@ class WordInSightPage extends HookConsumerWidget {
                     : ResultGameType.lose,
             winTitle: '¡Felicidades!',
             winSubtitle: 'Has ganado',
-            loseTitle: '¡Lo siento!',
-            loseSubtitle: 'Has perdido',
+            loseTitle: 'Perdiste',
+            loseSubtitle: 'Has perdido todas tus vidas, intentalo de nuevo',
+            callBackOnLose: () {
+              status.value = 0.0;
+              lifesCounter.value = 5;
+              key.value = UniqueKey();
+            },
           )
         : Scaffold(
             body: SafeArea(
@@ -247,6 +246,8 @@ class ResultScreen extends StatelessWidget {
   final String winSubtitle;
   final String loseTitle;
   final String loseSubtitle;
+  final Function()? callBackOnWin;
+  final Function()? callBackOnLose;
   const ResultScreen({
     Key? key,
     required this.resultType,
@@ -254,23 +255,36 @@ class ResultScreen extends StatelessWidget {
     required this.winSubtitle,
     required this.loseTitle,
     required this.loseSubtitle,
+    this.callBackOnWin,
+    this.callBackOnLose,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     if (resultType == ResultGameType.win) {
       return GameOverScreen(
         resultType: ResultGameType.win,
-        title: Text(winTitle),
-        subtitle: Text(winSubtitle),
-        level: Level.easy,
+        title: SimpleText(text: winTitle, style: textTheme.headlineSmall!),
+        subtitle: SimpleText(
+          text: winSubtitle,
+          style: textTheme.bodyMedium!,
+          padding: EdgeInsets.symmetric(vertical: 10),
+        ),
       );
     } else {
       return GameOverScreen(
         resultType: ResultGameType.lose,
-        title: Text(loseTitle),
-        subtitle: Text(loseSubtitle),
-        level: Level.easy,
+        action: callBackOnLose,
+        title: SimpleText(
+          text: loseTitle,
+          style: textTheme.headlineSmall!.copyWith(color: Colors.red),
+        ),
+        subtitle: SimpleText(
+          text: loseSubtitle,
+          style: textTheme.bodyMedium!,
+          padding: EdgeInsets.symmetric(vertical: 10),
+        ),
       );
     }
   }

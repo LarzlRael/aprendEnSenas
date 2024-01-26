@@ -35,7 +35,7 @@ final signLowerLetters = <Sign>[
 
 final listOnlyNumers = <Sign>[
   Sign("0", CustomIcons.number_0, type: SignType.number),
-  Sign("1", CustomIcons.number_0, type: SignType.number),
+  Sign("1", CustomIcons.number_1, type: SignType.number),
   Sign("2", CustomIcons.number_2, type: SignType.number),
   Sign("3", CustomIcons.number_3, type: SignType.number),
   Sign("4", CustomIcons.number_4, type: SignType.number),

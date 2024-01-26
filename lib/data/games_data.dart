@@ -51,7 +51,7 @@ final items = <SelectGameCard>[
     },
   ),
   SelectGameCard(
-    icon: CustomIcons.ic_word_in_sight,
+    icon: CustomIcons.ic_drag_matching,
     subtitle: "Arraga y suelta las letras para formar la palabra correcta",
     title: GameType.arrastra_y_suelta.name,
     onSelected: (context) {
