@@ -1,7 +1,7 @@
 import 'package:asl/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../pages/pages.dart';
+import 'package:asl/pages/pages.dart';
 
 final appRouter = GoRouter(
   initialLocation: '/',
@@ -11,6 +11,10 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/',
       builder: (context, state) => HomePage(),
+    ),
+    GoRoute(
+      path: '/welcome_page',
+      builder: (context, state) => WelcomePage(),
     ),
     GoRoute(
       path: '/letter_and_numbers',
@@ -88,9 +92,7 @@ final appRouter = GoRouter(
         ),
         GoRoute(
           path: 'drag_and_drop_game',
-          builder: (_, state) {
-            return MatchImageGame();
-          },
+          builder: (_, state) => MatchImageGame(),
         ),
       ],
     ),

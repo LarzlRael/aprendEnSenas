@@ -3,7 +3,8 @@ part of 'pages.dart';
 /* const timeMiliseconds = 1500; */
 
 class SendMessageWithSignPage extends HookConsumerWidget {
-  const SendMessageWithSignPage({super.key});
+  final String? phrase;
+  const SendMessageWithSignPage({super.key, this.phrase});
   @override
   Widget build(BuildContext context, ref) {
     final settingsN = ref.read(settingsProvider.notifier);
@@ -49,8 +50,8 @@ class SendMessageWithSignPage extends HookConsumerWidget {
               ],
             ),
             settingsS.isMainDisplayInPageView
-                ? SendMessageWithStaticImages()
-                : SendMessageSlider(),
+                ? SendMessageWithStaticImages(pharse: phrase)
+                : SendMessageSlider(pharse: phrase),
           ],
         ),
       ),
@@ -59,6 +60,9 @@ class SendMessageWithSignPage extends HookConsumerWidget {
 }
 
 class SendMessageWithStaticImages extends HookConsumerWidget {
+  final String? pharse;
+
+  SendMessageWithStaticImages({super.key, this.pharse});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final listOnlyLettersNumbers = useState<List<Sign>>([]);
@@ -124,7 +128,11 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
 }
 
 class SendMessageSlider extends HookConsumerWidget {
-  const SendMessageSlider({super.key});
+  final String? pharse;
+  const SendMessageSlider({
+    super.key,
+    this.pharse,
+  });
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(settingsProvider);

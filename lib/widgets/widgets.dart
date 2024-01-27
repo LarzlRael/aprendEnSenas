@@ -17,6 +17,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'dart:async';
+import 'package:provider/provider.dart' as ProviderState;
 
 import 'package:speech_to_text/speech_to_text.dart';
 
@@ -35,3 +36,6 @@ part '/animation/shakingY_animation.dart';
 part '/icons/colored_icon.dart';
 part '/forms/send_message_input.dart';
 part 'ads/banner_ad.dart';
+
+part 'slideshow/slide_item.dart';
+part 'slideshow/slideshow.dart';

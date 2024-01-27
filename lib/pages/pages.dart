@@ -26,13 +26,11 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
-import 'package:flutter_verification_code/flutter_verification_code.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:go_router/go_router.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../services/services.dart';
 part 'home_page.dart';
 
 part 'letter_and_numbers_page.dart';
@@ -49,3 +47,4 @@ part 'games/match_image_game.dart';
 /* part 'games/flipping_cards_2.dart'; */
 part 'games/flipping_card_game.dart';
 part 'games/game_over_screen.dart';
+part 'welcome/welcome_page.dart';
