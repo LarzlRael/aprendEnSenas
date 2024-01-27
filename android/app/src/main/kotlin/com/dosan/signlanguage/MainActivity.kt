@@ -1,4 +1,4 @@
-package com.example.templat_project
+package com.dosan.signlanguage
 
 import io.flutter.embedding.android.FlutterActivity
 
