@@ -1,5 +1,6 @@
 import 'package:asl/customs_icons/custom_icons.dart';
 import 'package:asl/models/models.dart';
+import 'package:asl/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 final signLowerLetters = <Sign>[
@@ -83,7 +84,10 @@ final listAllSign = <Sign>[
   ...signLowerLetters,
 ];
 
-Sign getIconSign(String letter) {
-  final sign = listAllSign.firstWhere((element) => element.letter == letter);
-  return sign;
+List<Sign>? getIconSign(String letter) {
+  if (letter.length == 0) {
+    return [listAllSign.firstWhere((element) => element.letter == letter)];
+  }
+
+  return generateListToMessageUtil(listAllSign, letter);
 }

@@ -7,6 +7,11 @@ class SendMessageWithSignPage extends HookConsumerWidget {
   const SendMessageWithSignPage({super.key, this.phrase});
   @override
   Widget build(BuildContext context, ref) {
+    useEffect(() {
+      Future.delayed(Duration.zero, () {
+        ref.read(signProviderProvider.notifier).setCurrentMessage(phrase ?? '');
+      });
+    }, []);
     final settingsN = ref.read(settingsProvider.notifier);
     final settingsS = ref.watch(settingsProvider);
     useEffect(() {
@@ -99,7 +104,7 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
                   size: 250,
                   sign: listOnlyLettersNumbers.value[index],
                   onTap: (sign) => context.push(
-                    '/letter_and_numbers/detail/${sign.letter}',
+                    '/letter_and_numbers_page/${sign.letter}',
                   ),
                 ),
               ),
@@ -237,7 +242,7 @@ class SendMessageSlider extends HookConsumerWidget {
                                 final sign = signProviderRef.listSigns[index];
                                 return InkWell(
                                   onTap: () => context.push(
-                                      '/letter_and_numbers/detail/${sign.letter}'),
+                                      '/letter_and_numbers_page/${sign.letter}'),
                                   child: Card(
                                     child: sign.type == SignType.space
                                         ? const Icon(
@@ -316,6 +321,7 @@ class SendMessageSlider extends HookConsumerWidget {
                                       style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
+                                        color: Colors.grey,
                                       ));
                                 }
                               }).toList(),

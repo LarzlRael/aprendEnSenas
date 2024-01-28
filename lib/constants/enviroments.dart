@@ -15,4 +15,6 @@ class Enviroment {
 
   static String adIntersitialId = dotenv.env['AD_INTERSITIAL_ID'] ??
       "ca-app-pub-3940256099942544/1033173712";
+
+  static String deepLinkUrl = dotenv.env['DEEP_LINK_URL'] ?? "";
 }

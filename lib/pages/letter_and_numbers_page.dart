@@ -8,7 +8,7 @@ class LetterAndNumbersPage extends StatelessWidget {
       body: SafeArea(
         child: MyStatelessWidget(
           onSelected: (selected) {
-            context.push('/letter_and_numbers/detail/${selected.letter}');
+            context.push('/letter_and_numbers_page/${selected.letter}');
           },
         ),
       ),
@@ -94,47 +94,9 @@ class ListGrid extends StatelessWidget {
   final Function(Sign sing)? onTap;
   @override
   Widget build(BuildContext context) {
-    return AlignedGridView.count(
-      crossAxisCount: 2,
-      mainAxisSpacing: 5,
-      crossAxisSpacing: 5,
-      itemCount: listOnlySingAndNumbers.length,
-      itemBuilder: (context, int index) {
-        final listIndex = listOnlySingAndNumbers[index];
-        return InkWell(
-          onTap: () {
-            if (onTap != null) {
-              onTap!(signLowerLetters[index]);
-            }
-          },
-          child: Card(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  listIndex.letter.toUpperCase(),
-                  style: TextStyle(
-                    fontSize: 50,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.grey[700],
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                Container(
-                  padding: EdgeInsets.all(10),
-                  width: 100,
-                  height: 100,
-                  child: ColoredIcon(
-                    icon: listIndex.iconSign,
-                    size: 50,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
+    return ListGridSign(
+      listSign: listOnlySingAndNumbers,
+      onTap: onTap,
     );
   }
 }
