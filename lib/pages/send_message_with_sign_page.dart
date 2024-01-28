@@ -5,15 +5,19 @@ part of 'pages.dart';
 class SendMessageWithSignPage extends HookConsumerWidget {
   final String? phrase;
   const SendMessageWithSignPage({super.key, this.phrase});
+  static const routeName = '/send_message_with_sign_page';
   @override
   Widget build(BuildContext context, ref) {
+    final settingsN = ref.read(settingsProvider.notifier);
+    final settingsS = ref.watch(settingsProvider);
+
+    final signProviderStatePhrase =
+        ref.watch(signProviderProvider).currentMessage;
     useEffect(() {
       Future.delayed(Duration.zero, () {
         ref.read(signProviderProvider.notifier).setCurrentMessage(phrase ?? '');
       });
     }, []);
-    final settingsN = ref.read(settingsProvider.notifier);
-    final settingsS = ref.watch(settingsProvider);
     useEffect(() {
       ref.read(interstiatAdProvider.notifier).loadAd();
       return null;
@@ -23,13 +27,13 @@ class SendMessageWithSignPage extends HookConsumerWidget {
       appBar: AppBar(
         title: Text("Enviar mensaje"),
         actions: [
-          IconButton(
-            onPressed: () => context.push('/select_game_menu_page'),
-            icon: Icon(
-              Icons.games,
-              color: Colors.green,
+          if (signProviderStatePhrase.isNotEmpty)
+            IconButton(
+              onPressed: () => ShareServiceImp().shareOnlyText(
+                "${Enviroment.deepLinkUrl}$routeName/$signProviderStatePhrase",
+              ),
+              icon: Icon(Icons.share),
             ),
-          ),
           IconButton(
             onPressed: () => context.push('/settings_page'),
             icon: Icon(Icons.settings),
@@ -104,7 +108,7 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
                   size: 250,
                   sign: listOnlyLettersNumbers.value[index],
                   onTap: (sign) => context.push(
-                    '/letter_and_numbers_page/${sign.letter}',
+                    '${LetterAndNumbersPage.routeName}/${sign.letter}',
                   ),
                 ),
               ),
@@ -242,7 +246,7 @@ class SendMessageSlider extends HookConsumerWidget {
                                 final sign = signProviderRef.listSigns[index];
                                 return InkWell(
                                   onTap: () => context.push(
-                                      '/letter_and_numbers_page/${sign.letter}'),
+                                      '${LetterAndNumbersPage.routeName}/${sign.letter}'),
                                   child: Card(
                                     child: sign.type == SignType.space
                                         ? const Icon(

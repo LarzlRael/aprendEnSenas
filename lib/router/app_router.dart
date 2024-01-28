@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:asl/pages/pages.dart';
 
 final appRouter = GoRouter(
-  initialLocation: '/letter_and_numbers_page',
+  initialLocation: '/',
   /* refreshListenable: goRouterNotifier, */
   routes: [
     ///* Primera pantalla
@@ -17,7 +17,7 @@ final appRouter = GoRouter(
       builder: (context, state) => WelcomePage(),
     ),
     GoRoute(
-        path: '/letter_and_numbers_page',
+        path: LetterAndNumbersPage.routeName,
         builder: (context, state) => LetterAndNumbersPage(),
         routes: [
           GoRoute(
@@ -29,7 +29,7 @@ final appRouter = GoRouter(
         ]),
 
     GoRoute(
-        path: '/send_message_with_sign_page',
+        path: SendMessageWithSignPage.routeName,
         builder: (_, __) => const SendMessageWithSignPage(),
         routes: [
           GoRoute(

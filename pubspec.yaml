@@ -35,8 +35,11 @@ dependencies:
   confetti: ^0.7.0
   cupertino_icons: ^1.0.2
   diacritic: ^0.1.5
+  firebase_analytics: ^10.8.0
   firebase_core: ^2.24.2
+  firebase_crashlytics: ^3.4.9
   firebase_messaging: ^14.7.10
+  firebase_remote_config: ^4.3.8
   flip_card: ^0.7.0
   flutter:
     sdk: flutter
@@ -58,6 +61,7 @@ dependencies:
   path_provider: ^2.1.2
   provider: ^6.1.1
   riverpod_annotation: ^2.3.3
+  share_plus: ^7.2.1
   shared_preferences: ^2.2.2
   speech_to_text: ^6.5.1
   vibration: ^1.8.4

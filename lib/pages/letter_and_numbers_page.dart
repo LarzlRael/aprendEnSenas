@@ -2,13 +2,14 @@ part of 'pages.dart';
 
 class LetterAndNumbersPage extends StatelessWidget {
   const LetterAndNumbersPage({super.key});
+  static const routeName = '/letter_and_numbers_page';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: MyStatelessWidget(
           onSelected: (selected) {
-            context.push('/letter_and_numbers_page/${selected.letter}');
+            context.push('${routeName}/${selected.letter}');
           },
         ),
       ),

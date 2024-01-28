@@ -18,6 +18,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  /* await FirebaseUtils().initializeRemoteConfig(); */
   return runApp(
     ProviderScope(
       child: const MyApp(),

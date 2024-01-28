@@ -3,6 +3,7 @@ part of 'pages.dart';
 class LetterAndNumbersPageDetail extends HookWidget {
   final String signChar;
   const LetterAndNumbersPageDetail({super.key, required this.signChar});
+  static const routeName = '/letter_and_numbers_page_detail';
   @override
   Widget build(BuildContext context) {
     final signState = useState<List<Sign>>([]);
@@ -13,9 +14,22 @@ class LetterAndNumbersPageDetail extends HookWidget {
     final appBarTitle = signState.value.length == 1
         ? "${signState.value.first.type!.name} ${signState.value.first.letter}"
         : signState.value.map((e) => e.letter).join("");
+
+    final currentLetterOrPhrase = signState.value.length == 1
+        ? signState.value.first.letter
+        : signState.value.map((e) => e.letter).join("");
+    ;
     return Scaffold(
       appBar: AppBar(
         title: Text(appBarTitle.toCapitalize()),
+        actions: [
+          IconButton(
+            onPressed: () => ShareServiceImp().shareOnlyText(
+              "${Enviroment.deepLinkUrl}${routeName}/$currentLetterOrPhrase",
+            ),
+            icon: Icon(Icons.share),
+          ),
+        ],
         leading: BackIcon(
           margin: EdgeInsets.only(left: 10),
         ),
@@ -25,7 +39,7 @@ class LetterAndNumbersPageDetail extends HookWidget {
           : ListGridSign(
               listSign: signState.value,
               onTap: (sing) => context.push(
-                    '/letter_and_numbers_page/${sing.letter}',
+                    '${LetterAndNumbersPage.routeName}/${sing.letter}',
                   )),
     );
   }
