@@ -133,42 +133,11 @@ class CardLevel extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
-              Wrap(
-                children: generateListToMessageUtil(
-                        listAllSign, level.name.removeDiacriticsFromString())
-                    .map((e) => IconAndLetter(e: e))
-                    .toList(),
-              ),
+              LetterAndSign(
+                text: level.name.removeDiacriticsFromString(),
+              )
             ],
           )),
-    );
-  }
-}
-
-class IconAndLetter extends StatelessWidget {
-  final Sign e;
-  const IconAndLetter({
-    super.key,
-    required this.e,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Icon(
-          e.iconSign,
-          size: 30,
-          color: Colors.white,
-        ),
-        SimpleText(
-          text: e.letter,
-          fontSize: 12,
-          fontWeight: FontWeight.w400,
-          textAlign: TextAlign.center,
-          color: Colors.white,
-        ),
-      ],
     );
   }
 }

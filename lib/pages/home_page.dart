@@ -39,14 +39,16 @@ class HomePage extends HookWidget {
     final _selectedIndex = useState(0);
     void _onItemTapped(int index) => _selectedIndex.value = index;
 
-    const TextStyle optionStyle =
-        TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+    /* const TextStyle optionStyle =
+        TextStyle(fontSize: 30, fontWeight: FontWeight.bold); */
+    final colors = Theme.of(context).colorScheme;
 
     return Scaffold(
       body: listMenu.elementAt(_selectedIndex.value).page,
       bottomNavigationBar: GNav(
         selectedIndex: _selectedIndex.value,
         onTabChange: _onItemTapped,
+        activeColor: colors.primary,
         gap: 8,
         tabs: listMenu
             .map((e) => GButton(

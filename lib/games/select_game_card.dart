@@ -45,6 +45,10 @@ class SelectGameCard extends StatelessWidget {
                 textAlign: TextAlign.center,
                 padding: EdgeInsets.symmetric(vertical: 10),
               ),
+              /* LetterAndSign(
+                text: title.snakeCaseToWords().toCapitalize(),
+                color: Colors.black,
+              ), */
               SimpleText(
                 text: subtitle,
                 fontSize: 13,
