@@ -114,6 +114,7 @@ class FlippingCardGame extends HookWidget {
     final theme = Theme.of(context).textTheme;
     return _isFinished.value
         ? GameOverScreen(
+            pathImage: getValueSoundFromList(correctImages),
             resultType: ResultGameType.win,
             title: SimpleText(
               text: "¡Nivel completado!",
@@ -134,7 +135,7 @@ class FlippingCardGame extends HookWidget {
         : Scaffold(
             appBar: AppBar(
               title: Text(
-                'Flipping Cards',
+                'Volteo de cartas',
               ),
               /* centerTitle: true, */
               leading: BackIcon(size: 20),
@@ -162,11 +163,11 @@ class FlippingCardGame extends HookWidget {
                           alignment: WrapAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Remaining: ${_left.value}',
+                              'Restantes: ${_left.value}',
                               style: style,
                             ),
                             SimpleText(
-                              text: 'Duration: ${gameDuration.value}s',
+                              text: 'Duración: ${gameDuration.value}s',
                               style: style,
                               padding: EdgeInsets.symmetric(horizontal: 10),
                             ),

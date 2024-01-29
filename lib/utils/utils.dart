@@ -18,5 +18,6 @@ part 'gammes_classes.dart';
 part 'flipping_cards_utils.dart';
 part 'shared_preferences_utils.dart';
 part 'drag_and_drop_game_utils.dart';
-part 'sounds_utils.dart';
+part 'sounds_and_image_utils.dart';
 part 'firebase_utils.dart';
+part 'arrays_utils.dart';

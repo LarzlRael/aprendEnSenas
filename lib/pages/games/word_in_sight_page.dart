@@ -248,6 +248,7 @@ class ResultScreen extends StatelessWidget {
   final String loseSubtitle;
   final Function()? callBackOnWin;
   final Function()? callBackOnLose;
+
   const ResultScreen({
     Key? key,
     required this.resultType,
@@ -271,11 +272,13 @@ class ResultScreen extends StatelessWidget {
           style: textTheme.bodyMedium!,
           padding: EdgeInsets.symmetric(vertical: 10),
         ),
+        pathImage: getValueSoundFromList(correctImages),
       );
     } else {
       return GameOverScreen(
         resultType: ResultGameType.lose,
         action: callBackOnLose,
+        pathImage: getValueSoundFromList(inCorrectImages),
         title: SimpleText(
           text: loseTitle,
           style: textTheme.headlineSmall!.copyWith(color: Colors.red),
