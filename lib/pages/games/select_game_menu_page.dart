@@ -7,7 +7,7 @@ class SelectGameMenuPage extends HookConsumerWidget {
   Widget build(BuildContext context, ref) {
     return Scaffold(
       appBar: AppBar(
-        leading: BackIcon(margin: const EdgeInsets.only(left: 10)),
+        /* leading: BackIcon(margin: const EdgeInsets.only(left: 10)), */
         title: Text("Selecciona un juego "),
       ),
       body: Container(
