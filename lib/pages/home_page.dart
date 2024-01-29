@@ -3,7 +3,7 @@ part of 'pages.dart';
 class ItemMenu {
   final String title;
   final Widget page;
-  final IconData? icon;
+  final IconData icon;
   ItemMenu({
     required this.title,
     required this.page,
@@ -14,17 +14,17 @@ class ItemMenu {
 final List<ItemMenu> listMenu = [
   /* ItemMenu(title: 'Home', page: HomePage()), */
   ItemMenu(
-    title: 'Send Message with Sign',
+    title: 'Enviar mensaje',
     page: SendMessageWithSignPage(),
     icon: IconsCustom.ic_conversation,
   ),
   ItemMenu(
-    title: 'Letter and Numbers',
+    title: 'Letrás y números',
     page: LetterAndNumbersPage(),
     icon: IconsCustom.ic_words,
   ),
   ItemMenu(
-    title: 'Games',
+    title: 'Juegos',
     page: SelectGameMenuPage(),
     icon: IconsCustom.ic_puzzle,
   ),
@@ -44,16 +44,19 @@ class HomePage extends HookWidget {
 
     return Scaffold(
       body: listMenu.elementAt(_selectedIndex.value).page,
-      bottomNavigationBar: BottomNavigationBar(
-        items: listMenu
-            .map((e) => BottomNavigationBarItem(
-                  icon: Icon(e.icon),
-                  label: e.title,
+      bottomNavigationBar: GNav(
+        selectedIndex: _selectedIndex.value,
+        onTabChange: _onItemTapped,
+        gap: 8,
+        tabs: listMenu
+            .map((e) => GButton(
+                  icon: e.icon,
+                  text: e.title,
                 ))
             .toList(),
-        currentIndex: _selectedIndex.value,
+        /* currentIndex: _selectedIndex.value,
         selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
+        onTap: _onItemTapped, */
       ),
     );
   }

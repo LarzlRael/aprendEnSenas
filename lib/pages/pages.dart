@@ -30,6 +30,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 
 import 'package:go_router/go_router.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

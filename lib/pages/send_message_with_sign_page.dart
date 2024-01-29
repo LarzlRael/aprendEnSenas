@@ -237,7 +237,7 @@ class SendMessageSlider extends HookConsumerWidget {
                     child: settings.typeDisplay == TypeDisplay.pageView
                         ? Container(
                             width: 300,
-                            height: size.height * 0.60,
+                            height: size.height * 0.55,
                             child: PageView.builder(
                               controller: pageController,
                               scrollDirection: settings.sliderDirection,
@@ -287,7 +287,7 @@ class SendMessageSlider extends HookConsumerWidget {
                           ),
                   ),
                   Container(
-                    margin: EdgeInsets.symmetric(vertical: 10),
+                    margin: EdgeInsets.symmetric(vertical: 5),
                     child: signProviderRef.listSigns.isEmpty
                         ? const SimpleText(
                             text: "No hay mensaje",
