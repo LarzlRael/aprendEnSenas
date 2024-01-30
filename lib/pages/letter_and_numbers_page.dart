@@ -47,9 +47,9 @@ class ListRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
       separatorBuilder: (context, index) => SizedBox(height: 13),
-      itemCount: listOnlySingAndNumbers.length,
+      itemCount: signLowerLetters.length,
       itemBuilder: (BuildContext context, int index) {
-        final list = listOnlySingAndNumbers[index];
+        final list = signLowerLetters[index];
         return Card(
           child: Container(
             padding: EdgeInsets.all(10),
@@ -82,7 +82,7 @@ class ListGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListGridSign(
-      listSign: listOnlySingAndNumbers,
+      listSign: signLowerLetters,
       onTap: onTap,
     );
   }

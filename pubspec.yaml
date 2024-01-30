@@ -138,6 +138,9 @@ flutter:
     - family: IconsCustom
       fonts:
         - asset: fonts/IconsCustom.ttf
+    - family: SignIcons
+      fonts:
+        - asset: fonts/SignIcons.ttf
     #   - family: Schyler
     #     fonts:
     #       - asset: fonts/Schyler-Regular.ttf

@@ -48,10 +48,10 @@ class IconAndLetter extends StatelessWidget {
         Icon(
           sign.iconSign,
           size: iconSize,
-          color: Colors.white,
+          /* color: Colors.white, */
         ),
         SimpleText(
-          text: sign.letter,
+          text: sign.letter.toUpperCase(),
           fontSize: letterSize,
           fontWeight: FontWeight.w400,
           textAlign: TextAlign.center,

@@ -82,7 +82,7 @@ class WordInSightPage extends HookConsumerWidget {
                     ),
                   ),
                   SimpleText(
-                    text: '¿Cual es la palabra?',
+                    text: '¿Cuál es la palabra?',
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
                     padding: EdgeInsets.symmetric(vertical: 10),

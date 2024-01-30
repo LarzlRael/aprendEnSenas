@@ -4,12 +4,12 @@ class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
   @override
   Widget build(BuildContext context, ref) {
-    final settings = ref.watch(settingsProvider);
-    final reff = ref.read(settingsProvider.notifier);
+    final settingS = ref.watch(settingsProvider);
+    final settingN = ref.read(settingsProvider.notifier);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Ajustes"),
+        title: LetterAndSign(text: 'Ajustes'),
         leading: BackIcon(
           margin: EdgeInsets.only(left: 10),
         ),
@@ -24,22 +24,22 @@ class SettingsPage extends ConsumerWidget {
                 OptionSetting(
                   title: 'Tema',
                   subTitle: 'Tema oscuro',
-                  value: settings.isDarkMode,
-                  onTap: reff.toggleDarkMode,
+                  value: settingS.isDarkMode,
+                  onTap: settingN.toggleDarkMode,
                 ),
                 OptionSetting(
                   title: 'Vibración',
                   subTitle: 'Activado',
-                  value: settings.isVibrationActive,
-                  onTap: reff.toggleVibration,
+                  value: settingS.isVibrationActive,
+                  onTap: settingN.toggleVibration,
                 ),
               ],
             ),
             OptionSetting(
               title: 'Sonido',
               subTitle: 'Activado',
-              value: settings.isSoundActive,
-              onTap: reff.toggleSound,
+              value: settingS.isSoundActive,
+              onTap: settingN.toggleSound,
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,11 +49,11 @@ class SettingsPage extends ConsumerWidget {
                   min: 250,
                   max: 2500,
                   divisions: 10,
-                  label: settings.transitionTime.toString(),
-                  value: settings.transitionTime,
-                  onChanged: (value) => reff.setTransitionTime(value),
+                  label: settingS.transitionTime.toString(),
+                  value: settingS.transitionTime,
+                  onChanged: (value) => settingN.setTransitionTime(value),
                 ),
-                Text('Tiempo actual: ${settings.transitionTime}'),
+                Text('Tiempo actual: ${settingS.transitionTime}'),
                 Text('Transicion'),
                 /* TextButton(
                   onPressed: () {
@@ -77,18 +77,18 @@ class SettingsPage extends ConsumerWidget {
                 ), */
                 CustomCheckBox(
                   label: 'Horizontal',
-                  value: settings.selectedAxiosOption == 0,
-                  onTap: () => reff.setSelectedDisplayOption(0),
+                  value: settingS.selectedAxiosOption == 0,
+                  onTap: () => settingN.setSelectedDisplayOption(0),
                 ),
                 CustomCheckBox(
                   label: 'Vertical',
-                  value: settings.selectedAxiosOption == 1,
-                  onTap: () => reff.setSelectedDisplayOption(1),
+                  value: settingS.selectedAxiosOption == 1,
+                  onTap: () => settingN.setSelectedDisplayOption(1),
                 ),
                 CustomCheckBox(
                   label: 'Imagenes',
-                  value: settings.selectedAxiosOption == 2,
-                  onTap: () => reff.setSelectedDisplayOption(2),
+                  value: settingS.selectedAxiosOption == 2,
+                  onTap: () => settingN.setSelectedDisplayOption(2),
                 ),
                 SimpleText(
                   text: 'Color de fondo',
@@ -96,8 +96,8 @@ class SettingsPage extends ConsumerWidget {
                   padding: EdgeInsets.symmetric(vertical: 5),
                 ),
                 MaterialColorPicker(
-                  onColorChange: reff.setIconColor,
-                  selectedColor: settings.color,
+                  onColorChange: settingN.setIconColor,
+                  selectedColor: settingS.color,
                 )
               ],
             )

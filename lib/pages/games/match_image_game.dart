@@ -38,18 +38,21 @@ class MatchImageGame extends HookConsumerWidget {
         centerTitle: true,
         title: Text('Arrastra y suelta'),
         actions: [
-          Column(
-            children: [
-              SimpleText(text: "Puntaje"),
-              SimpleText(
-                text: "${score.value}",
-                style: TextStyle(
-                  color: score.value > 0 ? Colors.green : Colors.red,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25.0,
-                ),
-              )
-            ],
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 8),
+            child: Column(
+              children: [
+                SimpleText(text: "Puntaje"),
+                SimpleText(
+                  text: "${score.value}",
+                  style: TextStyle(
+                    color: score.value > 0 ? Colors.green : Colors.red,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25.0,
+                  ),
+                )
+              ],
+            ),
           ),
         ],
       ),
@@ -136,7 +139,7 @@ class MatchImageGame extends HookConsumerWidget {
                               Container(
                             decoration: BoxDecoration(
                               color: item.accepting != null
-                                  ? Colors.grey.withOpacity(0.5)
+                                  ? Colors.grey.withOpacity(0.2)
                                   : Colors.teal,
                               borderRadius: BorderRadius.circular(10.0),
                             ),
@@ -152,7 +155,7 @@ class MatchImageGame extends HookConsumerWidget {
                                   .map((e) {
                                 return Icon(
                                   e.iconSign,
-                                  color: Colors.grey,
+                                  /* color: Colors.grey, */
                                   size: 30,
                                 );
                               }).toList(),
