@@ -35,6 +35,7 @@ part '/animation/scale_animation.dart';
 part '/animation/shakingY_animation.dart';
 part '/icons/colored_icon.dart';
 part '/forms/send_message_input.dart';
+part '/forms/checkbox_label.dart';
 part 'ads/banner_ad.dart';
 
 part 'slideshow/slide_item.dart';

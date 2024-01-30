@@ -19,8 +19,8 @@ class LetterAndNumbersPage extends HookWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SwitchListTile(
-                title: Text("Cambiar vista"),
+            CheckboxLabel(
+                label: "Cambiar vista",
                 value: isSwitched.value,
                 onChanged: (value) {
                   isSwitched.value = value;

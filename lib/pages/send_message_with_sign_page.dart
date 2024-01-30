@@ -11,11 +11,12 @@ class SendMessageWithSignPage extends HookConsumerWidget {
     final settingsN = ref.read(settingsProvider.notifier);
     final settingsS = ref.watch(settingsProvider);
 
-    final signProviderStatePhrase =
-        ref.watch(signProviderProvider).currentMessage;
+    final signProviderN = ref.read(signProviderProvider.notifier);
+    final signProviderS = ref.watch(signProviderProvider);
+
     useEffect(() {
       Future.delayed(Duration.zero, () {
-        ref.read(signProviderProvider.notifier).setCurrentMessage(phrase ?? '');
+        signProviderN.setCurrentMessage(phrase ?? '');
       });
     }, []);
     useEffect(() {
@@ -27,10 +28,10 @@ class SendMessageWithSignPage extends HookConsumerWidget {
       appBar: AppBar(
         title: Text("Enviar mensaje"),
         actions: [
-          if (signProviderStatePhrase.isNotEmpty)
+          if (signProviderS.currentMessage.isNotEmpty)
             IconButton(
               onPressed: () => ShareServiceImp().shareOnlyText(
-                "${Enviroment.deepLinkUrl}$routeName/$signProviderStatePhrase",
+                "${Enviroment.deepLinkUrl}$routeName/${signProviderS.currentMessage}",
               ),
               icon: Icon(Icons.share),
             ),
@@ -46,17 +47,12 @@ class SendMessageWithSignPage extends HookConsumerWidget {
         height: double.infinity,
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text('Cambiar vista'),
-                Switch(
-                  value: settingsS.isMainDisplayInPageView,
-                  onChanged: (value) async {
-                    await settingsN.toggleMainDisplayInPageView();
-                  },
-                ),
-              ],
+            CheckboxLabel(
+              label: 'Cambiar vista',
+              value: settingsS.isMainDisplayInPageView,
+              onChanged: (value) async {
+                await settingsN.toggleMainDisplayInPageView();
+              },
             ),
             settingsS.isMainDisplayInPageView
                 ? SendMessageWithStaticImages(pharse: phrase)
@@ -75,15 +71,15 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final listOnlyLettersNumbers = useState<List<Sign>>([]);
-    final currentMessage = ref.watch(signProviderProvider);
+    final signProviderS = ref.watch(signProviderProvider);
     final currentSliderState = useState(5);
     useEffect(() {
       listOnlyLettersNumbers.value = generateListToMessageUtil(
         listOnlySingAndNumbers,
-        currentMessage.currentMessage,
+        signProviderS.currentMessage,
       );
       return null;
-    }, [currentMessage]);
+    }, [signProviderS]);
 
     return Expanded(
       child: Column(
@@ -145,40 +141,38 @@ class SendMessageSlider extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(settingsProvider);
-    final signProviderRef = ref.watch(signProviderProvider);
+    final signProviderS = ref.watch(signProviderProvider);
+    final signProviderN = ref.read(signProviderProvider.notifier);
     final isPlaying = useState(false);
 
     final pageController = usePageController();
     final _currentIndex = useState<int>(0);
 
     pageController.addListener(() {
-      if (pageController.page!.toInt() < signProviderRef.listSigns.length) {
+      if (pageController.page!.toInt() < signProviderS.listSigns.length) {
         _currentIndex.value = pageController.page!.toInt();
-        ref.read(signProviderProvider.notifier).setCurrentSign(
-            signProviderRef.listSigns[pageController.page!.toInt()]);
+        signProviderN.setCurrentSign(
+            signProviderS.listSigns[pageController.page!.toInt()]);
       }
     });
 
     useEffect(() {
-      signProviderRef.listSigns = generateListToMessageUtil(
+      signProviderS.listSigns = generateListToMessageUtil(
         listOnlySingAndNumbers,
-        signProviderRef.currentMessage,
+        signProviderS.currentMessage,
       );
       /* return pageController.dispose; */
-    }, [signProviderRef]);
+    }, [signProviderS]);
 
     startPageViewMessage() {
-      ref
-          .read(signProviderProvider.notifier)
-          .setCurrentMessage(signProviderRef.currentMessage);
+      signProviderN.setCurrentMessage(signProviderS.currentMessage);
 
       pageController.jumpToPage(0);
 
-      signProviderRef.timer = Timer.periodic(
+      signProviderS.timer = Timer.periodic(
           Duration(milliseconds: settings.transitionTime.toInt()),
           (Timer timer) {
-        if (pageController.page!.toInt() <
-            signProviderRef.listSigns.length - 1) {
+        if (pageController.page!.toInt() < signProviderS.listSigns.length - 1) {
           isPlaying.value = true;
           pageController.nextPage(
             duration: Duration(milliseconds: settings.transitionTime.toInt()),
@@ -187,7 +181,7 @@ class SendMessageSlider extends HookConsumerWidget {
         } else {
           // Si estás en la última página, vuelve al principio
           timer.cancel();
-          signProviderRef.timer?.cancel();
+          signProviderS.timer?.cancel();
 
           pageController.jumpToPage(0);
           isPlaying.value = false;
@@ -197,24 +191,22 @@ class SendMessageSlider extends HookConsumerWidget {
 
     void stopTimerAnimatedImages() {
       isPlaying.value = false;
-      signProviderRef.timer?.cancel();
+      signProviderS.timer?.cancel();
       _currentIndex.value = 0;
-      ref
-          .read(signProviderProvider.notifier)
-          .setCurrentSign(signProviderRef.listSigns[_currentIndex.value]);
+      signProviderN
+          .setCurrentSign(signProviderS.listSigns[_currentIndex.value]);
     }
 
     void startTimerAnimatedImages() {
-      signProviderRef.timer = Timer.periodic(
+      signProviderS.timer = Timer.periodic(
           Duration(milliseconds: settings.transitionTime.toInt()),
           (timer) async {
         isPlaying.value = true;
-        ref
-            .read(signProviderProvider.notifier)
-            .setCurrentSign(signProviderRef.listSigns[_currentIndex.value]);
+        signProviderN
+            .setCurrentSign(signProviderS.listSigns[_currentIndex.value]);
         _currentIndex.value = _currentIndex.value + 1;
 
-        if (_currentIndex.value == signProviderRef.listSigns.length) {
+        if (_currentIndex.value == signProviderS.listSigns.length) {
           stopTimerAnimatedImages();
           /* TODO change this */
           /* ref.read(signProviderProvider.notifier).setCurrentSign(null); */
@@ -231,19 +223,19 @@ class SendMessageSlider extends HookConsumerWidget {
             children: [
               Column(
                 children: [
-                  CurrentSign(currenSign: signProviderRef.currentSign),
+                  CurrentSign(currenSign: signProviderS.currentSign),
                   Align(
                     alignment: Alignment.center,
                     child: settings.typeDisplay == TypeDisplay.pageView
                         ? Container(
                             width: 300,
-                            height: size.height * 0.55,
+                            height: size.height * 0.50,
                             child: PageView.builder(
                               controller: pageController,
                               scrollDirection: settings.sliderDirection,
-                              itemCount: signProviderRef.listSigns.length,
+                              itemCount: signProviderS.listSigns.length,
                               itemBuilder: (context, int index) {
-                                final sign = signProviderRef.listSigns[index];
+                                final sign = signProviderS.listSigns[index];
                                 return InkWell(
                                   onTap: () => context.push(
                                       '${LetterAndNumbersPage.routeName}/${sign.letter}'),
@@ -266,7 +258,7 @@ class SendMessageSlider extends HookConsumerWidget {
                         : Container(
                             width: 300,
                             height: 400,
-                            child: signProviderRef.listSigns.isEmpty
+                            child: signProviderS.listSigns.isEmpty
                                 ? const SizedBox()
                                 : Expanded(
                                     child: AnimatedSwitcher(
@@ -274,7 +266,7 @@ class SendMessageSlider extends HookConsumerWidget {
                                             const Duration(milliseconds: 500),
                                         child: Card(
                                           child: Icon(
-                                            signProviderRef
+                                            signProviderS
                                                 .listSigns[_currentIndex.value]
                                                 .iconSign,
                                             key: ValueKey<int>(
@@ -288,11 +280,29 @@ class SendMessageSlider extends HookConsumerWidget {
                   ),
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 5),
-                    child: signProviderRef.listSigns.isEmpty
-                        ? const SimpleText(
-                            text: "No hay mensaje",
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
+                    child: signProviderS.listSigns.isEmpty
+                        ? Card(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 10,
+                              ),
+                              child: Column(
+                                children: [
+                                  const SimpleText(
+                                    text: "No hay mensajes todavía...",
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  const SimpleText(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    text: "Envía un mensaje",
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ],
+                              ),
+                            ),
                           )
                         : RichText(
                             text: TextSpan(
@@ -301,7 +311,7 @@ class SendMessageSlider extends HookConsumerWidget {
                                 fontWeight: FontWeight.bold,
                                 /* color: Colors.black, */
                               ),
-                              children: signProviderRef.listSigns
+                              children: signProviderS.listSigns
                                   .mapIndexed((index, e) {
                                 if (_currentIndex.value == index) {
                                   return WidgetSpan(
@@ -345,13 +355,9 @@ class SendMessageSlider extends HookConsumerWidget {
                 const SizedBox(width: 2),
                 AnimatedSwitcher(
                   duration: const Duration(milliseconds: 500),
-                  child: signProviderRef.listSigns.isEmpty
+                  child: signProviderS.listSigns.isEmpty
                       ? SpeechButton(
-                          onSpeechResult: (res) {
-                            ref
-                                .read(signProviderProvider.notifier)
-                                .setCurrentMessage(res);
-                          },
+                          onSpeechResult: signProviderN.setCurrentMessage,
                         )
                       : InkWell(
                           onTap:
@@ -369,7 +375,7 @@ class SendMessageSlider extends HookConsumerWidget {
                                   : () async {
                                       FocusScope.of(context).unfocus();
                                       if (isPlaying.value) {
-                                        signProviderRef.timer?.cancel();
+                                        signProviderS.timer?.cancel();
                                         isPlaying.value = false;
                                       } else {
                                         startPageViewMessage();
@@ -423,7 +429,7 @@ class CurrentSign extends StatelessWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              /* color: Colors.black, */
+              color: Colors.grey,
             ),
           ),
           const TextSpan(text: " "),
@@ -432,25 +438,11 @@ class CurrentSign extends StatelessWidget {
             style: TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,
-              /* color: Colors.green, */
+              color: Colors.grey,
             ),
           ),
         ],
       ),
-
-      /* children: [
-        SimpleText(
-          text: currenSign?.type!.name ?? "",
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-        ),
-        SizedBox(width: 5),
-        SimpleText(
-          text: currenSign?.letter ?? "",
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-        ),
-      ], */
     );
   }
 }

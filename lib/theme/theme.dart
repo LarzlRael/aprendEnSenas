@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-const seedColor = Color.fromARGB(255, 7, 80, 59);
-
 class AppTheme {
   final bool isDarkmode;
 
@@ -9,10 +7,10 @@ class AppTheme {
 
   ThemeData getTheme() => ThemeData(
         useMaterial3: true,
-        colorSchemeSeed: seedColor,
+        colorSchemeSeed: Colors.green,
         brightness: isDarkmode ? Brightness.dark : Brightness.light,
         listTileTheme: const ListTileThemeData(
-          iconColor: seedColor,
+          iconColor: Colors.green,
         ),
       );
 }

@@ -4,13 +4,17 @@ import 'package:go_router/go_router.dart';
 import 'package:asl/pages/pages.dart';
 
 final appRouter = GoRouter(
-  initialLocation: '/',
+  initialLocation: '/splash_screen_page',
   /* refreshListenable: goRouterNotifier, */
   routes: [
     ///* Primera pantalla
     GoRoute(
       path: '/',
       builder: (context, state) => HomePage(),
+    ),
+    GoRoute(
+      path: '/splash_screen_page',
+      builder: (context, state) => SplashScreenPage(),
     ),
     GoRoute(
       path: '/welcome_page',

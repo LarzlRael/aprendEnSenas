@@ -1,7 +1,9 @@
-import 'package:asl/services/services.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:asl/constants/key_value_names.dart';
+import 'package:asl/services/services.dart';
 
 enum TypeDisplay {
   pageView,
@@ -15,8 +17,19 @@ final settingsProvider = StateNotifierProvider<SettingsNotifier, SettingsState>(
 class SettingsNotifier extends StateNotifier<SettingsState> {
   final keyValueStorageService = KeyValueStorageServiceImpl();
   SettingsNotifier()
-      : super(SettingsState(false, true, true, 750.0, Axis.horizontal, 0,
-            TypeDisplay.pageView, Colors.blue, false)) {
+      : super(
+          SettingsState(
+            isDarkMode: false,
+            isSoundActive: true,
+            isVibrationActive: true,
+            transitionTime: 750.0,
+            sliderDirection: Axis.horizontal,
+            selectedAxiosOption: 0,
+            typeDisplay: TypeDisplay.pageView,
+            color: Colors.blue,
+            isMainDisplayInPageView: false,
+          ),
+        ) {
     asyncInit();
   }
 
@@ -147,17 +160,17 @@ class SettingsState {
   final Color color;
   final bool isMainDisplayInPageView;
 
-  SettingsState(
-    this.isDarkMode,
-    this.isSoundActive,
-    this.isVibrationActive,
-    this.transitionTime,
-    this.sliderDirection,
-    this.selectedAxiosOption,
-    this.typeDisplay,
-    this.color,
-    this.isMainDisplayInPageView,
-  );
+  SettingsState({
+    required this.isDarkMode,
+    required this.isSoundActive,
+    required this.isVibrationActive,
+    required this.transitionTime,
+    required this.sliderDirection,
+    required this.selectedAxiosOption,
+    required this.typeDisplay,
+    required this.color,
+    required this.isMainDisplayInPageView,
+  });
 
   SettingsState copyWith({
     bool? isDarkMode,
@@ -165,21 +178,22 @@ class SettingsState {
     bool? isVibrationActive,
     double? transitionTime,
     Axis? sliderDirection,
-    int? selectedAxiosOption,
     TypeDisplay? typeDisplay,
+    int? selectedAxiosOption,
     Color? color,
     bool? isMainDisplayInPageView,
   }) {
     return SettingsState(
-      isDarkMode ?? this.isDarkMode,
-      isSoundActive ?? this.isSoundActive,
-      isVibrationActive ?? this.isVibrationActive,
-      transitionTime ?? this.transitionTime,
-      sliderDirection ?? this.sliderDirection,
-      selectedAxiosOption ?? this.selectedAxiosOption,
-      typeDisplay ?? this.typeDisplay,
-      color ?? this.color,
-      isMainDisplayInPageView ?? this.isMainDisplayInPageView,
+      isDarkMode: isDarkMode ?? this.isDarkMode,
+      isSoundActive: isSoundActive ?? this.isSoundActive,
+      isVibrationActive: isVibrationActive ?? this.isVibrationActive,
+      transitionTime: transitionTime ?? this.transitionTime,
+      sliderDirection: sliderDirection ?? this.sliderDirection,
+      typeDisplay: typeDisplay ?? this.typeDisplay,
+      selectedAxiosOption: selectedAxiosOption ?? this.selectedAxiosOption,
+      color: color ?? this.color,
+      isMainDisplayInPageView:
+          isMainDisplayInPageView ?? this.isMainDisplayInPageView,
     );
   }
 }
