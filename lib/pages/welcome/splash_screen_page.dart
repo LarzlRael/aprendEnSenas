@@ -2,7 +2,7 @@ part of '../pages.dart';
 
 class SplashScreenPage extends StatefulWidget {
   const SplashScreenPage({super.key});
-
+  static const routeName = '/splash_screen_page';
   @override
   State<SplashScreenPage> createState() => _SplashScreenPageState();
 }
@@ -16,11 +16,11 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
 
     if (isFirstTime) {
       // Primera vez que se inicia la aplicación
-      context.go('/welcome_page');
+      context.go(WelcomePage.routeName);
       // Actualizamos el valor en SharedPreferences para indicar que ya se mostró la vista "Welcome".
     } else {
       // No es la primera vez que se inicia la aplicación
-      context.go('/');
+      context.go(HomePage.routeName);
     }
   }
 

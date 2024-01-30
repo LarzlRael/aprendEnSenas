@@ -9,15 +9,22 @@ final appRouter = GoRouter(
   routes: [
     ///* Primera pantalla
     GoRoute(
-      path: '/',
-      builder: (context, state) => HomePage(),
-    ),
+        path: HomePage.routeName,
+        builder: (context, state) => HomePage(),
+        routes: [
+          GoRoute(
+            path: ':phrase',
+            builder: (context, state) => HomePage(
+              phrase: state.params['phrase'],
+            ),
+          ),
+        ]),
     GoRoute(
-      path: '/splash_screen_page',
+      path: SplashScreenPage.routeName,
       builder: (context, state) => SplashScreenPage(),
     ),
     GoRoute(
-      path: '/welcome_page',
+      path: WelcomePage.routeName,
       builder: (context, state) => WelcomePage(),
     ),
     GoRoute(

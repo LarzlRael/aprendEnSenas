@@ -137,6 +137,6 @@ class WelcomePage extends HookWidget {
       IS_FIRST_TIME_KEY,
       false,
     );
-    context.go('/');
+    context.go(HomePage.routeName);
   }
 }
