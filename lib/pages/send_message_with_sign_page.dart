@@ -73,6 +73,10 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
     final listOnlyLettersNumbers = useState<List<Sign>>([]);
     final signProviderS = ref.watch(signProviderProvider);
     final currentSliderState = useState(5);
+    final currentSize = useState(50.0);
+    useEffect(() {
+      currentSize.value = 250 / currentSliderState.value;
+    }, [currentSliderState.value]);
     useEffect(() {
       listOnlyLettersNumbers.value = generateListToMessageUtil(
         listOnlySingAndNumbers,
@@ -101,7 +105,7 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
                 crossAxisSpacing: 5,
                 itemCount: listOnlyLettersNumbers.value.length,
                 itemBuilder: (_, index) => SquareCard(
-                  size: 250,
+                  iconSize: currentSize.value,
                   sign: listOnlyLettersNumbers.value[index],
                   onTap: (sign) => context.push(
                     '${LetterAndNumbersPage.routeName}/${sign.letter}',
@@ -284,8 +288,8 @@ class SendMessageSlider extends HookConsumerWidget {
                         ? Card(
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
-                                horizontal: 20,
-                                vertical: 10,
+                                horizontal: 30,
+                                vertical: 15,
                               ),
                               child: Column(
                                 children: [
@@ -295,9 +299,9 @@ class SendMessageSlider extends HookConsumerWidget {
                                     fontWeight: FontWeight.w500,
                                   ),
                                   const SimpleText(
-                                    padding: const EdgeInsets.only(top: 10),
-                                    text: "Envía un mensaje",
-                                    fontSize: 14,
+                                    padding: const EdgeInsets.only(top: 5),
+                                    text: "Puedes escribir o usar el micrófono",
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ],
@@ -447,18 +451,20 @@ class CurrentSign extends StatelessWidget {
   }
 }
 
-class SquareCard extends StatelessWidget {
+class SquareCard extends ConsumerWidget {
   final Sign sign;
   final Function(Sign sign)? onTap;
-  final double size;
+  final double iconSize;
+
   const SquareCard({
     super.key,
     this.onTap,
     required this.sign,
-    required this.size,
+    required this.iconSize,
   });
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
+    final settings = ref.watch(settingsProvider);
     return InkWell(
       onTap: () {
         if (onTap != null) {
@@ -474,14 +480,20 @@ class SquareCard extends StatelessWidget {
             sign.type == SignType.space
                 ? Icon(
                     Icons.space_bar,
-                    size: size,
+                    size: iconSize,
                     color: Colors.transparent,
                   )
                 : ColoredIcon(
                     icon: sign.iconSign,
-                    size: size,
+                    size: iconSize,
                   ),
-            Text(sign.letter),
+            Text(
+              sign.letter,
+              style: TextStyle(
+                color: settings.color,
+                fontSize: iconSize / 3,
+              ),
+            ),
           ],
         ),
       ),

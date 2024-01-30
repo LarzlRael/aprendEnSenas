@@ -7,11 +7,6 @@ class CustomIcon extends Icon {
   // Constructor que llama al constructor de la clase base (Icon)
   CustomIcon(IconData icon, {Key? key, this.customColor = Colors.black})
       : super(icon, key: key);
-
-  // Puedes agregar tus propios métodos aquí
-  /* void customMethod() {
-    print("Custom method");
-  } */
 }
 
 class ColoredIcon extends ConsumerWidget {
