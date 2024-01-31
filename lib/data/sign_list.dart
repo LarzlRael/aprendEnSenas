@@ -4,6 +4,7 @@ import 'package:asl/models/models.dart';
 import 'package:asl/utils/utils.dart';
 import 'package:flutter/material.dart';
 
+final spaceBarIcon = Icons.space_bar;
 final signLowerLetters = <Sign>[
   Sign("a", CustomIcons.a_sign),
   Sign("b", CustomIcons.b_sign),
@@ -32,7 +33,7 @@ final signLowerLetters = <Sign>[
   Sign("x", CustomIcons.x_sign),
   Sign("y", CustomIcons.y_sign),
   Sign("z", CustomIcons.z_sign),
-  Sign(" ", Icons.space_bar, type: SignType.space),
+  Sign(" ", spaceBarIcon, type: SignType.space),
 ];
 
 /* final signStyle2 = <Sign>[
@@ -108,7 +109,7 @@ final listOnlySingAndNumbers = <Sign>[
   Sign("x", CustomIcons.x_sign),
   Sign("y", CustomIcons.y_sign),
   Sign("z", CustomIcons.z_sign),
-  Sign(" ", Icons.space_bar, type: SignType.space),
+  Sign(" ", spaceBarIcon, type: SignType.space),
   ...listOnlyNumers,
 ];
 

@@ -249,16 +249,10 @@ class SendMessageSlider extends HookConsumerWidget {
                                   onTap: () => context.push(
                                       '${LetterAndNumbersPage.routeName}/${sign.letter}'),
                                   child: Card(
-                                    child: sign.type == SignType.space
-                                        ? const Icon(
-                                            Icons.space_bar,
-                                            size: 250,
-                                            color: Colors.transparent,
-                                          )
-                                        : ColoredIcon(
-                                            icon: sign.iconSign,
-                                            size: 250,
-                                          ),
+                                    child: ColoredIcon(
+                                      icon: sign.iconSign,
+                                      size: 250,
+                                    ),
                                   ),
                                 );
                               },

@@ -48,7 +48,7 @@ class IconAndLetter extends StatelessWidget {
         Icon(
           sign.iconSign,
           size: iconSize,
-          /* color: Colors.white, */
+          color: sign.iconSign == spaceBarIcon ? Colors.transparent : color,
         ),
         SimpleText(
           text: sign.letter.toUpperCase(),

@@ -17,14 +17,13 @@ class ColoredIcon extends ConsumerWidget {
     required this.icon,
     this.size,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context, ref) {
     final settings = ref.watch(settingsProvider);
 
     return Icon(
       icon,
-      color: settings.color,
+      color: icon == spaceBarIcon ? Colors.transparent : settings.color,
       size: size,
     );
   }
