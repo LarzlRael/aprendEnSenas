@@ -152,6 +152,8 @@ class SendMessageSlider extends HookConsumerWidget {
     final pageController = usePageController();
     final _currentIndex = useState<int>(0);
 
+    final interstialAdProviderN = ref.read(interstiatAdProvider.notifier);
+
     pageController.addListener(() {
       if (pageController.page!.toInt() < signProviderS.listSigns.length) {
         _currentIndex.value = pageController.page!.toInt();
@@ -227,7 +229,10 @@ class SendMessageSlider extends HookConsumerWidget {
             children: [
               Column(
                 children: [
-                  CurrentSign(currenSign: signProviderS.currentSign),
+                  CurrentSign(
+                    currenSign: signProviderS.currentSign,
+                    padding: const EdgeInsets.symmetric(vertical: 5),
+                  ),
                   Align(
                     alignment: Alignment.center,
                     child: settings.typeDisplay == TypeDisplay.pageView
@@ -374,7 +379,7 @@ class SendMessageSlider extends HookConsumerWidget {
                                         startTimerAnimatedImages();
                                       }
                                       addCounterIntersitialAd(
-                                          () => InterstitialAdManager.showAd());
+                                          () => interstialAdProviderN.showAd());
                                     }
                                   : () async {
                                       FocusScope.of(context).unfocus();
@@ -416,36 +421,41 @@ class SendMessageSlider extends HookConsumerWidget {
 }
 
 class CurrentSign extends StatelessWidget {
+  final EdgeInsetsGeometry? padding;
   const CurrentSign({
     super.key,
     required this.currenSign,
+    this.padding,
   });
 
   final Sign? currenSign;
 
   @override
   Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        children: [
-          TextSpan(
-            text: currenSign?.type!.name.toCapitalize() ?? "",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey,
+    return Container(
+      margin: padding,
+      child: RichText(
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: currenSign?.type!.name.toCapitalize() ?? "",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey,
+              ),
             ),
-          ),
-          const TextSpan(text: " "),
-          TextSpan(
-            text: currenSign?.letter ?? "",
-            style: TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey,
+            const TextSpan(text: " "),
+            TextSpan(
+              text: currenSign?.letter ?? "",
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

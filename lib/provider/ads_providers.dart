@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:asl/constants/enviroments.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -24,14 +25,14 @@ final adBannerProvider = FutureProvider<BannerAd>((ref) async {
   return ad;
 }); */
 
-class InterstitialAdManager {
+/* class InterstitialAdManager {
   static InterstitialAd? _interstitialAd;
   static bool _isAdLoaded = false;
 
   static void loadAd() {
     if (!_isAdLoaded) {
       InterstitialAd.load(
-        adUnitId: "ca-app-pub-3940256099942544/1033173712",
+        adUnitId: Enviroment.adIntersitialId,
         request: const AdRequest(),
         adLoadCallback: InterstitialAdLoadCallback(
           onAdLoaded: (ad) {
@@ -83,7 +84,7 @@ class InterstitialAdManager {
     _interstitialAd = null;
     _isAdLoaded = false;
   }
-}
+} */
 
 void addCounterIntersitialAd(Function callBack) async {
   const MAXCOUNT = 2;
@@ -119,7 +120,7 @@ class IntersitialAdNotifier extends StateNotifier<InterstialState> {
   void loadAd() {
     if (!state.isAdLoaded) {
       InterstitialAd.load(
-        adUnitId: "ca-app-pub-3940256099942544/1033173712",
+        adUnitId: Enviroment.adIntersitialId,
         request: const AdRequest(),
         adLoadCallback: InterstitialAdLoadCallback(
           onAdLoaded: (ad) {
@@ -178,10 +179,9 @@ class InterstialState {
   InterstialState copyWith({
     InterstitialAd? interstitialAd,
     bool? isAdLoaded,
-  }) {
-    return InterstialState(
-      interstitialAd: interstitialAd ?? this.interstitialAd,
-      isAdLoaded: isAdLoaded ?? this.isAdLoaded,
-    );
-  }
+  }) =>
+      InterstialState(
+        interstitialAd: interstitialAd ?? this.interstitialAd,
+        isAdLoaded: isAdLoaded ?? this.isAdLoaded,
+      );
 }

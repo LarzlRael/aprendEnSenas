@@ -1,8 +1,12 @@
 <resources>
-  <string name="app_name">Sign Language</string>
-  <string name="admob_application_id">ca-app-pub-3940256099942544~3347511713</string>
-  <string name="android_host_deep_linking">asl-deep-linking-next.vercel.app</string>
-  
+  <string name="app_name">AprendEnseñas</string>
+  <string
+    name="admob_application_id"
+  >ca-app-pub-3940256099942544~3347511713</string>
+  <string
+    name="android_host_deep_linking"
+  >asl-deep-linking-next.vercel.app</string>
+
   <!-- Agrega más cadenas según sea necesario -->
-  
+
 </resources>

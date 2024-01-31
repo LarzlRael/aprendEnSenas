@@ -8,6 +8,7 @@ class MatchImageGame extends HookConsumerWidget {
     final score = useState<int>(0);
     final gameOver = useState<bool>(false);
     final settingsNotifier = ref.watch(settingsProvider.notifier);
+    final interstiatAdProviderN = ref.watch(interstiatAdProvider.notifier);
     initGame() {
       gameOver.value = false;
       score.value = 0;
@@ -28,7 +29,7 @@ class MatchImageGame extends HookConsumerWidget {
 
     useEffect(() {
       if (gameOver.value) {
-        addCounterIntersitialAd(() => InterstitialAdManager.showAd());
+        addCounterIntersitialAd(() => interstiatAdProviderN.showAd());
       }
     }, [gameOver.value]);
     if (items.value.length == 0) gameOver.value = true;

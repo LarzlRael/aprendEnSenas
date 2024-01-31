@@ -18,8 +18,8 @@ class TestYourMemoryPage extends HookConsumerWidget {
     final lifesRemaing = useState<int>(generate.lifes);
 
     final correctAnswer = createTestYourGameState.value.correctAnswer;
-    final settings = ref.watch(settingsProvider);
-    final reff = ref.read(settingsProvider.notifier);
+    final settingS = ref.watch(settingsProvider);
+    final settingN = ref.read(settingsProvider.notifier);
     final isCorrect = useState<bool>(false);
 
     final currentScore = useState<int>(0);
@@ -31,32 +31,36 @@ class TestYourMemoryPage extends HookConsumerWidget {
     useEffect(() {
       if (isCorrect.value) {
         createTestYourGameState.value =
-            createTestYourGame(listOnlySingAndNumbers, 3);
-        reff.playSound('assets/sounds/correct_sound_2.mp3');
+            createTestYourGame(listOnlySingAndNumbers, generate.numberOptions);
+        settingN.playSound('assets/sounds/correct_sound_2.mp3');
         currentScore.value = currentScore.value + 10;
         isCorrect.value = false;
         /* Reset the animation */
         key.value = UniqueKey();
       }
+      return;
     }, [isCorrect.value]);
 
     return Scaffold(
       appBar: AppBar(
         leading: BackIcon(),
         actions: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextSpanHit(
-                text: 'Hits: ',
-                score: currentScore.value,
-                key: key.value,
-              ),
-              TextSpanHit(
-                text: 'Record: ',
-                score: currentRecord.data ?? 0,
-              ),
-            ],
+          Container(
+            margin: EdgeInsets.only(right: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextSpanHit(
+                  text: 'Hits: ',
+                  score: currentScore.value,
+                  key: key.value,
+                ),
+                TextSpanHit(
+                  text: 'Record: ',
+                  score: currentRecord.data ?? 0,
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -126,8 +130,9 @@ class TestYourMemoryPage extends HookConsumerWidget {
                           isCorrect.value = true;
                         } else {
                           isCorrect.value = false;
-                          reff.playSoundAndVibration(
-                              'assets/sounds/wrong_sound_1.mp3');
+                          settingN.playSoundAndVibration(
+                            'assets/sounds/wrong_sound_1.mp3',
+                          );
                           lifesRemaing.value--;
                           if (lifesRemaing.value == 0) {
                             await saveGameScore(
@@ -208,6 +213,7 @@ class TextSpanHit extends StatelessWidget {
   final int score;
   @override
   Widget build(BuildContext context) {
+    final color = Colors.grey;
     return ScaleAnimation(
       end: 1.5,
       duration: Duration(milliseconds: 250),
@@ -218,15 +224,17 @@ class TextSpanHit extends StatelessWidget {
             TextSpan(
               text: text,
               style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w400,
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: color,
               ),
             ),
             TextSpan(
               text: score.toString(),
               style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w400,
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: color,
               ),
             ),
           ],

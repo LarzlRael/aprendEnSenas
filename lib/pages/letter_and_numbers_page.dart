@@ -27,7 +27,7 @@ class LetterAndNumbersPage extends HookWidget {
                 }),
             Expanded(
               child: AnimatedSwitcher(
-                duration: Duration(milliseconds: 500),
+                duration: Duration(milliseconds: 350),
                 child: isSwitched.value
                     ? ListGrid(onTap: onSelected, key: UniqueKey())
                     : ListRow(onTap: onSelected, key: UniqueKey()),

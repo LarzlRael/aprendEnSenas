@@ -38,7 +38,7 @@ class WordInSightPage extends HookConsumerWidget {
                     ? ResultGameType.win
                     : ResultGameType.lose,
             winTitle: '¡Felicidades!',
-            winSubtitle: 'Has ganado',
+            winSubtitle: 'Has ganado, sigue así',
             loseTitle: 'Perdiste',
             loseSubtitle: 'Has perdido todas tus vidas, intentalo de nuevo',
             callBackOnLose: () {

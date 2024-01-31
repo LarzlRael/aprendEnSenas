@@ -111,6 +111,9 @@ class CardLevel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      customBorder: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
       onTap: () => onTap(level),
       child: Card(
           color: colorByLevel[level],
