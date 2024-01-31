@@ -142,7 +142,7 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
     }
   }
 
-  void startVibrate({int millisec = 500}) {
+  void startVibrate({int millisec = 150}) {
     if (state.isVibrationActive) {
       VibrateServiceImp().vibrate(millisec: millisec);
     }
