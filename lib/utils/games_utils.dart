@@ -95,7 +95,7 @@ FlipCardGame getFlipCardGameLevel(Level gameLevel) {
     case Level.hard:
       return FlipCardGame(8, 4, Duration(seconds: 45));
     case Level.very_hard:
-      return FlipCardGame(25, 5, Duration(seconds: 60));
+      return FlipCardGame(10, 4, Duration(seconds: 60));
     default:
       return FlipCardGame(6, 2, Duration(seconds: 90));
   }

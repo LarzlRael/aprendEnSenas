@@ -37,11 +37,11 @@ class FlippingCardGame extends HookWidget {
     final _data = useState<List<Sign>>([]);
 
     final _cardFlips = useState<List<bool>>([]);
-    final getRecord = useFuture(
+    /* final getRecord = useFuture(
       getGameScore(GameType.volteo_de_cartas, level),
-    );
+    ); */
     final _cardStateKeys = useState<List<GlobalKey<FlipCardState>>>([]);
-    final diff = useState<FlipCardGame?>(null);
+    final levelFlippingGame = useState<FlipCardGame?>(null);
     Widget getItem(int index) {
       return Container(
         padding: const EdgeInsets.all(4.0),
@@ -91,11 +91,13 @@ class FlippingCardGame extends HookWidget {
     }
 
     void initializeGameData() {
-      diff.value = getFlipCardGameLevel(level);
-      _data.value = createShuffledListFromImageSource(diff.value!.options);
-      _cardFlips.value = getInitialItemStateList((diff.value!.options * 2));
+      levelFlippingGame.value = getFlipCardGameLevel(level);
+      _data.value =
+          createShuffledListFromImageSource(levelFlippingGame.value!.options);
+      _cardFlips.value =
+          getInitialItemStateList((levelFlippingGame.value!.options * 2));
       _cardStateKeys.value =
-          createFlipCardStateKeysList((diff.value!.options * 2));
+          createFlipCardStateKeysList((levelFlippingGame.value!.options * 2));
       _time.value = 3;
       _left.value = (_data.value.length ~/ 2);
       _isFinished.value = false;
@@ -137,14 +139,14 @@ class FlippingCardGame extends HookWidget {
               title: Text(
                 'Volteo de cartas',
               ),
-              /* centerTitle: true, */
+              centerTitle: true,
               leading: BackIcon(size: 20),
-              actions: [
+              /* actions: [
                 TextSpanHit(
                   text: 'Record: ',
                   score: getRecord.data ?? 0,
                 )
-              ],
+              ], */
             ),
             body: SafeArea(
               child: Container(
@@ -171,7 +173,7 @@ class FlippingCardGame extends HookWidget {
                               style: style,
                               padding: EdgeInsets.symmetric(horizontal: 10),
                             ),
-                            _time.value == 0
+                            _time.value == 0 || gameDuration.value == 0
                                 ? const SizedBox()
                                 : Text(
                                     'Countdown: ${_time.value}',
@@ -183,11 +185,11 @@ class FlippingCardGame extends HookWidget {
                       AlignedGridView.count(
                         shrinkWrap: true,
                         itemCount: _data.value.length,
-                        crossAxisCount: diff.value!.rows,
+                        crossAxisCount: levelFlippingGame.value!.rows,
                         crossAxisSpacing: 5,
                         mainAxisSpacing: 5,
                         physics: const BouncingScrollPhysics(),
-                        itemBuilder: (context, index) => _start.value
+                        itemBuilder: (_, index) => _start.value
                             ? FlipCard(
                                 key: _cardStateKeys.value[index],
                                 onFlip: () async {

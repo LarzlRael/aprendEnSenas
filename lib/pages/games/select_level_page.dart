@@ -112,7 +112,7 @@ class CardLevel extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       customBorder: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(15),
       ),
       onTap: () => onTap(level),
       child: Card(
