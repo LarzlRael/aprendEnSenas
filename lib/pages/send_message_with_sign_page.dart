@@ -31,7 +31,7 @@ class SendMessageWithSignPage extends HookConsumerWidget {
           if (signProviderS.currentMessage.isNotEmpty)
             IconButton(
               onPressed: () => ShareServiceImp().shareOnlyText(
-                "${Enviroment.deepLinkUrl}${HomePage.routeName}/${signProviderS.currentMessage}",
+                shareString(HomePage.routeName, signProviderS.currentMessage),
               ),
               icon: Icon(Icons.share),
             ),

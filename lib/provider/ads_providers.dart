@@ -87,7 +87,7 @@ final adBannerProvider = FutureProvider<BannerAd>((ref) async {
 } */
 
 void addCounterIntersitialAd(Function callBack) async {
-  const MAXCOUNT = 2;
+  const MAXCOUNT = 5;
   final keyValueStorageServiceImpl = KeyValueStorageServiceImpl();
   final getCurrentCounterAdd =
       await keyValueStorageServiceImpl.getValue<int>(COUNTER_ADD) ?? 0;

@@ -25,7 +25,7 @@ class LetterAndNumbersPageDetail extends HookWidget {
         actions: [
           IconButton(
             onPressed: () => ShareServiceImp().shareOnlyText(
-              "${Enviroment.deepLinkUrl}${routeName}/$currentLetterOrPhrase",
+              shareString(routeName, currentLetterOrPhrase),
             ),
             icon: Icon(Icons.share),
           ),
@@ -100,10 +100,10 @@ class OneLetterAndNumbers extends StatelessWidget {
               ),
             ),
           ),
-          /*   Align(
+          Align(
             alignment: Alignment.bottomCenter,
             child: BannerAd(),
-          ), */
+          ),
         ],
       ),
     );

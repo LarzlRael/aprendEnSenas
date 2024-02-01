@@ -22,6 +22,10 @@ class SignProvider extends _$SignProvider {
     );
   }
 
+  String replaceSpaceByPlus() {
+    return state.currentMessage.replaceAll(' ', '%20');
+  }
+
   void generateListToMessage(String inputString) {
     state =
         state.copyWith(listSigns: [], currentSign: null, currentMessage: '');
@@ -32,35 +36,15 @@ class SignProvider extends _$SignProvider {
     );
   }
 
-  setCurrentMessage(String message) {
+  void setCurrentMessage(String message) {
     state = state.copyWith(currentMessage: message);
   }
 
-  setCurrentSign(Sign sign) {
+  void setCurrentSign(Sign sign) {
     state = state.copyWith(currentSign: sign);
   }
 }
 
-/* @riverpod
-class CurrentMessage extends _$CurrentMessage {
-  @override
-  String build() {
-    return '';
-  }
-
-  setCurrentMessage(String message) {
-    state = message;
-  }
-}
-
-@riverpod
-class CurrentSign extends _$CurrentSign {
-  @override
-  Sign? build() {
-    return null;
-  }
-}
- */
 class SignState {
   List<Sign> listSigns = [];
   Sign? currentSign;

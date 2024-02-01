@@ -43,3 +43,8 @@ String replaceMiddleWithUnderscores(String word) {
   // Concatenate the start, middle, and end characters with underscores
   return start + middleUnderscores + end;
 }
+
+String shareString(String routeName, String message) {
+  final string = message.replaceAll(' ', '%20');
+  return "${Enviroment.deepLinkUrl}$routeName/$string";
+}
