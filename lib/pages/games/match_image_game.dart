@@ -35,7 +35,9 @@ class MatchImageGame extends HookConsumerWidget {
     if (items.value.length == 0) gameOver.value = true;
     return Scaffold(
       appBar: AppBar(
-        leading: BackIcon(),
+        leading: BackIcon(
+          margin: EdgeInsets.only(left: 10),
+        ),
         centerTitle: true,
         title: Text('Arrastra y suelta'),
         actions: [

@@ -140,7 +140,10 @@ class FlippingCardGame extends HookWidget {
                 'Volteo de cartas',
               ),
               centerTitle: true,
-              leading: BackIcon(size: 20),
+              leading: BackIcon(
+                size: 20,
+                margin: EdgeInsets.only(left: 10),
+              ),
               /* actions: [
                 TextSpanHit(
                   text: 'Record: ',

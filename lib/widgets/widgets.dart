@@ -24,6 +24,7 @@ part 'simple_text.dart';
 part './cards/image_gallery.dart';
 part './cards/image_switcher.dart';
 part './cards/sign_card.dart';
+part 'cards/no_information_card.dart';
 
 part '/games/select_game_card.dart';
 part '/games/page_view_sign_slider.dart';

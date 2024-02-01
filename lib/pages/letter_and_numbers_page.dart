@@ -46,7 +46,7 @@ class ListRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      separatorBuilder: (context, index) => SizedBox(height: 13),
+      separatorBuilder: (context, index) => SizedBox(height: 5),
       itemCount: signLowerLetters.length,
       itemBuilder: (BuildContext context, int index) {
         final list = signLowerLetters[index];
@@ -65,7 +65,10 @@ class ListRow extends StatelessWidget {
               ),
               title: Text(
                 list.letter,
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.w400,
+                ),
                 textAlign: TextAlign.center,
               ),
             ),

@@ -72,6 +72,7 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final listOnlyLettersNumbers = useState<List<Sign>>([]);
     final signProviderS = ref.watch(signProviderProvider);
+    final signProviderN = ref.read(signProviderProvider.notifier);
     final currentSliderState = useState(5);
     final currentSize = useState(50.0);
     useEffect(() {
@@ -88,43 +89,62 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
     return Expanded(
       child: Column(
         children: [
-          Slider(
-            value: currentSliderState.value.toDouble(),
-            onChanged: (value) {
-              currentSliderState.value = value.toInt();
-            },
-            min: 1,
-            max: 10,
-            divisions: 10,
-          ),
-          Expanded(
-            child: Card(
-              child: AlignedGridView.count(
-                crossAxisCount: currentSliderState.value,
-                mainAxisSpacing: 5,
-                crossAxisSpacing: 5,
-                itemCount: listOnlyLettersNumbers.value.length,
-                itemBuilder: (_, index) => SquareCard(
-                  iconSize: currentSize.value,
-                  sign: listOnlyLettersNumbers.value[index],
-                  onTap: (sign) => context.push(
-                    '${LetterAndNumbersPage.routeName}/${sign.letter}',
-                  ),
-                ),
-              ),
+          if (signProviderS.currentMessage.isNotEmpty)
+            Slider(
+              value: currentSliderState.value.toDouble(),
+              onChanged: (value) {
+                currentSliderState.value = value.toInt();
+              },
+              min: 1,
+              max: 10,
+              divisions: 10,
             ),
+          Expanded(
+            child: signProviderS.currentMessage.isEmpty
+                ? FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: NoInformationCard(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 30,
+                        vertical: 15,
+                      ),
+                      title: "No hay mensajes todavía...",
+                      description: "Puedes escribir o usar el micrófono",
+                    ),
+                  )
+                : Card(
+                    child: AlignedGridView.count(
+                      crossAxisCount: currentSliderState.value,
+                      mainAxisSpacing: 5,
+                      crossAxisSpacing: 5,
+                      itemCount: listOnlyLettersNumbers.value.length,
+                      itemBuilder: (_, index) => SquareCard(
+                        iconSize: currentSize.value,
+                        sign: listOnlyLettersNumbers.value[index],
+                        onTap: (sign) => context.push(
+                          '${LetterAndNumbersPage.routeName}/${sign.letter}',
+                        ),
+                      ),
+                    ),
+                  ),
           ),
           Container(
             margin: EdgeInsets.symmetric(vertical: 5),
             child: Row(
               children: [
-                Expanded(child: TextFieldSendMessage()),
+                Expanded(
+                    child: TextFieldSendMessage(
+                  onTextChange: signProviderN.setCurrentMessage,
+                  initialValue: signProviderS.currentMessage,
+                  onClear: (controller) {
+                    controller.clear();
+                    signProviderN.setCurrentMessage('');
+                  },
+                )),
                 const SizedBox(width: 2),
                 SpeechButton(
                   onSpeechResult: (res) {
-                    ref
-                        .read(signProviderProvider.notifier)
-                        .setCurrentMessage(res);
+                    signProviderN.setCurrentMessage(res);
                   },
                 ),
               ],
@@ -229,121 +249,108 @@ class SendMessageSlider extends HookConsumerWidget {
             children: [
               Column(
                 children: [
-                  CurrentSign(
-                    currenSign: signProviderS.currentSign,
-                    padding: const EdgeInsets.symmetric(vertical: 5),
-                  ),
+                  if (signProviderS.currentMessage.isNotEmpty)
+                    CurrentSign(
+                      currenSign: signProviderS.currentSign,
+                      padding: const EdgeInsets.symmetric(vertical: 5),
+                    ),
                   Align(
                     alignment: Alignment.center,
-                    child: settings.typeDisplay == TypeDisplay.pageView
-                        ? Container(
-                            width: 300,
-                            height: size.height * 0.50,
-                            child: PageView.builder(
-                              controller: pageController,
-                              scrollDirection: settings.sliderDirection,
-                              itemCount: signProviderS.listSigns.length,
-                              itemBuilder: (context, int index) {
-                                final sign = signProviderS.listSigns[index];
-                                return InkWell(
-                                  onTap: () => context.push(
-                                      '${LetterAndNumbersPage.routeName}/${sign.letter}'),
-                                  child: Card(
-                                    child: ColoredIcon(
-                                      icon: sign.iconSign,
-                                      size: 250,
-                                    ),
-                                  ),
-                                );
-                              },
+                    child: signProviderS.listSigns.isEmpty
+                        ? NoInformationCard(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 30,
+                              vertical: 15,
                             ),
+                            title: "No hay mensajes todavía...",
+                            description: "Puedes escribir o usar el micrófono",
                           )
-                        : Container(
-                            width: 300,
-                            height: 400,
-                            child: signProviderS.listSigns.isEmpty
-                                ? const SizedBox()
-                                : Expanded(
-                                    child: AnimatedSwitcher(
-                                        duration:
-                                            const Duration(milliseconds: 500),
-                                        child: Card(
-                                          child: Icon(
-                                            signProviderS
-                                                .listSigns[_currentIndex.value]
-                                                .iconSign,
-                                            key: ValueKey<int>(
-                                                _currentIndex.value),
-                                            /*   width: 200,
+                        : settings.typeDisplay == TypeDisplay.pageView
+                            ? Container(
+                                width: 300,
+                                height: size.height * 0.50,
+                                child: PageView.builder(
+                                  controller: pageController,
+                                  scrollDirection: settings.sliderDirection,
+                                  itemCount: signProviderS.listSigns.length,
+                                  itemBuilder: (context, int index) {
+                                    final sign = signProviderS.listSigns[index];
+                                    return InkWell(
+                                      onTap: () => context.push(
+                                          '${LetterAndNumbersPage.routeName}/${sign.letter}'),
+                                      child: Card(
+                                        child: ColoredIcon(
+                                          icon: sign.iconSign,
+                                          size: 250,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              )
+                            : Container(
+                                width: 300,
+                                height: 400,
+                                child: signProviderS.listSigns.isEmpty
+                                    ? const SizedBox()
+                                    : Expanded(
+                                        child: AnimatedSwitcher(
+                                            duration: const Duration(
+                                                milliseconds: 500),
+                                            child: Card(
+                                              child: Icon(
+                                                signProviderS
+                                                    .listSigns[
+                                                        _currentIndex.value]
+                                                    .iconSign,
+                                                key: ValueKey<int>(
+                                                    _currentIndex.value),
+                                                /*   width: 200,
                                                           height: 200, */
-                                          ),
-                                        )),
-                                  ),
-                          ),
+                                              ),
+                                            )),
+                                      ),
+                              ),
                   ),
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 5),
-                    child: signProviderS.listSigns.isEmpty
-                        ? Card(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 30,
-                                vertical: 15,
-                              ),
-                              child: Column(
-                                children: [
-                                  const SimpleText(
-                                    text: "No hay mensajes todavía...",
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
+                    child: RichText(
+                      text: TextSpan(
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          /* color: Colors.black, */
+                        ),
+                        children:
+                            signProviderS.listSigns.mapIndexed((index, e) {
+                          if (_currentIndex.value == index) {
+                            return WidgetSpan(
+                              alignment: PlaceholderAlignment.middle,
+                              child: Transform.translate(
+                                offset: const Offset(0.0, 0.0),
+                                child: Text(
+                                  e.letter,
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.green,
+                                    /* color: Colors.black, */
                                   ),
-                                  const SimpleText(
-                                    padding: const EdgeInsets.only(top: 5),
-                                    text: "Puedes escribir o usar el micrófono",
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ],
+                                ),
                               ),
-                            ),
-                          )
-                        : RichText(
-                            text: TextSpan(
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                /* color: Colors.black, */
-                              ),
-                              children: signProviderS.listSigns
-                                  .mapIndexed((index, e) {
-                                if (_currentIndex.value == index) {
-                                  return WidgetSpan(
-                                    alignment: PlaceholderAlignment.middle,
-                                    child: Transform.translate(
-                                      offset: const Offset(0.0, 0.0),
-                                      child: Text(
-                                        e.letter,
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.green,
-                                          /* color: Colors.black, */
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                } else {
-                                  return TextSpan(
-                                      text: e.letter,
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.grey,
-                                      ));
-                                }
-                              }).toList(),
-                            ),
-                          ),
+                            );
+                          } else {
+                            return TextSpan(
+                                text: e.letter,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey,
+                                ));
+                          }
+                        }).toList(),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -354,7 +361,15 @@ class SendMessageSlider extends HookConsumerWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Expanded(child: TextFieldSendMessage()),
+                Expanded(
+                    child: TextFieldSendMessage(
+                  onTextChange: signProviderN.setCurrentMessage,
+                  initialValue: signProviderS.currentMessage,
+                  onClear: (textController) {
+                    textController.clear();
+                    signProviderN.setCurrentMessage('');
+                  },
+                )),
                 const SizedBox(width: 2),
                 AnimatedSwitcher(
                   duration: const Duration(milliseconds: 500),
@@ -418,8 +433,8 @@ class CurrentSign extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   const CurrentSign({
     super.key,
-    required this.currenSign,
     this.padding,
+    required this.currenSign,
   });
 
   final Sign? currenSign;

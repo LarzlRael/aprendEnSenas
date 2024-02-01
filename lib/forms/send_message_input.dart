@@ -2,13 +2,22 @@ part of '../widgets/widgets.dart';
 
 const borderRadious = 40.0;
 
-class TextFieldSendMessage extends HookConsumerWidget {
-  TextFieldSendMessage({super.key});
+class TextFieldSendMessage extends HookWidget {
+  final Function(TextEditingController controller)? onClear;
+  final String? initialValue;
+  final Function(String value) onTextChange;
+  TextFieldSendMessage({
+    super.key,
+    this.onClear,
+    this.initialValue,
+    required this.onTextChange,
+  });
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final textController = useTextEditingController()
       ..value = TextEditingValue(
-          text: ref.watch(signProviderProvider).currentMessage);
+        text: initialValue ?? "",
+      );
 
     return Card(
       shape: RoundedRectangleBorder(
@@ -37,10 +46,9 @@ class TextFieldSendMessage extends HookConsumerWidget {
             suffixIcon: textController.text.isNotEmpty
                 ? IconButton(
                     onPressed: () {
-                      textController.text = "";
-                      textController.clear();
-
-                      /* ref.read(brailleProvider.notifier).setNormalText(""); */
+                      if (onClear != null) {
+                        onClear!(textController);
+                      }
                     },
                     icon: Icon(
                       Icons.cancel,
@@ -49,12 +57,12 @@ class TextFieldSendMessage extends HookConsumerWidget {
                 : null,
           ),
           onChanged: (val) {
-            ref
+            /*  ref
                 .read(
                   signProviderProvider.notifier,
                 )
-                .setCurrentMessage(val);
-            /* onTextChange(value); */
+                .setCurrentMessage(val); */
+            onTextChange(val);
           },
         ),
       ),

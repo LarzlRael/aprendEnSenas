@@ -57,7 +57,9 @@ class WordInSightPage extends HookConsumerWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        BackIcon(),
+                        BackIcon(
+                          margin: EdgeInsets.only(left: 10),
+                        ),
                         Expanded(
                           child: Container(
                             padding: EdgeInsets.symmetric(horizontal: 10),

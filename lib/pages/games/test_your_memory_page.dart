@@ -43,7 +43,9 @@ class TestYourMemoryPage extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        leading: BackIcon(),
+        leading: BackIcon(
+          margin: EdgeInsets.only(left: 10),
+        ),
         actions: [
           Container(
             margin: EdgeInsets.only(right: 10),
