@@ -29,10 +29,10 @@ class SelectGameMenuPage extends HookConsumerWidget {
                 );
               },
             ),
-            Align(
+            /* Align(
               alignment: Alignment.bottomCenter,
               child: BannerAd(),
-            ),
+            ), */
           ],
         ),
       ),

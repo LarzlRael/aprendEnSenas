@@ -5,7 +5,7 @@ import 'package:asl/data/sign_list.dart';
 import 'package:asl/models/models.dart';
 import 'package:asl/provider/ads_providers.dart';
 import 'package:asl/provider/settings_provider.dart';
-import 'package:asl/provider/sign_provider.dart';
+
 import 'package:asl/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';

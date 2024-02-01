@@ -100,10 +100,10 @@ class OneLetterAndNumbers extends StatelessWidget {
               ),
             ),
           ),
-          Align(
+          /*   Align(
             alignment: Alignment.bottomCenter,
             child: BannerAd(),
-          ),
+          ), */
         ],
       ),
     );

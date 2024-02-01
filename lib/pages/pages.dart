@@ -21,14 +21,13 @@ import 'package:asl/utils/utils.dart';
 import 'package:asl/widgets/widgets.dart';
 import 'package:collection/collection.dart';
 import 'package:confetti/confetti.dart';
-import 'package:diacritic/diacritic.dart';
+
 import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 
 import 'package:go_router/go_router.dart';
@@ -54,3 +53,5 @@ part 'games/flipping_card_game.dart';
 part 'games/game_over_screen.dart';
 part 'welcome/welcome_page.dart';
 part 'welcome/splash_screen_page.dart';
+
+part 'test/test_page.dart';

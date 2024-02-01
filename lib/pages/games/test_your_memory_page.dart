@@ -18,7 +18,6 @@ class TestYourMemoryPage extends HookConsumerWidget {
     final lifesRemaing = useState<int>(generate.lifes);
 
     final correctAnswer = createTestYourGameState.value.correctAnswer;
-    final settingS = ref.watch(settingsProvider);
     final settingN = ref.read(settingsProvider.notifier);
     final isCorrect = useState<bool>(false);
 
@@ -35,7 +34,6 @@ class TestYourMemoryPage extends HookConsumerWidget {
         settingN.playSound('assets/sounds/correct_sound_2.mp3');
         currentScore.value = currentScore.value + 10;
         isCorrect.value = false;
-        /* Reset the animation */
         key.value = UniqueKey();
       }
       return;
