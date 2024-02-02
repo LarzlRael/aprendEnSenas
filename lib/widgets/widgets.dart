@@ -20,6 +20,8 @@ import 'package:provider/provider.dart' as ProviderState;
 
 import 'package:speech_to_text/speech_to_text.dart';
 
+import '../provider/sign_provider.dart';
+
 part 'simple_text.dart';
 part './cards/image_gallery.dart';
 part './cards/image_switcher.dart';

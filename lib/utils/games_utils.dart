@@ -26,7 +26,7 @@ WordInSightGame createWordInSightGame(List<String> options, int amountOptions) {
     options:
         selectedOptions.map((e) => e.removeDiacriticsFromString()).toList(),
     correctAnswerList: generateListToMessageUtil(
-      listOnlySingAndNumbers,
+      signStyle1,
       correctAnswerString,
     ),
     correctAnswerString: correctAnswerString,
@@ -39,8 +39,7 @@ GuessTheWord getRandomWordFromStringList(List<String> list) {
       list[Random().nextInt(list.length)].removeDiacriticsFromString();
 
   return GuessTheWord(
-    correctWordSignList:
-        generateListToMessageUtil(listOnlySingAndNumbers, randomWord),
+    correctWordSignList: generateListToMessageUtil(signStyle1, randomWord),
     correctWordString: randomWord,
   );
 }

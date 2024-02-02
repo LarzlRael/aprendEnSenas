@@ -1,14 +1,15 @@
 part of 'pages.dart';
 
-class LetterAndNumbersPageDetail extends HookWidget {
+class LetterAndNumbersPageDetail extends HookConsumerWidget {
   final String signChar;
   const LetterAndNumbersPageDetail({super.key, required this.signChar});
   static const routeName = '/letter_and_numbers_page_detail';
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final signState = useState<List<Sign>>([]);
     useEffect(() {
-      signState.value = getIconSign(signChar)!;
+      signState.value = getIconSign(
+          signChar, ref.watch(signProviderProvider).currentListSing)!;
       return;
     }, [signChar]);
     final appBarTitle = signState.value.length == 1

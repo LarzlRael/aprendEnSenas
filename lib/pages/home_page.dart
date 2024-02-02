@@ -25,17 +25,17 @@ class HomePage extends HookWidget {
       ItemMenu(
         title: 'Enviar mensaje',
         page: SendMessageWithSignPage(phrase: phrase),
-        icon: IconsCustom.ic_conversation,
+        icon: CustomIcons.ic_conversation,
       ),
       ItemMenu(
         title: 'Letrás y números',
         page: LetterAndNumbersPage(),
-        icon: IconsCustom.ic_words,
+        icon: CustomIcons.ic_words,
       ),
       ItemMenu(
         title: 'Juegos',
         page: SelectGameMenuPage(),
-        icon: IconsCustom.ic_puzzle,
+        icon: CustomIcons.ic_puzzle,
       ),
       /* ItemMenu(title: 'Settings', page: SettingsPage()), */
     ];

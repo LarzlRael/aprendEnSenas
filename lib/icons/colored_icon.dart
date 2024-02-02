@@ -1,13 +1,13 @@
 part of '../widgets/widgets.dart';
 
-class CustomIcon extends Icon {
+/* class CustomIcon extends Icon {
   // Puedes agregar tus propios atributos aquí
   final Color customColor;
 
   // Constructor que llama al constructor de la clase base (Icon)
   CustomIcon(IconData icon, {Key? key, this.customColor = Colors.black})
       : super(icon, key: key);
-}
+} */
 
 class ColoredIcon extends ConsumerWidget {
   final IconData icon;

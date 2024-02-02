@@ -138,9 +138,6 @@ flutter:
     - family: CustomIcons
       fonts:
         - asset: fonts/CustomIcons.ttf
-    - family: IconsCustom
-      fonts:
-        - asset: fonts/IconsCustom.ttf
     - family: SignIcons
       fonts:
         - asset: fonts/SignIcons.ttf

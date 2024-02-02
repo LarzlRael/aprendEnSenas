@@ -1,11 +1,12 @@
 part of 'pages.dart';
 
-class LetterAndNumbersPage extends HookWidget {
+class LetterAndNumbersPage extends HookConsumerWidget {
   const LetterAndNumbersPage({super.key});
   static const routeName = '/letter_and_numbers_page';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
+    final currentSignList = ref.watch(signProviderProvider).currentListSing;
     void onSelected(Sign sing) => context.push('${routeName}/${sing.letter}');
 
     final isSwitched = useState(false);
@@ -29,8 +30,16 @@ class LetterAndNumbersPage extends HookWidget {
               child: AnimatedSwitcher(
                 duration: Duration(milliseconds: 350),
                 child: isSwitched.value
-                    ? ListGrid(onTap: onSelected, key: UniqueKey())
-                    : ListRow(onTap: onSelected, key: UniqueKey()),
+                    ? ListGrid(
+                        onTap: onSelected,
+                        key: UniqueKey(),
+                        currentSignList: currentSignList,
+                      )
+                    : ListRow(
+                        onTap: onSelected,
+                        key: UniqueKey(),
+                        currentSignList: currentSignList,
+                      ),
               ),
             ),
           ],
@@ -42,14 +51,15 @@ class LetterAndNumbersPage extends HookWidget {
 
 class ListRow extends StatelessWidget {
   final Function(Sign sing)? onTap;
-  const ListRow({super.key, this.onTap});
+  final List<Sign> currentSignList;
+  const ListRow({super.key, this.onTap, required this.currentSignList});
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
       separatorBuilder: (context, index) => SizedBox(height: 5),
-      itemCount: signLowerLetters.length,
+      itemCount: currentSignList.length,
       itemBuilder: (BuildContext context, int index) {
-        final list = signLowerLetters[index];
+        final list = currentSignList[index];
         return Card(
           child: Container(
             padding: EdgeInsets.all(10),
@@ -80,12 +90,13 @@ class ListRow extends StatelessWidget {
 }
 
 class ListGrid extends StatelessWidget {
-  const ListGrid({super.key, this.onTap});
+  final List<Sign> currentSignList;
+  const ListGrid({super.key, this.onTap, required this.currentSignList});
   final Function(Sign sing)? onTap;
   @override
   Widget build(BuildContext context) {
     return ListGridSign(
-      listSign: signLowerLetters,
+      listSign: currentSignList,
       onTap: onTap,
     );
   }

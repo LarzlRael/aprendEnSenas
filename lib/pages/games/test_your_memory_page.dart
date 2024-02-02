@@ -11,7 +11,7 @@ class TestYourMemoryPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final generate = getTestYourMemoryGameLevel(level);
     final createTestYourGameState = useState<TestYourGame>(
-      createTestYourGame(listOnlySingAndNumbers, generate.numberOptions),
+      createTestYourGame(signStyle1, generate.numberOptions),
     );
 
     final totalLifes = generate.lifes;
@@ -30,7 +30,7 @@ class TestYourMemoryPage extends HookConsumerWidget {
     useEffect(() {
       if (isCorrect.value) {
         createTestYourGameState.value =
-            createTestYourGame(listOnlySingAndNumbers, generate.numberOptions);
+            createTestYourGame(signStyle1, generate.numberOptions);
         settingN.playSound('assets/sounds/correct_sound_2.mp3');
         currentScore.value = currentScore.value + 10;
         isCorrect.value = false;

@@ -1,14 +1,11 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:math' as math;
-import 'dart:ui' as ui;
-
 import 'package:animate_do/animate_do.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
+
 import 'package:asl/constants/constant.dart';
-import 'package:asl/constants/enviroments.dart';
 import 'package:asl/constants/key_value_names.dart';
-import 'package:asl/customs_icons/icons_custom_icons.dart';
+import 'package:asl/customs_icons/custom_icons_icons.dart';
+
 import 'package:asl/data/games_data.dart';
 import 'package:asl/data/sign_list.dart';
 import 'package:asl/models/models.dart';

@@ -80,7 +80,7 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
     }, [currentSliderState.value]);
     useEffect(() {
       listOnlyLettersNumbers.value = generateListToMessageUtil(
-        listOnlySingAndNumbers,
+        signStyle1,
         signProviderS.currentMessage,
       );
       return null;
@@ -175,16 +175,17 @@ class SendMessageSlider extends HookConsumerWidget {
     final interstialAdProviderN = ref.read(interstiatAdProvider.notifier);
 
     pageController.addListener(() {
-      if (pageController.page!.toInt() < signProviderS.listSigns.length) {
+      if (pageController.page!.toInt() <
+          signProviderS.listSignsToMessage.length) {
         _currentIndex.value = pageController.page!.toInt();
         signProviderN.setCurrentSign(
-            signProviderS.listSigns[pageController.page!.toInt()]);
+            signProviderS.listSignsToMessage[pageController.page!.toInt()]);
       }
     });
 
     useEffect(() {
-      signProviderS.listSigns = generateListToMessageUtil(
-        listOnlySingAndNumbers,
+      signProviderS.listSignsToMessage = generateListToMessageUtil(
+        signStyle1,
         signProviderS.currentMessage,
       );
       /* return pageController.dispose; */
@@ -198,7 +199,8 @@ class SendMessageSlider extends HookConsumerWidget {
       signProviderS.timer = Timer.periodic(
           Duration(milliseconds: settings.transitionTime.toInt()),
           (Timer timer) {
-        if (pageController.page!.toInt() < signProviderS.listSigns.length - 1) {
+        if (pageController.page!.toInt() <
+            signProviderS.listSignsToMessage.length - 1) {
           isPlaying.value = true;
           pageController.nextPage(
             duration: Duration(milliseconds: settings.transitionTime.toInt()),
@@ -219,8 +221,8 @@ class SendMessageSlider extends HookConsumerWidget {
       isPlaying.value = false;
       signProviderS.timer?.cancel();
       _currentIndex.value = 0;
-      signProviderN
-          .setCurrentSign(signProviderS.listSigns[_currentIndex.value]);
+      signProviderN.setCurrentSign(
+          signProviderS.listSignsToMessage[_currentIndex.value]);
     }
 
     void startTimerAnimatedImages() {
@@ -228,11 +230,11 @@ class SendMessageSlider extends HookConsumerWidget {
           Duration(milliseconds: settings.transitionTime.toInt()),
           (timer) async {
         isPlaying.value = true;
-        signProviderN
-            .setCurrentSign(signProviderS.listSigns[_currentIndex.value]);
+        signProviderN.setCurrentSign(
+            signProviderS.listSignsToMessage[_currentIndex.value]);
         _currentIndex.value = _currentIndex.value + 1;
 
-        if (_currentIndex.value == signProviderS.listSigns.length) {
+        if (_currentIndex.value == signProviderS.listSignsToMessage.length) {
           stopTimerAnimatedImages();
           /* TODO change this */
           /* ref.read(signProviderProvider.notifier).setCurrentSign(null); */
@@ -256,7 +258,7 @@ class SendMessageSlider extends HookConsumerWidget {
                     ),
                   Align(
                     alignment: Alignment.center,
-                    child: signProviderS.listSigns.isEmpty
+                    child: signProviderS.listSignsToMessage.isEmpty
                         ? NoInformationCard(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 30,
@@ -272,9 +274,11 @@ class SendMessageSlider extends HookConsumerWidget {
                                 child: PageView.builder(
                                   controller: pageController,
                                   scrollDirection: settings.sliderDirection,
-                                  itemCount: signProviderS.listSigns.length,
+                                  itemCount:
+                                      signProviderS.listSignsToMessage.length,
                                   itemBuilder: (context, int index) {
-                                    final sign = signProviderS.listSigns[index];
+                                    final sign =
+                                        signProviderS.listSignsToMessage[index];
                                     return InkWell(
                                       onTap: () => context.push(
                                           '${LetterAndNumbersPage.routeName}/${sign.letter}'),
@@ -291,7 +295,7 @@ class SendMessageSlider extends HookConsumerWidget {
                             : Container(
                                 width: 300,
                                 height: 400,
-                                child: signProviderS.listSigns.isEmpty
+                                child: signProviderS.listSignsToMessage.isEmpty
                                     ? const SizedBox()
                                     : Expanded(
                                         child: AnimatedSwitcher(
@@ -300,7 +304,7 @@ class SendMessageSlider extends HookConsumerWidget {
                                             child: Card(
                                               child: Icon(
                                                 signProviderS
-                                                    .listSigns[
+                                                    .listSignsToMessage[
                                                         _currentIndex.value]
                                                     .iconSign,
                                                 key: ValueKey<int>(
@@ -321,8 +325,8 @@ class SendMessageSlider extends HookConsumerWidget {
                           fontWeight: FontWeight.bold,
                           /* color: Colors.black, */
                         ),
-                        children:
-                            signProviderS.listSigns.mapIndexed((index, e) {
+                        children: signProviderS.listSignsToMessage
+                            .mapIndexed((index, e) {
                           if (_currentIndex.value == index) {
                             return WidgetSpan(
                               alignment: PlaceholderAlignment.middle,
@@ -373,7 +377,7 @@ class SendMessageSlider extends HookConsumerWidget {
                 const SizedBox(width: 2),
                 AnimatedSwitcher(
                   duration: const Duration(milliseconds: 500),
-                  child: signProviderS.listSigns.isEmpty
+                  child: signProviderS.listSignsToMessage.isEmpty
                       ? SpeechButton(
                           onSpeechResult: signProviderN.setCurrentMessage,
                         )

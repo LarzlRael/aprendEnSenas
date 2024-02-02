@@ -15,10 +15,11 @@ class SignProvider extends _$SignProvider {
   @override
   SignState build() {
     return SignState(
-      listSigns: [],
+      listSignsToMessage: [],
       currentSign: null,
       currentMessage: '',
       timer: null,
+      currentListSing: signStyle1,
     );
   }
 
@@ -31,7 +32,7 @@ class SignProvider extends _$SignProvider {
         state.copyWith(listSigns: [], currentSign: null, currentMessage: '');
 
     state = state.copyWith(
-      listSigns: generateListToMessageUtil(listOnlySingAndNumbers, inputString),
+      listSigns: generateListToMessageUtil(signStyle1, inputString),
       currentMessage: inputString,
     );
   }
@@ -46,15 +47,17 @@ class SignProvider extends _$SignProvider {
 }
 
 class SignState {
-  List<Sign> listSigns = [];
+  List<Sign> listSignsToMessage = [];
   Sign? currentSign;
   String currentMessage = '';
   Timer? timer;
+  List<Sign> currentListSing = [];
   SignState({
-    required this.listSigns,
+    required this.listSignsToMessage,
     required this.currentSign,
     required this.currentMessage,
     required this.timer,
+    required this.currentListSing,
   });
 
   SignState copyWith({
@@ -62,12 +65,14 @@ class SignState {
     Sign? currentSign,
     String? currentMessage,
     Timer? timer,
+    List<Sign>? currentListSing,
   }) {
     return SignState(
-      listSigns: listSigns ?? this.listSigns,
+      listSignsToMessage: listSigns ?? this.listSignsToMessage,
       currentSign: currentSign ?? this.currentSign,
       currentMessage: currentMessage ?? this.currentMessage,
       timer: timer ?? this.timer,
+      currentListSing: currentListSing ?? this.currentListSing,
     );
   }
 }

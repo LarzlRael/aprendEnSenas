@@ -28,7 +28,7 @@ class TestFlippingCardsPage extends HookWidget {
   Widget build(BuildContext context) {
     final getFlipCardGameLevelState = getFlipCardGameLevel(level);
     final state = useState<List<Sign>>(generateSignToPair(
-      listOnlySingAndNumbers,
+      signStyle1,
       getFlipCardGameLevelState.options,
     ));
 

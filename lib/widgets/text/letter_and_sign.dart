@@ -1,6 +1,6 @@
 part of '../widgets.dart';
 
-class LetterAndSign extends StatelessWidget {
+class LetterAndSign extends ConsumerWidget {
   final String text;
   final double? iconSize;
   final double? letterSize;
@@ -13,10 +13,11 @@ class LetterAndSign extends StatelessWidget {
     this.color,
   });
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Wrap(
       children: generateListToMessageUtil(
-              listAllSign, text.removeDiacriticsFromString())
+              ref.watch(signProviderProvider).currentListSing,
+              text.removeDiacriticsFromString())
           .map((sign) => IconAndLetter(
                 sign: sign,
                 iconSize: iconSize,

@@ -1,7 +1,7 @@
 part of 'utils.dart';
 
 List<Sign> createShuffledListFromImageSource(int amount) {
-  return generateSignToPair(listOnlySingAndNumbers, amount);
+  return generateSignToPair(signStyle1, amount);
 }
 
 List<bool> getInitialItemStateList(int amount) =>
