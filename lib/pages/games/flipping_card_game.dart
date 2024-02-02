@@ -93,7 +93,7 @@ class FlippingCardGame extends HookConsumerWidget {
     void initializeGameData() {
       levelFlippingGame.value = getFlipCardGameLevel(level);
       _data.value = createShuffledListFromImageSource(
-        ref.read(signProviderProvider).currentListSing,
+        ref.read(signProvider).currentListSing,
         levelFlippingGame.value!.options,
       );
       _cardFlips.value =

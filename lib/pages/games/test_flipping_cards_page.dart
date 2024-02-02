@@ -28,7 +28,7 @@ class TestFlippingCardsPage extends HookConsumerWidget {
   Widget build(BuildContext context, ref) {
     final getFlipCardGameLevelState = getFlipCardGameLevel(level);
     final state = useState<List<Sign>>(generateSignToPair(
-      ref.watch(signProviderProvider).currentListSing,
+      ref.watch(signProvider).currentListSing,
       getFlipCardGameLevelState.options,
     ));
 

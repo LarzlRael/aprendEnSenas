@@ -16,7 +16,7 @@ class TestYourMemoryPage extends HookConsumerWidget {
 
     final createTestYourGameState = useState<TestYourGame>(
       createTestYourGame(
-        ref.watch(signProviderProvider).currentListSing,
+        ref.watch(signProvider).currentListSing,
         generate.numberOptions,
       ),
     );
@@ -33,7 +33,7 @@ class TestYourMemoryPage extends HookConsumerWidget {
     useEffect(() {
       if (isCorrect.value) {
         createTestYourGameState.value = createTestYourGame(
-          ref.watch(signProviderProvider).currentListSing,
+          ref.watch(signProvider).currentListSing,
           generate.numberOptions,
         );
         settingN.playSound('assets/sounds/correct_sound_2.mp3');

@@ -8,7 +8,7 @@ class GuessTheWordPage extends HookConsumerWidget {
   Widget build(BuildContext context, ref) {
     final mediaQuery = MediaQuery.of(context).size;
     final settingNotifier = ref.watch(settingsProvider.notifier);
-    final signProviderN = ref.watch(signProviderProvider);
+    final signProviderN = ref.watch(signProvider);
 
     final randomCommonWord = useState<GuessTheWord>(getRandomWordFromStringList(
         commonWords, signProviderN.currentListSing));

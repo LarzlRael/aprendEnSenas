@@ -8,8 +8,8 @@ class LetterAndNumbersPageDetail extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final signState = useState<List<Sign>>([]);
     useEffect(() {
-      signState.value = getIconSign(
-          signChar, ref.read(signProviderProvider).currentListSing)!;
+      signState.value =
+          getIconSign(signChar, ref.read(signProvider).currentListSing)!;
       return;
     }, [signChar]);
     final appBarTitle = signState.value.length == 1

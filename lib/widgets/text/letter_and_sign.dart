@@ -16,7 +16,7 @@ class LetterAndSign extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Wrap(
       children: generateListToMessageUtil(
-              ref.watch(signProviderProvider).currentListSing,
+              ref.watch(signProvider).currentListSing,
               text.removeDiacriticsFromString())
           .map((sign) => IconAndLetter(
                 sign: sign,

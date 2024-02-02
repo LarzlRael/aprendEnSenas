@@ -9,7 +9,7 @@ class MatchImageGame extends HookConsumerWidget {
     final gameOver = useState<bool>(false);
     final settingsNotifier = ref.watch(settingsProvider.notifier);
     final interstiatAdProviderN = ref.watch(interstiatAdProvider.notifier);
-    final signProvider = ref.watch(signProviderProvider);
+    final signProviderS = ref.watch(signProvider);
     initGame() {
       gameOver.value = false;
       score.value = 0;
@@ -155,7 +155,7 @@ class MatchImageGame extends HookConsumerWidget {
                             child: Wrap(
                               crossAxisAlignment: WrapCrossAlignment.end,
                               children: generateListToMessageUtil(
-                                      signProvider.currentListSing,
+                                      signProviderS.currentListSing,
                                       item.name.removeDiacriticsFromString())
                                   .map((e) {
                                 return Icon(

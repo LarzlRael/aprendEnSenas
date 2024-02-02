@@ -11,8 +11,8 @@ class SendMessageWithSignPage extends HookConsumerWidget {
     final settingsN = ref.read(settingsProvider.notifier);
     final settingsS = ref.watch(settingsProvider);
 
-    final signProviderN = ref.read(signProviderProvider.notifier);
-    final signProviderS = ref.watch(signProviderProvider);
+    final signProviderN = ref.read(signProvider.notifier);
+    final signProviderS = ref.watch(signProvider);
 
     useEffect(() {
       Future.delayed(Duration.zero, () {
@@ -71,8 +71,8 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final listOnlyLettersNumbers = useState<List<Sign>>([]);
-    final signProviderS = ref.watch(signProviderProvider);
-    final signProviderN = ref.read(signProviderProvider.notifier);
+    final signProviderS = ref.watch(signProvider);
+    final signProviderN = ref.read(signProvider.notifier);
     final currentSliderState = useState(5);
     final currentSize = useState(50.0);
     useEffect(() {
@@ -165,8 +165,8 @@ class SendMessageSlider extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(settingsProvider);
-    final signProviderS = ref.watch(signProviderProvider);
-    final signProviderN = ref.read(signProviderProvider.notifier);
+    final signProviderS = ref.watch(signProvider);
+    final signProviderN = ref.read(signProvider.notifier);
     final isPlaying = useState(false);
 
     final pageController = usePageController();

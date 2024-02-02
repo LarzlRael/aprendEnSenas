@@ -12,8 +12,8 @@ class SettingsPage extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     final settingS = ref.watch(settingsProvider);
     final settingN = ref.read(settingsProvider.notifier);
-    final signProviderN = ref.read(signProviderProvider.notifier);
-    final signProviderS = ref.watch(signProviderProvider);
+    final signProviderN = ref.read(signProvider.notifier);
+    final signProviderS = ref.watch(signProvider);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

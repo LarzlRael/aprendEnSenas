@@ -1,22 +1,33 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
-
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:asl/data/sign_list.dart';
 import 'package:asl/models/models.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../utils/utils.dart';
 
-part 'sign_provider.g.dart';
+final signListProvider = [
+  signStyle1,
+  signStyle2,
+  signStyle3,
+];
+final signProvider = StateNotifierProvider<SignNotifier, SignState>((ref) {
+  return SignNotifier();
+});
 
-@riverpod
-class SignProvider extends _$SignProvider {
-  final signListProvider = [
-    signStyle1,
-    signStyle2,
-    signStyle3,
-  ];
+class SignNotifier extends StateNotifier<SignState> {
+  SignNotifier()
+      : super(
+          SignState(
+            listSignsToMessage: [],
+            currentSign: null,
+            currentMessage: '',
+            timer: null,
+            currentListIndex: 0,
+            currentListSing: signListProvider[0],
+          ),
+        );
+
   @override
   SignState build() {
     return SignState(

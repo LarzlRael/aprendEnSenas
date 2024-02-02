@@ -9,7 +9,7 @@ class WordInSightPage extends HookConsumerWidget {
   Widget build(BuildContext context, ref) {
     final state = useState<WordInSightGame>(createWordInSightGame(
       commonWords,
-      ref.watch(signProviderProvider).currentListSing,
+      ref.watch(signProvider).currentListSing,
       4,
     ));
     final isCorrect = useState(false);
@@ -27,7 +27,7 @@ class WordInSightPage extends HookConsumerWidget {
         settingsNotifier.playSound(correctsSounds[2]);
         selectedCardIndex.value = -1;
         state.value = createWordInSightGame(
-            commonWords, ref.watch(signProviderProvider).currentListSing, 4);
+            commonWords, ref.watch(signProvider).currentListSing, 4);
         status.value = status.value + stepValue;
         key.value = UniqueKey();
       }

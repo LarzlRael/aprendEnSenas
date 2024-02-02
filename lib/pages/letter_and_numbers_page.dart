@@ -6,7 +6,7 @@ class LetterAndNumbersPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final currentSignList = ref.watch(signProviderProvider).currentListSing;
+    final currentSignList = ref.watch(signProvider).currentListSing;
     void onSelected(Sign sing) => context.push('${routeName}/${sing.letter}');
 
     final isSwitched = useState(false);
