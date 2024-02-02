@@ -15,13 +15,13 @@ final style = TextStyle(
   fontWeight: FontWeight.w500,
 );
 
-class FlippingCardGame extends HookWidget {
+class FlippingCardGame extends HookConsumerWidget {
   final Level level;
 
   FlippingCardGame({required this.level});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final _previousIndex = useState(-1);
     final _time = useState(3);
     final gameDuration = useState(-3);
@@ -92,8 +92,10 @@ class FlippingCardGame extends HookWidget {
 
     void initializeGameData() {
       levelFlippingGame.value = getFlipCardGameLevel(level);
-      _data.value =
-          createShuffledListFromImageSource(levelFlippingGame.value!.options);
+      _data.value = createShuffledListFromImageSource(
+        ref.read(signProviderProvider).currentListSing,
+        levelFlippingGame.value!.options,
+      );
       _cardFlips.value =
           getInitialItemStateList((levelFlippingGame.value!.options * 2));
       _cardStateKeys.value =

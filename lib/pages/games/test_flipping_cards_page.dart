@@ -17,7 +17,7 @@ class Pair {
   String toString() => 'Pair[$left, $right]';
 }
 
-class TestFlippingCardsPage extends HookWidget {
+class TestFlippingCardsPage extends HookConsumerWidget {
   const TestFlippingCardsPage({
     super.key,
     required this.level,
@@ -25,10 +25,10 @@ class TestFlippingCardsPage extends HookWidget {
   final Level level;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     final getFlipCardGameLevelState = getFlipCardGameLevel(level);
     final state = useState<List<Sign>>(generateSignToPair(
-      signStyle1,
+      ref.watch(signProviderProvider).currentListSing,
       getFlipCardGameLevelState.options,
     ));
 

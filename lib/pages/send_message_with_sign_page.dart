@@ -80,7 +80,7 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
     }, [currentSliderState.value]);
     useEffect(() {
       listOnlyLettersNumbers.value = generateListToMessageUtil(
-        signStyle1,
+        signProviderS.currentListSing,
         signProviderS.currentMessage,
       );
       return null;
@@ -185,7 +185,7 @@ class SendMessageSlider extends HookConsumerWidget {
 
     useEffect(() {
       signProviderS.listSignsToMessage = generateListToMessageUtil(
-        signStyle1,
+        signProviderS.currentListSing,
         signProviderS.currentMessage,
       );
       /* return pageController.dispose; */

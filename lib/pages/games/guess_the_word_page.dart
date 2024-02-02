@@ -8,9 +8,10 @@ class GuessTheWordPage extends HookConsumerWidget {
   Widget build(BuildContext context, ref) {
     final mediaQuery = MediaQuery.of(context).size;
     final settingNotifier = ref.watch(settingsProvider.notifier);
+    final signProviderN = ref.watch(signProviderProvider);
 
-    final randomCommonWord =
-        useState<GuessTheWord>(getRandomWordFromStringList(commonWords));
+    final randomCommonWord = useState<GuessTheWord>(getRandomWordFromStringList(
+        commonWords, signProviderN.currentListSing));
     final currentWord = useState("");
     final isCorrect = useState(false);
 
@@ -19,7 +20,8 @@ class GuessTheWordPage extends HookConsumerWidget {
 
     useEffect(() {
       if (isCorrect.value) {
-        randomCommonWord.value = getRandomWordFromStringList(commonWords);
+        randomCommonWord.value = getRandomWordFromStringList(
+            commonWords, signProviderN.currentListSing);
         currentWord.value = "";
         restartKey.value = UniqueKey();
         textEditingController.clear();

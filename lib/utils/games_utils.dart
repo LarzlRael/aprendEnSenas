@@ -14,7 +14,8 @@ TestYourGame createTestYourGame(List<Sign> options, int indexValues) {
   );
 }
 
-WordInSightGame createWordInSightGame(List<String> options, int amountOptions) {
+WordInSightGame createWordInSightGame(
+    List<String> options, List<Sign> sign, int amountOptions) {
   final correctAnswer = options.first;
   final randomOptions = List<String>.from(options)..shuffle();
   final selectedOptions = randomOptions.take(amountOptions).toList()
@@ -26,20 +27,21 @@ WordInSightGame createWordInSightGame(List<String> options, int amountOptions) {
     options:
         selectedOptions.map((e) => e.removeDiacriticsFromString()).toList(),
     correctAnswerList: generateListToMessageUtil(
-      signStyle1,
+      sign,
       correctAnswerString,
     ),
     correctAnswerString: correctAnswerString,
   );
 }
 
-GuessTheWord getRandomWordFromStringList(List<String> list) {
+GuessTheWord getRandomWordFromStringList(
+    List<String> list, List<Sign> listSign) {
   /* Get one string word list */
   final randomWord =
       list[Random().nextInt(list.length)].removeDiacriticsFromString();
 
   return GuessTheWord(
-    correctWordSignList: generateListToMessageUtil(signStyle1, randomWord),
+    correctWordSignList: generateListToMessageUtil(listSign, randomWord),
     correctWordString: randomWord,
   );
 }

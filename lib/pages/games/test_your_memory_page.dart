@@ -10,13 +10,16 @@ class TestYourMemoryPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final generate = getTestYourMemoryGameLevel(level);
-    final createTestYourGameState = useState<TestYourGame>(
-      createTestYourGame(signStyle1, generate.numberOptions),
-    );
 
     final totalLifes = generate.lifes;
     final lifesRemaing = useState<int>(generate.lifes);
 
+    final createTestYourGameState = useState<TestYourGame>(
+      createTestYourGame(
+        ref.watch(signProviderProvider).currentListSing,
+        generate.numberOptions,
+      ),
+    );
     final correctAnswer = createTestYourGameState.value.correctAnswer;
     final settingN = ref.read(settingsProvider.notifier);
     final isCorrect = useState<bool>(false);
@@ -29,8 +32,10 @@ class TestYourMemoryPage extends HookConsumerWidget {
 
     useEffect(() {
       if (isCorrect.value) {
-        createTestYourGameState.value =
-            createTestYourGame(signStyle1, generate.numberOptions);
+        createTestYourGameState.value = createTestYourGame(
+          ref.watch(signProviderProvider).currentListSing,
+          generate.numberOptions,
+        );
         settingN.playSound('assets/sounds/correct_sound_2.mp3');
         currentScore.value = currentScore.value + 10;
         isCorrect.value = false;

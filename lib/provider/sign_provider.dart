@@ -12,6 +12,11 @@ part 'sign_provider.g.dart';
 
 @riverpod
 class SignProvider extends _$SignProvider {
+  final signListProvider = [
+    signStyle1,
+    signStyle2,
+    signStyle3,
+  ];
   @override
   SignState build() {
     return SignState(
@@ -19,7 +24,8 @@ class SignProvider extends _$SignProvider {
       currentSign: null,
       currentMessage: '',
       timer: null,
-      currentListSing: signStyle1,
+      currentListIndex: 0,
+      currentListSing: signListProvider[0],
     );
   }
 
@@ -44,6 +50,13 @@ class SignProvider extends _$SignProvider {
   void setCurrentSign(Sign sign) {
     state = state.copyWith(currentSign: sign);
   }
+
+  void changeListSignIndex(int index) {
+    state = state.copyWith(
+      currentListIndex: index,
+      currentListSing: signListProvider[index],
+    );
+  }
 }
 
 class SignState {
@@ -52,12 +65,14 @@ class SignState {
   String currentMessage = '';
   Timer? timer;
   List<Sign> currentListSing = [];
+  int currentListIndex = 0;
   SignState({
     required this.listSignsToMessage,
     required this.currentSign,
     required this.currentMessage,
     required this.timer,
     required this.currentListSing,
+    required this.currentListIndex,
   });
 
   SignState copyWith({
@@ -66,6 +81,7 @@ class SignState {
     String? currentMessage,
     Timer? timer,
     List<Sign>? currentListSing,
+    int? currentListIndex,
   }) {
     return SignState(
       listSignsToMessage: listSigns ?? this.listSignsToMessage,
@@ -73,6 +89,7 @@ class SignState {
       currentMessage: currentMessage ?? this.currentMessage,
       timer: timer ?? this.timer,
       currentListSing: currentListSing ?? this.currentListSing,
+      currentListIndex: currentListIndex ?? this.currentListIndex,
     );
   }
 }

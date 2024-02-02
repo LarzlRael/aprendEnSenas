@@ -1,6 +1,6 @@
 part of 'utils.dart';
 
-List<Sign> createShuffledListFromImageSource(int amount) {
+List<Sign> createShuffledListFromImageSource(List<Sign> sing, int amount) {
   return generateSignToPair(signStyle1, amount);
 }
 

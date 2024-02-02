@@ -99,6 +99,10 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
     await keyValueStorageService.setKeyValue<int>(COLOR_HANDS, color.value);
   }
 
+  void changeIndeState(int index) {
+    state = state.copyWith();
+  }
+
   void setSelectedDisplayOption(int value) async {
     switch (value) {
       case 0:
