@@ -299,20 +299,21 @@ class SendMessageSlider extends HookConsumerWidget {
                                     ? const SizedBox()
                                     : Expanded(
                                         child: AnimatedSwitcher(
-                                            duration: const Duration(
-                                                milliseconds: 500),
-                                            child: Card(
-                                              child: Icon(
-                                                signProviderS
-                                                    .listSignsToMessage[
-                                                        _currentIndex.value]
-                                                    .iconSign,
-                                                key: ValueKey<int>(
-                                                    _currentIndex.value),
-                                                /*   width: 200,
-                                                          height: 200, */
+                                          duration:
+                                              const Duration(milliseconds: 500),
+                                          child: Card(
+                                            child: ColoredIcon(
+                                              size: 300,
+                                              icon: signProviderS
+                                                  .listSignsToMessage[
+                                                      _currentIndex.value]
+                                                  .iconSign,
+                                              key: ValueKey<int>(
+                                                _currentIndex.value,
                                               ),
-                                            )),
+                                            ),
+                                          ),
+                                        ),
                                       ),
                               ),
                   ),
