@@ -67,7 +67,7 @@ class _SpeechButtonState extends State<SpeechButton> {
   Widget build(BuildContext context) {
     return InkWell(
       customBorder: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(50),
+        borderRadius: BorderRadius.circular(100),
       ),
       onTapUp: (_) async {
         _isPressed = false;

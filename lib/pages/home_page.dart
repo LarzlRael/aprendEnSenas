@@ -11,20 +11,26 @@ class ItemMenu {
   });
 }
 
-class HomePage extends HookWidget {
+class HomePage extends HookConsumerWidget {
   const HomePage({super.key, this.phrase});
   final String? phrase;
   static const routeName = '/home_page';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final _selectedIndex = useState(0);
     void _onItemTapped(int index) => _selectedIndex.value = index;
+    useEffect(() {
+      Future.delayed(Duration.zero, () {
+        ref.read(signProvider.notifier).setCurrentMessage(phrase ?? '');
+      });
+    }, []);
+
     final List<ItemMenu> listMenu = [
       /* ItemMenu(title: 'Home', page: HomePage()), */
       ItemMenu(
         title: 'Enviar mensaje',
-        page: SendMessageWithSignPage(phrase: phrase),
+        page: SendMessageWithSignPage(),
         icon: CustomIcons.ic_conversation,
       ),
       ItemMenu(

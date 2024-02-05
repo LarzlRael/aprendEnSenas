@@ -1,4 +1,4 @@
-part of 'pages.dart';
+part of '../pages.dart';
 
 class LetterAndNumbersPage extends HookConsumerWidget {
   const LetterAndNumbersPage({super.key});

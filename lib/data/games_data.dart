@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 const iconSize = 30.0;
-final items = <SelectGameCard>[
+final selecteGameItems = <SelectGameCard>[
   SelectGameCard(
     icon: CustomIcons.ic_test_your_memory,
     title: GameType.prueba_tu_memoria.name,
@@ -17,13 +17,13 @@ final items = <SelectGameCard>[
       );
     },
   ),
-  /* SelectGameCard(
+  /*  SelectGameCard(
     icon: CustomIcons.ic_guess_the_word,
     title: GameType.adivina_la_palabra.name,
-    subtitle: "Prueba con conocimiento con las palabras",
+    subtitle: "Teclado",
     onSelected: (context) {
       context.push(
-        '/games/guess_the_word_page',
+        '/games/keyboard_page',
         extra: CustomIcons.ic_guess_the_word,
       );
     },

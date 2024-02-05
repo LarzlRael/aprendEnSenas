@@ -2,7 +2,7 @@ part of '../pages.dart';
 
 class SelectGameMenuPage extends HookConsumerWidget {
   const SelectGameMenuPage({super.key});
-
+  static const routeName = '/select_game_menu_page';
   @override
   Widget build(BuildContext context, ref) {
     return Scaffold(
@@ -18,9 +18,9 @@ class SelectGameMenuPage extends HookConsumerWidget {
               crossAxisCount: 2,
               mainAxisSpacing: 5,
               crossAxisSpacing: 5,
-              itemCount: items.length,
+              itemCount: selecteGameItems.length,
               itemBuilder: (_, index) {
-                final item = items[index];
+                final item = selecteGameItems[index];
                 return SelectGameCard(
                   icon: item.icon,
                   title: item.title,

@@ -34,10 +34,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 part 'home_page.dart';
 
-part 'letter_and_numbers_page.dart';
-part 'letter_and_numbers_page_detail.dart';
+part 'letters_numbers/letter_and_numbers_page.dart';
+part 'letters_numbers/letter_and_numbers_page_detail.dart';
 part 'settings_page.dart';
 part 'send_message_with_sign_page.dart';
+
 part 'games/select_game_menu_page.dart';
 part 'games/select_level_page.dart';
 part 'games/test_your_memory_page.dart';
@@ -45,10 +46,11 @@ part 'games/word_in_sight_page.dart';
 part 'games/guess_the_word_page.dart';
 part 'games/test_flipping_cards_page.dart';
 part 'games/match_image_game.dart';
-/* part 'games/flipping_cards_2.dart'; */
 part 'games/flipping_card_game.dart';
 part 'games/game_over_screen.dart';
+
 part 'welcome/welcome_page.dart';
 part 'welcome/splash_screen_page.dart';
 
 part 'test/test_page.dart';
+part 'keyboard/keyboard_letters_page.dart';

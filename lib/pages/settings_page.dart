@@ -2,6 +2,7 @@ part of 'pages.dart';
 
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
+  static const routeName = '/settings_page';
   @override
   Widget build(BuildContext context, ref) {
     final settingS = ref.watch(settingsProvider);
@@ -205,7 +206,9 @@ class IconShowToChange extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     return InkWell(
-      /* customBorder: S, */
+      customBorder: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
       onTap: onTap,
       child: Card(
         shape: RoundedRectangleBorder(

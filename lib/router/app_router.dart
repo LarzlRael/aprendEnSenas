@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:asl/pages/pages.dart';
 
 final appRouter = GoRouter(
-  initialLocation: '/splash_screen_page',
+  initialLocation: SplashScreenPage.routeName,
   /* refreshListenable: goRouterNotifier, */
   routes: [
     ///* Primera pantalla
@@ -47,15 +47,14 @@ final appRouter = GoRouter(
             path: ':phrase',
             builder: (_, state) {
               final phrase = state.params['phrase'];
-              return SendMessageWithSignPage(
-                phrase: phrase,
-              );
+              return SendMessageWithSignPage();
             },
           ),
         ]),
     GoRoute(
-        path: '/select_game_menu_page',
-        builder: (_, __) => SelectGameMenuPage()),
+      path: SelectGameMenuPage.routeName,
+      builder: (_, __) => SelectGameMenuPage(),
+    ),
     GoRoute(
         path: '/select_level_page/:gameTitle/:gameDestinty',
         builder: (_, state) {
@@ -69,7 +68,7 @@ final appRouter = GoRouter(
           );
         }),
     GoRoute(
-      path: '/settings_page',
+      path: SettingsPage.routeName,
       builder: (_, __) => const SettingsPage(),
     ),
 
@@ -107,7 +106,15 @@ final appRouter = GoRouter(
           path: 'drag_and_drop_game',
           builder: (_, state) => MatchImageGame(),
         ),
+        GoRoute(
+          path: 'keyboard_page',
+          builder: (_, state) => KeyboardLettersPage(),
+        ),
       ],
+    ),
+    GoRoute(
+      path: KeyboardLettersPage.routeName,
+      builder: (_, state) => KeyboardLettersPage(),
     ),
   ],
 );

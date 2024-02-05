@@ -1,10 +1,7 @@
 part of 'pages.dart';
 
-/* const timeMiliseconds = 1500; */
-
 class SendMessageWithSignPage extends HookConsumerWidget {
-  final String? phrase;
-  const SendMessageWithSignPage({super.key, this.phrase});
+  const SendMessageWithSignPage({super.key});
   static const routeName = '/send_message_with_sign_page';
   @override
   Widget build(BuildContext context, ref) {
@@ -14,11 +11,6 @@ class SendMessageWithSignPage extends HookConsumerWidget {
     final signProviderN = ref.read(signProvider.notifier);
     final signProviderS = ref.watch(signProvider);
 
-    useEffect(() {
-      Future.delayed(Duration.zero, () {
-        signProviderN.setCurrentMessage(phrase ?? '');
-      });
-    }, []);
     useEffect(() {
       ref.read(interstiatAdProvider.notifier).loadAd();
       return null;
@@ -55,8 +47,8 @@ class SendMessageWithSignPage extends HookConsumerWidget {
               },
             ),
             settingsS.isMainDisplayInPageView
-                ? SendMessageWithStaticImages(pharse: phrase)
-                : SendMessageSlider(pharse: phrase),
+                ? SendMessageWithStaticImages()
+                : SendMessageSlider(),
           ],
         ),
       ),
@@ -65,9 +57,7 @@ class SendMessageWithSignPage extends HookConsumerWidget {
 }
 
 class SendMessageWithStaticImages extends HookConsumerWidget {
-  final String? pharse;
-
-  SendMessageWithStaticImages({super.key, this.pharse});
+  SendMessageWithStaticImages({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final listOnlyLettersNumbers = useState<List<Sign>>([]);
@@ -78,6 +68,7 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
     useEffect(() {
       currentSize.value = 250 / currentSliderState.value;
     }, [currentSliderState.value]);
+
     useEffect(() {
       listOnlyLettersNumbers.value = generateListToMessageUtil(
         signProviderS.currentListSing,
@@ -157,10 +148,8 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
 }
 
 class SendMessageSlider extends HookConsumerWidget {
-  final String? pharse;
   const SendMessageSlider({
     super.key,
-    this.pharse,
   });
   @override
   Widget build(BuildContext context, WidgetRef ref) {
