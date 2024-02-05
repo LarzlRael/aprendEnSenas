@@ -47,6 +47,7 @@ class WelcomePage extends HookWidget {
     final textTheme = Theme.of(context).textTheme;
     final size = MediaQuery.of(context).size;
     final colors = Theme.of(context).colorScheme;
+    final controller = SwiperController();
     return Scaffold(
       body: SizedBox.expand(
         child: Stack(
@@ -56,7 +57,7 @@ class WelcomePage extends HookWidget {
               right: 10,
               child: TextButton(
                 child: Text('Saltar'),
-                onPressed: () => goToNextPage(context),
+                onPressed: () => controller.move(welcomeSlides.length - 1),
               ),
             ),
             Align(
@@ -64,13 +65,16 @@ class WelcomePage extends HookWidget {
               child: Container(
                 height: size.height * 0.65,
                 child: Swiper(
+                  controller: controller,
                   itemCount: welcomeSlides.length,
                   onIndexChanged: (index) {
-                    /* if (index == welcomeSlides.length - 1) {
+                    /* Other way
+                     if (index == welcomeSlides.length - 1) {
                       isLastPage.value = true;
                     } else {
                       isLastPage.value = false;
-                    } */
+                    }
+                    */
                     isLastPage.value = index == welcomeSlides.length - 1;
                   },
                   itemBuilder: (_, index) {
