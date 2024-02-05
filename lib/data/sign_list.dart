@@ -1,4 +1,4 @@
-import 'package:asl/customs_icons/sign_icons_icons.dart';
+import 'package:asl/customs_icons/sign_icons.dart';
 import 'package:asl/models/models.dart';
 import 'package:asl/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +19,7 @@ final signStyle1 = <Sign>[
   Sign("l", SignIcons.l_sign),
   Sign("m", SignIcons.m_sign),
   Sign("n", SignIcons.n_sign),
-  /* Sign("ñ", SignIcons.nn), */
+  Sign("ñ", SignIcons.nn_sign),
   Sign("o", SignIcons.o_sign),
   Sign("p", SignIcons.p_sign),
   Sign("q", SignIcons.q_sign),
@@ -45,13 +45,13 @@ final signStyle2 = <Sign>[
   Sign("f", SignIcons.f_sign_2),
   Sign("g", SignIcons.g_sign_2),
   Sign("h", SignIcons.h_sign_2),
-  Sign("i", SignIcons.i_sign_3),
+  Sign("i", SignIcons.i_sign_2),
   Sign("j", SignIcons.j_sign_2),
   Sign("k", SignIcons.k_sign_2),
   Sign("l", SignIcons.l_sign_2),
   Sign("m", SignIcons.m_sign_2),
   Sign("n", SignIcons.n_sign_2),
-  Sign("ñ", SignIcons.n_sign_2),
+  Sign("ñ", SignIcons.nn_sign),
   Sign("o", SignIcons.o_sign_2),
   Sign("p", SignIcons.p_sign_2),
   Sign("q", SignIcons.q_sign_2),
@@ -67,6 +67,7 @@ final signStyle2 = <Sign>[
   Sign(" ", Icons.space_bar, type: SignType.space),
   ...listOnlyNumers
 ];
+
 final signStyle3 = <Sign>[
   Sign("a", SignIcons.a_sign_3),
   Sign("b", SignIcons.b_sign_3),
@@ -81,7 +82,6 @@ final signStyle3 = <Sign>[
   Sign("k", SignIcons.k_sign_3),
   Sign("l", SignIcons.l_sign_3),
   Sign("m", SignIcons.m_sign_3),
-  Sign("n", SignIcons.n_sign_3),
   Sign("ñ", SignIcons.nn_sign),
   Sign("o", SignIcons.o_sign_3),
   Sign("p", SignIcons.p_sign_3),
@@ -95,6 +95,37 @@ final signStyle3 = <Sign>[
   Sign("x", SignIcons.x_sign_3),
   Sign("y", SignIcons.y_sign_3),
   Sign("z", SignIcons.z_sign_3),
+  Sign(" ", Icons.space_bar, type: SignType.space),
+  ...listOnlyNumers
+];
+final signStyle4 = <Sign>[
+  Sign("a", SignIcons.a_sign_4),
+  Sign("b", SignIcons.b_sign_4),
+  Sign("c", SignIcons.c_sign_4),
+  Sign("d", SignIcons.d_sign_4),
+  Sign("e", SignIcons.e_sign_4),
+  Sign("f", SignIcons.f_sign_4),
+  Sign("g", SignIcons.g_sign_4),
+  Sign("h", SignIcons.h_sign_4),
+  Sign("i", SignIcons.i_sign_4),
+  Sign("j", SignIcons.j_sign_4),
+  Sign("k", SignIcons.k_sign_4),
+  Sign("l", SignIcons.l_sign_4),
+  Sign("m", SignIcons.m_sign_4),
+  Sign("n", SignIcons.n_sign_4),
+  Sign("ñ", SignIcons.nn_sign),
+  Sign("o", SignIcons.o_sign_4),
+  Sign("p", SignIcons.p_sign_4),
+  Sign("q", SignIcons.q_sign_4),
+  Sign("r", SignIcons.r_sign_4),
+  Sign("s", SignIcons.s_sign_4),
+  Sign("t", SignIcons.t_sign_4),
+  Sign("u", SignIcons.u_sign_4),
+  Sign("v", SignIcons.v_sign_4),
+  Sign("w", SignIcons.w_sign_4),
+  Sign("x", SignIcons.x_sign_4),
+  Sign("y", SignIcons.y_sign_4),
+  Sign("z", SignIcons.z_sign_4),
   Sign(" ", Icons.space_bar, type: SignType.space),
   ...listOnlyNumers
 ];

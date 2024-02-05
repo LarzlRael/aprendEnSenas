@@ -59,27 +59,37 @@ class ListRow extends StatelessWidget {
       separatorBuilder: (context, index) => SizedBox(height: 5),
       itemCount: currentSignList.length,
       itemBuilder: (BuildContext context, int index) {
-        final list = currentSignList[index];
-        return Card(
-          child: Container(
-            padding: EdgeInsets.all(10),
-            child: ListTile(
-              onTap: () {
-                if (onTap != null) {
-                  onTap!(list);
-                }
-              },
-              leading: ColoredIcon(
-                icon: list.iconSign,
-                size: 50,
-              ),
-              title: Text(
-                list.letter,
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w400,
+        final listItem = currentSignList[index];
+        return InkWell(
+          customBorder: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          onTap: () {
+            if (onTap != null) {
+              onTap!(listItem);
+            }
+          },
+          child: Card(
+            child: Container(
+              padding: EdgeInsets.all(10),
+              child: ListTile(
+                /*  onTap: () {
+                  if (onTap != null) {
+                    onTap!(list);
+                  }
+                }, */
+                leading: ColoredIcon(
+                  icon: listItem.iconSign,
+                  size: 50,
                 ),
-                textAlign: TextAlign.center,
+                title: Text(
+                  listItem.letter,
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ),

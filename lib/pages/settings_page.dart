@@ -4,6 +4,7 @@ final listSign = <List<Sign>>[
   signStyle1,
   signStyle2,
   signStyle3,
+  signStyle4,
 ];
 
 class SettingsPage extends ConsumerWidget {

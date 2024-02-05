@@ -31,6 +31,9 @@ class SignCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      customBorder: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
       onTap: () {
         if (onSelected != null) {
           onSelected!(sign);

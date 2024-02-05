@@ -10,6 +10,7 @@ final signListProvider = [
   signStyle1,
   signStyle2,
   signStyle3,
+  signStyle4,
 ];
 final signProvider = StateNotifierProvider<SignNotifier, SignState>((ref) {
   return SignNotifier();
