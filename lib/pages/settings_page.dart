@@ -1,12 +1,5 @@
 part of 'pages.dart';
 
-final listSign = <List<Sign>>[
-  signStyle1,
-  signStyle2,
-  signStyle3,
-  signStyle4,
-];
-
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
   @override
@@ -15,6 +8,7 @@ class SettingsPage extends ConsumerWidget {
     final settingN = ref.read(settingsProvider.notifier);
     final signProviderN = ref.read(signProvider.notifier);
     final signProviderS = ref.watch(signProvider);
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -54,7 +48,10 @@ class SettingsPage extends ConsumerWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Tiempo de retraso de transicion'),
+                  SimpleText(
+                    text: 'Tiempo de retraso de transición',
+                    style: textTheme.titleSmall,
+                  ),
                   Slider(
                     min: 250,
                     max: 2500,
@@ -64,27 +61,10 @@ class SettingsPage extends ConsumerWidget {
                     onChanged: (value) => settingN.setTransitionTime(value),
                   ),
                   Text('Tiempo actual: ${settingS.transitionTime}'),
-                  Text('Transicion'),
-                  /* TextButton(
-                    onPressed: () {
-                      reff.setSelectedDisplayOption(0);
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                            height: 24.0,
-                            width: 24.0,
-                            child: Checkbox(
-                                value: settings.selectedAxiosOption == 0,
-                                onChanged: (value) {
-                                  reff.setSelectedDisplayOption(0);
-                                })),
-                        SizedBox(width: 10.0),
-                        Text("Horizontal")
-                      ],
-                    ),
-                  ), */
+                  SimpleText(
+                    text: 'Tipo de transición',
+                    style: textTheme.titleSmall,
+                  ),
                   CustomCheckBox(
                     label: 'Horizontal',
                     value: settingS.selectedAxiosOption == 0,
@@ -101,22 +81,30 @@ class SettingsPage extends ConsumerWidget {
                     onTap: () => settingN.setSelectedDisplayOption(2),
                   ),
                   SimpleText(
-                    text: 'Color de fondo',
-                    style: Theme.of(context).textTheme.titleSmall,
+                    text: 'Estilo de señalización',
+                    style: textTheme.titleSmall,
                     padding: EdgeInsets.symmetric(vertical: 5),
                   ),
                   SizedBox(
                     width: double.infinity,
                     child: Wrap(
                       alignment: WrapAlignment.center,
-                      children: listSign.mapIndexed((index, sign) {
-                        return IconShowToChange(
-                          icon: sign[0].iconSign,
-                          onTap: () => signProviderN.changeListSignIndex(index),
-                          isSelect: signProviderS.currentListIndex == index,
-                        );
-                      }).toList(),
+                      children: signListProvider
+                          .mapIndexed(
+                            (index, sign) => IconShowToChange(
+                              icon: sign[0].iconSign,
+                              onTap: () =>
+                                  signProviderN.changeListSignIndex(index),
+                              isSelect: signProviderS.currentListIndex == index,
+                            ),
+                          )
+                          .toList(),
                     ),
+                  ),
+                  SimpleText(
+                    text: 'Color de icono',
+                    style: textTheme.titleSmall,
+                    padding: EdgeInsets.symmetric(vertical: 5),
                   ),
                   MaterialColorPicker(
                     onColorChange: settingN.setIconColor,
@@ -215,14 +203,16 @@ class IconShowToChange extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
     return InkWell(
       /* customBorder: S, */
       onTap: onTap,
       child: Card(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(10),
           side: BorderSide(
-            color: isSelect ? Colors.blue : Colors.transparent,
+            color:
+                isSelect ? colors.primary.withOpacity(0.8) : Colors.transparent,
             width: 2,
           ),
         ),

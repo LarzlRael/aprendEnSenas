@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:asl/constants/key_value_names.dart';
 import 'package:asl/data/sign_list.dart';
 import 'package:asl/models/models.dart';
+import 'package:asl/services/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../utils/utils.dart';
@@ -17,6 +19,14 @@ final signProvider = StateNotifierProvider<SignNotifier, SignState>((ref) {
 });
 
 class SignNotifier extends StateNotifier<SignState> {
+  final keyValueStorageService = KeyValueStorageServiceImpl();
+  static final List<List<Sign>> signListProvider = [
+    signStyle1,
+    signStyle2,
+    signStyle3,
+    signStyle4,
+  ];
+  @override
   SignNotifier()
       : super(
           SignState(
@@ -27,17 +37,18 @@ class SignNotifier extends StateNotifier<SignState> {
             currentListIndex: 0,
             currentListSing: signListProvider[0],
           ),
-        );
+        ) {
+    asyncInit();
+  }
 
-  @override
-  SignState build() {
-    return SignState(
-      listSignsToMessage: [],
-      currentSign: null,
-      currentMessage: '',
-      timer: null,
-      currentListIndex: 0,
-      currentListSing: signListProvider[0],
+  void asyncInit() async {
+    final currentListIndex =
+        await keyValueStorageService.getValue<int>(CURRENT_LIST_INDEX);
+
+    state = state.copyWith(
+      currentListIndex: currentListIndex ?? state.currentListIndex,
+      currentListSing:
+          signListProvider[currentListIndex ?? state.currentListIndex],
     );
   }
 
@@ -63,11 +74,12 @@ class SignNotifier extends StateNotifier<SignState> {
     state = state.copyWith(currentSign: sign);
   }
 
-  void changeListSignIndex(int index) {
+  void changeListSignIndex(int index) async {
     state = state.copyWith(
       currentListIndex: index,
       currentListSing: signListProvider[index],
     );
+    await keyValueStorageService.setKeyValue<int>(CURRENT_LIST_INDEX, index);
   }
 }
 
