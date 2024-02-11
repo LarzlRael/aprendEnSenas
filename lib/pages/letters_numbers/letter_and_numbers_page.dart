@@ -78,7 +78,7 @@ class ListRow extends StatelessWidget {
                     onTap!(list);
                   }
                 }, */
-                leading: ColoredIcon(
+                leading: SignIcon(
                   icon: listItem.iconSign,
                   size: 50,
                 ),

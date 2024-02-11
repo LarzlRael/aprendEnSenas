@@ -2,7 +2,7 @@
   <string name="app_name">AprendEnseñas</string>
   <string
     name="admob_application_id"
-  >ca-app-pub-3940256099942544~3347511713</string>
+  >ca-app-pub-8271313080297168~8248083112</string>
   <string
     name="android_host_deep_linking"
   >asl-deep-linking-next.vercel.app</string>

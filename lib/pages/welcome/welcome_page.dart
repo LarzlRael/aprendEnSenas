@@ -69,7 +69,7 @@ class WelcomePage extends HookWidget {
                   itemCount: welcomeSlides.length,
                   onIndexChanged: (index) {
                     /* Other way
-                     if (index == welcomeSlides.length - 1) {
+                    if (index == welcomeSlides.length - 1) {
                       isLastPage.value = true;
                     } else {
                       isLastPage.value = false;

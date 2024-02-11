@@ -57,7 +57,7 @@ class SignCard extends StatelessWidget {
               padding: EdgeInsets.all(10),
               width: 100,
               height: 100,
-              child: ColoredIcon(
+              child: SignIcon(
                 icon: sign.iconSign,
                 size: 50,
               ),

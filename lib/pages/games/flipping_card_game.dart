@@ -53,7 +53,7 @@ class FlippingCardGame extends HookConsumerWidget {
             Expanded(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(border),
-                child: ColoredIcon(
+                child: SignIcon(
                   icon: _data.value[index].iconSign,
                   size: 60,
                   /* width: sizeWidth - 35,

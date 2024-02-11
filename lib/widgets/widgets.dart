@@ -1,8 +1,9 @@
 import 'dart:io';
-
+import 'dart:math' as math;
 import 'package:animate_do/animate_do.dart';
 import 'package:asl/data/sign_list.dart';
 import 'package:asl/models/models.dart';
+import 'package:asl/pages/pages.dart';
 import 'package:asl/provider/ads_providers.dart';
 import 'package:asl/provider/settings_provider.dart';
 
@@ -37,6 +38,7 @@ part '/buttons/speech_button.dart';
 part '/animation/scale_animation.dart';
 part '/animation/shakingY_animation.dart';
 part '/icons/colored_icon.dart';
+part '/icons/sign_icon.dart';
 part '/forms/send_message_input.dart';
 part '/forms/checkbox_label.dart';
 part 'ads/banner_ad.dart';

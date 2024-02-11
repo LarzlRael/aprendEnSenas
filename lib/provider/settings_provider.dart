@@ -28,6 +28,7 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
             typeDisplay: TypeDisplay.pageView,
             color: Colors.blue,
             isMainDisplayInPageView: false,
+            isTurned: false,
           ),
         ) {
     asyncInit();
@@ -49,6 +50,7 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
         await keyValueStorageService.getValue<int>(SELECTED_AXIOS_OPTION);
     final isMainDisplayInPageView = await keyValueStorageService
         .getValue<bool>(IS_MAIN_DISPLAY_IN_PAGE_VIEW);
+    final isTurned = await keyValueStorageService.getValue<bool>(IS_TURNED);
 
     state = state.copyWith(
       isDarkMode: isDarkMode ?? state.isDarkMode,
@@ -59,6 +61,7 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
       color: Color(color ?? state.color.value),
       isMainDisplayInPageView:
           isMainDisplayInPageView ?? state.isMainDisplayInPageView,
+      isTurned: isTurned ?? state.isTurned,
     );
     setSelectedDisplayOption(
         selectedDisplayOption ?? state.selectedAxiosOption);
@@ -151,6 +154,11 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
       VibrateServiceImp().vibrate(millisec: millisec);
     }
   }
+
+  void setIsTurned() async {
+    state = state.copyWith(isTurned: !state.isTurned);
+    await keyValueStorageService.setKeyValue<bool>(IS_TURNED, state.isTurned);
+  }
 }
 
 class SettingsState {
@@ -163,6 +171,7 @@ class SettingsState {
   final int selectedAxiosOption;
   final Color color;
   final bool isMainDisplayInPageView;
+  final bool isTurned;
 
   SettingsState({
     required this.isDarkMode,
@@ -174,6 +183,7 @@ class SettingsState {
     required this.typeDisplay,
     required this.color,
     required this.isMainDisplayInPageView,
+    required this.isTurned,
   });
 
   SettingsState copyWith({
@@ -186,6 +196,7 @@ class SettingsState {
     int? selectedAxiosOption,
     Color? color,
     bool? isMainDisplayInPageView,
+    bool? isTurned,
   }) {
     return SettingsState(
       isDarkMode: isDarkMode ?? this.isDarkMode,
@@ -198,6 +209,7 @@ class SettingsState {
       color: color ?? this.color,
       isMainDisplayInPageView:
           isMainDisplayInPageView ?? this.isMainDisplayInPageView,
+      isTurned: isTurned ?? this.isTurned,
     );
   }
 }

@@ -272,7 +272,7 @@ class SendMessageSlider extends HookConsumerWidget {
                                       onTap: () => context.push(
                                           '${LetterAndNumbersPage.routeName}/${sign.letter}'),
                                       child: Card(
-                                        child: ColoredIcon(
+                                        child: SignIcon(
                                           icon: sign.iconSign,
                                           size: 250,
                                         ),
@@ -291,7 +291,7 @@ class SendMessageSlider extends HookConsumerWidget {
                                           duration:
                                               const Duration(milliseconds: 500),
                                           child: Card(
-                                            child: ColoredIcon(
+                                            child: SignIcon(
                                               size: 300,
                                               icon: signProviderS
                                                   .listSignsToMessage[
@@ -496,7 +496,7 @@ class SquareCard extends ConsumerWidget {
                     size: iconSize,
                     color: Colors.transparent,
                   )
-                : ColoredIcon(
+                : SignIcon(
                     icon: sign.iconSign,
                     size: iconSize,
                   ),

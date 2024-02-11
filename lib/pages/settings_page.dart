@@ -77,7 +77,7 @@ class SettingsPage extends ConsumerWidget {
                     onTap: () => settingN.setSelectedDisplayOption(1),
                   ),
                   CustomCheckBox(
-                    label: 'Imagenes',
+                    label: 'Imágenes',
                     value: settingS.selectedAxiosOption == 2,
                     onTap: () => settingN.setSelectedDisplayOption(2),
                   ),
@@ -85,6 +85,12 @@ class SettingsPage extends ConsumerWidget {
                     text: 'Estilo de señalización',
                     style: textTheme.titleSmall,
                     padding: EdgeInsets.symmetric(vertical: 5),
+                  ),
+                  OptionSetting(
+                    title: 'Invertir señales',
+                    subTitle: settingS.isTurned ? 'Derecha' : 'Izquierda',
+                    value: settingS.isTurned,
+                    onTap: settingN.setIsTurned,
                   ),
                   SizedBox(
                     width: double.infinity,
@@ -221,7 +227,7 @@ class IconShowToChange extends StatelessWidget {
         ),
         child: Container(
           padding: EdgeInsets.all(10),
-          child: ColoredIcon(
+          child: SignIcon(
             icon: icon,
             size: 70,
           ),
