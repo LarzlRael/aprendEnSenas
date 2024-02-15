@@ -35,6 +35,7 @@ part '/games/progres_linear_timer.dart';
 part '/navigation/back_icon.dart';
 part '/buttons/animated_play_button.dart';
 part '/buttons/speech_button.dart';
+part '/buttons/flag_button.dart';
 part '/animation/scale_animation.dart';
 part '/animation/shakingY_animation.dart';
 part '/icons/colored_icon.dart';

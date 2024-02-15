@@ -39,7 +39,7 @@ class KeyboardLettersPage extends HookConsumerWidget {
                 itemCount: signProviderS.length,
                 itemBuilder: (context, index) {
                   final letter = signProviderS[index];
-                  return Button(
+                  return _Button(
                     letter: letter.letter,
                     onTap: findLetter,
                     isSelected: currentSign.value?.letter == letter.letter,
@@ -54,12 +54,12 @@ class KeyboardLettersPage extends HookConsumerWidget {
   }
 }
 
-class Button extends StatelessWidget {
+class _Button extends StatelessWidget {
   final String letter;
   final Function(String letter) onTap;
   final bool isSelected;
 
-  const Button({
+  const _Button({
     super.key,
     required this.letter,
     required this.onTap,

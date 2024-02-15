@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:asl/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -29,6 +30,7 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
             color: Colors.blue,
             isMainDisplayInPageView: false,
             isTurned: false,
+            language: getSystemLanguage(),
           ),
         ) {
     asyncInit();
@@ -52,6 +54,8 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
         .getValue<bool>(IS_MAIN_DISPLAY_IN_PAGE_VIEW);
     final isTurned = await keyValueStorageService.getValue<bool>(IS_TURNED);
 
+    final language = await keyValueStorageService.getValue<String>(LANGUAGE);
+
     state = state.copyWith(
       isDarkMode: isDarkMode ?? state.isDarkMode,
       isSoundActive: isSoundActive ?? state.isSoundActive,
@@ -62,6 +66,7 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
       isMainDisplayInPageView:
           isMainDisplayInPageView ?? state.isMainDisplayInPageView,
       isTurned: isTurned ?? state.isTurned,
+      language: language ?? state.language,
     );
     setSelectedDisplayOption(
         selectedDisplayOption ?? state.selectedAxiosOption);
@@ -77,6 +82,11 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
     state = state.copyWith(isSoundActive: !state.isSoundActive);
     await keyValueStorageService.setKeyValue<bool>(
         IS_SOUNDACTIVE, state.isSoundActive);
+  }
+
+  Future<void> changeLanguage(String language) async {
+    state = state.copyWith(language: language);
+    await keyValueStorageService.setKeyValue<String>(LANGUAGE, language);
   }
 
   void toggleVibration() async {
@@ -172,6 +182,7 @@ class SettingsState {
   final Color color;
   final bool isMainDisplayInPageView;
   final bool isTurned;
+  final String language;
 
   SettingsState({
     required this.isDarkMode,
@@ -184,6 +195,7 @@ class SettingsState {
     required this.color,
     required this.isMainDisplayInPageView,
     required this.isTurned,
+    required this.language,
   });
 
   SettingsState copyWith({
@@ -197,6 +209,7 @@ class SettingsState {
     Color? color,
     bool? isMainDisplayInPageView,
     bool? isTurned,
+    String? language,
   }) {
     return SettingsState(
       isDarkMode: isDarkMode ?? this.isDarkMode,
@@ -210,6 +223,7 @@ class SettingsState {
       isMainDisplayInPageView:
           isMainDisplayInPageView ?? this.isMainDisplayInPageView,
       isTurned: isTurned ?? this.isTurned,
+      language: language ?? this.language,
     );
   }
 }

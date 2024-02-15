@@ -66,7 +66,7 @@ class SettingsPage extends ConsumerWidget {
                     text: 'Tipo de transición',
                     style: textTheme.titleSmall,
                   ),
-                  CustomCheckBox(
+                  /*  CustomCheckBox(
                     label: 'Horizontal',
                     value: settingS.selectedAxiosOption == 0,
                     onTap: () => settingN.setSelectedDisplayOption(0),
@@ -80,6 +80,46 @@ class SettingsPage extends ConsumerWidget {
                     label: 'Imágenes',
                     value: settingS.selectedAxiosOption == 2,
                     onTap: () => settingN.setSelectedDisplayOption(2),
+                  ), */
+                  SimpleText(
+                      text: "es",
+                      style: textTheme.titleSmall,
+                      padding: EdgeInsets.symmetric(horizontal: 10)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      FlagButton(
+                        pathImage: esFlag,
+                        language: "xd",
+                        isSelected: settingS.language == 'es',
+                        onTap: () async {
+                          await settingN.changeLanguage('es');
+                        },
+                      ),
+                      FlagButton(
+                        pathImage: enFlag,
+                        language: "en",
+                        isSelected: settingS.language == 'en',
+                        onTap: () async {
+                          await settingN.changeLanguage('es');
+                        },
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      'Horizontal',
+                      'Vertical',
+                      'Imágenes',
+                    ].asMap().entries.map((entry) {
+                      int index = entry.key;
+                      String label = entry.value;
+                      return CustomCheckBox(
+                        label: label,
+                        value: settingS.selectedAxiosOption == index,
+                        onTap: () => settingN.setSelectedDisplayOption(index),
+                      );
+                    }).toList(),
                   ),
                   SimpleText(
                     text: 'Estilo de señalización',
@@ -171,11 +211,12 @@ class OptionSetting extends StatelessWidget {
 }
 
 class CustomCheckBox extends ConsumerWidget {
-  const CustomCheckBox(
-      {super.key,
-      required this.onTap,
-      required this.value,
-      required this.label});
+  const CustomCheckBox({
+    super.key,
+    required this.onTap,
+    required this.value,
+    required this.label,
+  });
   final Function() onTap;
   final bool value;
   final String label;
