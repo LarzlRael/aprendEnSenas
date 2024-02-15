@@ -1,4 +1,5 @@
 import 'package:asl/firebase_options.dart';
+import 'package:asl/l10n/l10n.dart';
 import 'package:asl/plugin/admob_plugin.dart';
 import 'package:asl/provider/notification_provider.dart';
 import 'package:asl/provider/settings_provider.dart';
@@ -10,6 +11,7 @@ import 'package:asl/router/app_router.dart';
 import 'package:asl/utils/utils.dart';
 import 'constants/constant.dart';
 import 'constants/enviroments.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   await Enviroment.initEnviroment();
@@ -32,13 +34,23 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final settingsProviderS = ref.watch(settingsProvider);
+    final settingsProviderN = ref.read(settingsProvider.notifier);
     final notificationProvider = ref.watch(notificationNotifierProvider);
 
     return MaterialApp.router(
       title: appName,
       debugShowCheckedModeBanner: false,
       routerConfig: appRouter,
-      theme: AppTheme(isDarkmode: settingsProviderS.isDarkMode).getTheme(),
+      theme: AppTheme(isDarkmode: settingsProviderN.isDarkModeEnabled())
+          .getTheme(),
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      locale: Locale(settingsProviderS.language),
+      supportedLocales: L10n.all,
     );
   }
 }

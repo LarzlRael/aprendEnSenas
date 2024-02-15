@@ -40,13 +40,13 @@ class MatchImageGame extends HookConsumerWidget {
           margin: EdgeInsets.only(left: 10),
         ),
         centerTitle: true,
-        title: Text('Arrastra y suelta'),
+        title: Text(AppLocalizations.of(context)!.drag_and_drop),
         actions: [
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 8),
             child: Column(
               children: [
-                SimpleText(text: "Puntaje"),
+                SimpleText(text: AppLocalizations.of(context)!.score),
                 SimpleText(
                   text: "${score.value}",
                   style: TextStyle(
@@ -73,11 +73,11 @@ class MatchImageGame extends HookConsumerWidget {
                           ? ResultGameType.win
                           : ResultGameType.lose,
                       loseSubtitle:
-                          'El puntaje es menor a 0, vuelve a intentarlo',
-                      loseTitle: 'Perdiste',
+                          AppLocalizations.of(context)!.negative_score,
+                      loseTitle: AppLocalizations.of(context)!.lost,
                       winSubtitle:
-                          '¡Felicidades! tu puntaje es de ${score.value}',
-                      winTitle: '¡Ganaste!',
+                          '${AppLocalizations.of(context)!.congratulations_score} ${score.value}',
+                      winTitle: AppLocalizations.of(context)!.you_won,
                       callBackOnLose: initGame,
                       callBackOnWin: initGame,
                     ),

@@ -1,0 +1,270 @@
+{
+  "send_message": "Send Message",
+  "@send_message": {
+    "description": "Action of sending a message"
+  },
+  "alphabet_and_numbers": "Alphabet and Numbers",
+  "@alphabet_and_numbers": {
+    "description": "Collection of letters and numerical characters"
+  },
+  "games": "Games",
+  "@games": {
+    "description": "Entertainment activities or challenges"
+  },
+  "change_view": "Change View",
+  "@change_view": {
+    "description": "Action of altering the appearance or layout"
+  },
+  "letters_and_numbers": "Letters and Numbers",
+  "@letters_and_numbers": {
+    "description": "Characters and numerical digits"
+  },
+  "no_messages_yet": "No messages yet...",
+  "@no_messages_yet": {
+    "description": "Indication that there are currently no messages"
+  },
+  "you_can_write_or_use_the_microphone": "You can write or use the microphone",
+  "@you_can_write_or_use_the_microphone": {
+    "description": "Instruction indicating available input options"
+  },
+  "letter": "Letter",
+  "@letter": {
+    "description": "Character representing a speech sound"
+  },
+  "number": "Number",
+  "@number": {
+    "description": "Mathematical quantity or numeral"
+  },
+  "test_your_memory": "Test Your Memory",
+  "@test_your_memory": {
+    "description": "Activity to assess memory skills"
+  },
+  "guess_the_correct_word_or_number": "Guess the correct word or number",
+  "@guess_the_correct_word_or_number": {
+    "description": "Challenge to identify the correct word or numeral"
+  },
+  "card_flip": "Card Flip",
+  "@card_flip": {
+    "description": "Action of turning over a card"
+  },
+  "flip_the_cards_and_find_the_pairs": "Flip the cards and find the pairs",
+  "@flip_the_cards_and_find_the_pairs": {
+    "description": "Activity to match pairs by flipping cards"
+  },
+  "word_in_sight": "Word in Sight",
+  "@word_in_sight": {
+    "description": "Visible word challenge"
+  },
+  "challenge_yourself_and_your_friends": "Challenge yourself and your friends",
+  "@challenge_yourself_and_your_friends": {
+    "description": "Encouragement to test oneself and others"
+  },
+  "drag_and_drop": "Drag and Drop",
+  "@drag_and_drop": {
+    "description": "Action of moving an object by clicking and holding"
+  },
+  "drag_and_drop_the_letters_to_form_the_correct_word": "Drag and drop the letters to form the correct word",
+  "@drag_and_drop_the_letters_to_form_the_correct_word": {
+    "description": "Instruction for arranging letters to create a word"
+  },
+  "select_a_game": "Select a Game",
+  "@select_a_game": {
+    "description": "Action of choosing a game or activity"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Application configurations or preferences"
+  },
+  "theme": "Theme",
+  "@theme": {
+    "description": "Visual appearance or style"
+  },
+  "dark_theme": "Dark Theme",
+  "@dark_theme": {
+    "description": "Appearance with darker colors"
+  },
+  "vibration": "Vibration",
+  "@vibration": {
+    "description": "Action of shaking or vibrating"
+  },
+  "enabled": "Enabled",
+  "@enabled": {
+    "description": "Functionality or feature currently active"
+  },
+  "sound": "Sound",
+  "@sound": {
+    "description": "Auditory effect or noise"
+  },
+  "transition_delay": "Transition Delay Time",
+  "@transition_delay": {
+    "description": "Interval between visual changes"
+  },
+  "current_time": "Current Time",
+  "@current_time": {
+    "description": "Present moment"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "System of communication"
+  },
+  "horizontal": "Horizontal",
+  "@horizontal": {
+    "description": "Parallel to the horizon"
+  },
+  "vertical": "Vertical",
+  "@vertical": {
+    "description": "Perpendicular to the horizon"
+  },
+  "images": "Images",
+  "@images": {
+    "description": "Visual representations"
+  },
+  "signaling_style": "Signaling style",
+  "@signaling_style": {
+    "description": "Method of indicating or communicating"
+  },
+  "reverse_signals": "Reverse Signals",
+  "@reverse_signals": {
+    "description": "Invert the direction of indications"
+  },
+  "right": "Right",
+  "@right": {
+    "description": "Opposite of left"
+  },
+  "left": "Left",
+  "@left": {
+    "description": "Opposite of right"
+  },
+  "icon_color": "Icon Color",
+  "@icon_color": {
+    "description": "Color of visual symbols"
+  },
+  "share": "Share",
+  "@share": {
+    "description": "Action of distributing or sending content to others"
+  },
+  "spanish": "Spanish",
+  "@spanish": {
+    "description": "The Spanish language"
+  },
+  "english": "English",
+  "@english": {
+    "description": "The English language"
+  },
+  "default_system": "Default system",
+  "@default_system": {
+    "description": "Standard or default system configuration"
+  },
+  "light": "Light",
+  "@light": {
+    "description": "Bright or light color theme or mode"
+  },
+  "dark": "Dark",
+  "@dark": {
+    "description": "Dark or night color theme or mode"
+  },
+  "choose_theme": "Choose a Theme",
+  "@choose_theme": {
+    "description": "Prompt to choose a theme"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel action"
+  },
+  "transition_type": "Tipo de transición",
+  "@transition_type": {
+    "description": "Type of transition"
+  },
+  "on": "On",
+  "@on": {
+    "description": "Indicates that something is turned on or active"
+  },
+  "off": "Off",
+  "@off": {
+    "description": "Indicates that something is turned off or inactive"
+  },
+  "select_difficulty_level": "Select the difficulty level",
+  "@select_difficulty_level": {
+    "description": "Message to select the difficulty level"
+  },
+  "easy": "Easy",
+  "@easy": {
+    "description": "Easy difficulty level"
+  },
+  "medium": "Medium",
+  "@medium": {
+    "description": "Medium difficulty level"
+  },
+  "hard": "Hard",
+  "@hard": {
+    "description": "Hard difficulty level"
+  },
+  "very_hard": "Very hard",
+  "@very_hard": {
+    "description": "Very hard difficulty level"
+  },
+  "what_is_the_signal_for": "What is the signal for?",
+  "@what_is_the_signal_for": {
+    "description": "Prompt to ask for the signal of a letter"
+  },
+  "check": "Check",
+  "@check": {
+    "description": "Check button label"
+  },
+  "word": "What is the word?",
+  "@word": {
+    "description": "Prompt to enter the word"
+  },
+  "remaining": "Remaining",
+  "@remaining": {
+    "description": "Label indicating remaining items"
+  },
+  "level_completed": "Level completed!",
+  "@level_completed": {
+    "description": "Message displayed when a level is completed"
+  },
+  "congratulations_level": "Congratulations! You have completed level ",
+  "@congratulations_level": {
+    "description": "Message displayed when a level is completed with level name"
+  },
+  "next_level": "Go to the next level",
+  "@next_level": {
+    "description": "Button label to go to the next level"
+  },
+  "duration": "Duration",
+  "@duration": {
+    "description": "Label indicating duration or time"
+  },
+  "congratulations": "Congratulations!",
+  "@congratulations": {
+    "description": "Generic congratulations message"
+  },
+  "you_won": "You won, keep it up!",
+  "@you_won": {
+    "description": "Message displayed when the player wins"
+  },
+  "lost": "You lost",
+  "@lost": {
+    "description": "Message displayed when the player loses"
+  },
+  "try_again": "You lost all your lives, try again",
+  "@try_again": {
+    "description": "Message displayed when the player loses all lives"
+  },
+  "score": "Score",
+  "@score": {
+    "description": "Label indicating the player's score"
+  },
+  "negative_score": "The score is less than 0, try again",
+  "@negative_score": {
+    "description": "Message displayed when the player's score is negative"
+  },
+  "congratulations_score": "Congratulations! Your score is ",
+  "@congratulations_score": {
+    "description": "Message displayed when the player's score is positive"
+  },
+  "you_won_game": "You won!",
+  "@you_won_game": {
+    "description": "Message displayed when the player wins the game"
+  }
+}

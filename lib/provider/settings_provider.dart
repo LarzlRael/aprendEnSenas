@@ -20,7 +20,7 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
   SettingsNotifier()
       : super(
           SettingsState(
-            isDarkMode: false,
+            darkMode: 0,
             isSoundActive: true,
             isVibrationActive: true,
             transitionTime: 750.0,
@@ -37,7 +37,7 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
   }
 
   void asyncInit() async {
-    final isDarkMode = await keyValueStorageService.getValue<bool>(IS_DARKMODE);
+    final darkMode = await keyValueStorageService.getValue<int>(DARKMODE);
     final isSoundActive =
         await keyValueStorageService.getValue<bool>(IS_SOUNDACTIVE);
     final isVibrationActive =
@@ -57,7 +57,7 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
     final language = await keyValueStorageService.getValue<String>(LANGUAGE);
 
     state = state.copyWith(
-      isDarkMode: isDarkMode ?? state.isDarkMode,
+      darkMode: darkMode != null ? darkMode : state.darkMode,
       isSoundActive: isSoundActive ?? state.isSoundActive,
       isVibrationActive: isVibrationActive ?? state.isVibrationActive,
       transitionTime: transitionTime ?? state.transitionTime,
@@ -72,16 +72,38 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
         selectedDisplayOption ?? state.selectedAxiosOption);
   }
 
-  void toggleDarkMode() async {
-    state = state.copyWith(isDarkMode: !state.isDarkMode);
-    await keyValueStorageService.setKeyValue<bool>(
-        IS_DARKMODE, state.isDarkMode);
+  Future<void> toggleTheme(int darkMode) async {
+    state = state.copyWith(
+      darkMode: darkMode,
+    );
+
+    await keyValueStorageService.setKeyValue<int>(
+      DARKMODE,
+      state.darkMode,
+    );
   }
 
   void toggleSound() async {
     state = state.copyWith(isSoundActive: !state.isSoundActive);
     await keyValueStorageService.setKeyValue<bool>(
         IS_SOUNDACTIVE, state.isSoundActive);
+  }
+
+  bool isDarkModeEnabled() {
+    var brightness = getSystemApparience();
+    switch (state.darkMode) {
+      case 0:
+        return brightness ==
+            Brightness
+                .dark; // Retorna true si el brillo es oscuro, false si es claro
+      case 1:
+        return false; // Modo de luz, siempre retorna false
+      case 2:
+        return true; // Modo oscuro, siempre retorna true
+      default:
+        return brightness ==
+            Brightness.light; // Retorna true si el brillo es oscuro por defecto
+    }
   }
 
   Future<void> changeLanguage(String language) async {
@@ -172,7 +194,7 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
 }
 
 class SettingsState {
-  final bool isDarkMode;
+  final int darkMode;
   final bool isSoundActive;
   final bool isVibrationActive;
   final double transitionTime;
@@ -185,7 +207,7 @@ class SettingsState {
   final String language;
 
   SettingsState({
-    required this.isDarkMode,
+    required this.darkMode,
     required this.isSoundActive,
     required this.isVibrationActive,
     required this.transitionTime,
@@ -199,7 +221,7 @@ class SettingsState {
   });
 
   SettingsState copyWith({
-    bool? isDarkMode,
+    int? darkMode,
     bool? isSoundActive,
     bool? isVibrationActive,
     double? transitionTime,
@@ -212,7 +234,7 @@ class SettingsState {
     String? language,
   }) {
     return SettingsState(
-      isDarkMode: isDarkMode ?? this.isDarkMode,
+      darkMode: darkMode ?? this.darkMode,
       isSoundActive: isSoundActive ?? this.isSoundActive,
       isVibrationActive: isVibrationActive ?? this.isVibrationActive,
       transitionTime: transitionTime ?? this.transitionTime,

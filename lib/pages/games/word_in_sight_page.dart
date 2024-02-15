@@ -41,10 +41,10 @@ class WordInSightPage extends HookConsumerWidget {
                 : status.value > 1.0
                     ? ResultGameType.win
                     : ResultGameType.lose,
-            winTitle: '¡Felicidades!',
-            winSubtitle: 'Has ganado, sigue así',
-            loseTitle: 'Perdiste',
-            loseSubtitle: 'Has perdido todas tus vidas, intentalo de nuevo',
+            winTitle: AppLocalizations.of(context)!.congratulations,
+            winSubtitle: AppLocalizations.of(context)!.you_won,
+            loseTitle: AppLocalizations.of(context)!.lost,
+            loseSubtitle: AppLocalizations.of(context)!.try_again,
             callBackOnLose: () {
               status.value = 0.0;
               lifesCounter.value = 5;
@@ -88,7 +88,7 @@ class WordInSightPage extends HookConsumerWidget {
                     ),
                   ),
                   SimpleText(
-                    text: '¿Cuál es la palabra?',
+                    text: AppLocalizations.of(context)!.word,
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
                     padding: EdgeInsets.symmetric(vertical: 10),
@@ -158,7 +158,7 @@ class WordInSightPage extends HookConsumerWidget {
                     width: double.infinity,
                     height: 50,
                     child: FilledButton(
-                      child: Text('Verificar'),
+                      child: Text(AppLocalizations.of(context)!.check),
                       onPressed: selectedCardIndex.value == -1
                           ? null
                           : () {

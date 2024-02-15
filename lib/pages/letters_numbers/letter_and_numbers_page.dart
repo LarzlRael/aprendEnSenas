@@ -12,7 +12,7 @@ class LetterAndNumbersPage extends HookConsumerWidget {
     final isSwitched = useState(false);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Abecedario y números'),
+        title: Text(AppLocalizations.of(context)!.letters_and_numbers),
       ),
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: 15),
@@ -21,7 +21,7 @@ class LetterAndNumbersPage extends HookConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CheckboxLabel(
-                label: "Cambiar vista",
+                label: AppLocalizations.of(context)!.change_view,
                 value: isSwitched.value,
                 onChanged: (value) {
                   isSwitched.value = value;

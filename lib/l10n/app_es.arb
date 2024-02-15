@@ -1,0 +1,270 @@
+{
+  "send_message": "Enviar mensaje",
+  "@send_message": {
+    "description": "Acción de enviar un mensaje"
+  },
+  "alphabet_and_numbers": "Abecedario y números",
+  "@alphabet_and_numbers": {
+    "description": "Colección de letras y caracteres numéricos"
+  },
+  "games": "Juegos",
+  "@games": {
+    "description": "Actividades de entretenimiento o desafíos"
+  },
+  "change_view": "Cambiar vista",
+  "@change_view": {
+    "description": "Acción de alterar la apariencia o disposición"
+  },
+  "letters_and_numbers": "Letras y números",
+  "@letters_and_numbers": {
+    "description": "Caracteres y dígitos numéricos"
+  },
+  "no_messages_yet": "No hay mensajes todavía...",
+  "@no_messages_yet": {
+    "description": "Indicación de que actualmente no hay mensajes"
+  },
+  "you_can_write_or_use_the_microphone": "Puedes escribir o usar el micrófono",
+  "@you_can_write_or_use_the_microphone": {
+    "description": "Instrucción que indica las opciones de entrada disponibles"
+  },
+  "letter": "Letra",
+  "@letter": {
+    "description": "Carácter que representa un sonido del habla"
+  },
+  "number": "Número",
+  "@number": {
+    "description": "Cantidad matemática o numeral"
+  },
+  "test_your_memory": "Prueba tu memoria",
+  "@test_your_memory": {
+    "description": "Actividad para evaluar habilidades de memoria"
+  },
+  "guess_the_correct_word_or_number": "Adivina la palabra o número correcto",
+  "@guess_the_correct_word_or_number": {
+    "description": "Desafío para identificar la palabra o numeral correcto"
+  },
+  "card_flip": "Volteo de cartas",
+  "@card_flip": {
+    "description": "Acción de voltear una carta"
+  },
+  "flip_the_cards_and_find_the_pairs": "Voltea las cartas y encuentra las parejas",
+  "@flip_the_cards_and_find_the_pairs": {
+    "description": "Actividad para emparejar cartas al voltearlas"
+  },
+  "word_in_sight": "Palabra a la vista",
+  "@word_in_sight": {
+    "description": "Desafío de palabra visible"
+  },
+  "challenge_yourself_and_your_friends": "Desafíate a ti mismo y a tus amigos",
+  "@challenge_yourself_and_your_friends": {
+    "description": "Animo para poner a prueba a uno mismo y a otros"
+  },
+  "drag_and_drop": "Arrastra y suelta",
+  "@drag_and_drop": {
+    "description": "Acción de mover un objeto haciendo clic y manteniendo presionado"
+  },
+  "drag_and_drop_the_letters_to_form_the_correct_word": "Arrastra y suelta las letras para formar la palabra correcta",
+  "@drag_and_drop_the_letters_to_form_the_correct_word": {
+    "description": "Instrucción para organizar letras para crear una palabra"
+  },
+  "select_a_game": "Selecciona un juego",
+  "@select_a_game": {
+    "description": "Acción de elegir un juego o actividad"
+  },
+  "settings": "Ajustes",
+  "@settings": {
+    "description": "Configuraciones o preferencias de la aplicación"
+  },
+  "theme": "Tema",
+  "@theme": {
+    "description": "Apariencia visual o estilo"
+  },
+  "dark_theme": "Tema oscuro",
+  "@dark_theme": {
+    "description": "Apariencia con colores más oscuros"
+  },
+  "vibration": "Vibración",
+  "@vibration": {
+    "description": "Acción de agitar o vibrar"
+  },
+  "enabled": "Activado",
+  "@enabled": {
+    "description": "Funcionalidad o característica actualmente activa"
+  },
+  "sound": "Sonido",
+  "@sound": {
+    "description": "Efecto auditivo o ruido"
+  },
+  "transition_delay": "Tiempo de retraso de transición",
+  "@transition_delay": {
+    "description": "Intervalo entre cambios visuales"
+  },
+  "current_time": "Tiempo actual",
+  "@current_time": {
+    "description": "Momento presente"
+  },
+  "language": "Idioma",
+  "@language": {
+    "description": "Sistema de comunicación"
+  },
+  "horizontal": "Horizontal",
+  "@horizontal": {
+    "description": "Paralelo al horizonte"
+  },
+  "vertical": "Vertical",
+  "@vertical": {
+    "description": "Perpendicular al horizonte"
+  },
+  "images": "Imágenes",
+  "@images": {
+    "description": "Representaciones visuales"
+  },
+  "signaling_style": "Estilo de señalización",
+  "@signaling_style": {
+    "description": "Método de indicación o comunicación"
+  },
+  "reverse_signals": "Invertir señales",
+  "@reverse_signals": {
+    "description": "Invertir la dirección de las indicaciones"
+  },
+  "right": "Derecha",
+  "@right": {
+    "description": "Opuesto de izquierda"
+  },
+  "left": "Izquierda",
+  "@left": {
+    "description": "Opuesto de derecha"
+  },
+  "icon_color": "Color de icono",
+  "@icon_color": {
+    "description": "Color de los símbolos visuales"
+  },
+  "share": "Compartir",
+  "@share": {
+    "description": "Acción de distribuir o enviar contenido a otros"
+  },
+  "spanish": "Español",
+  "@spanish": {
+    "description": "El idioma español"
+  },
+  "english": "Inglés",
+  "@english": {
+    "description": "El idioma ingles"
+  },
+  "default_system": "Predeterminado del sistema",
+  "@default_system": {
+    "description": "Standard or default system configuration"
+  },
+  "light": "Claro",
+  "@light": {
+    "description": "Bright or light color theme or mode"
+  },
+  "dark": "Oscuro",
+  "@dark": {
+    "description": "Dark or night color theme or mode"
+  },
+  "choose_theme": "Escoge un tema",
+  "@choose_theme": {
+    "description": "Prompt to choose a theme"
+  },
+  "cancel": "Cancelar",
+  "@cancel": {
+    "description": "Cancel action"
+  },
+  "transition_type": "Tipo de transición",
+  "@transition_type": {
+    "description": "Tipo de transición"
+  },
+  "on": "Encendido",
+  "@on": {
+    "description": "Indica que algo está encendido o activo"
+  },
+  "off": "Apagado",
+  "@off": {
+    "description": "Indica que algo está apagado o inactivo"
+  },
+  "select_difficulty_level": "Selecciona el nivel de dificultad",
+  "@select_difficulty_level": {
+    "description": "Message to select the difficulty level"
+  },
+  "easy": "Fácil",
+  "@easy": {
+    "description": "Easy difficulty level"
+  },
+  "medium": "Medio",
+  "@medium": {
+    "description": "Medium difficulty level"
+  },
+  "hard": "Difícil",
+  "@hard": {
+    "description": "Hard difficulty level"
+  },
+  "very_hard": "Muy difícil",
+  "@very_hard": {
+    "description": "Very hard difficulty level"
+  },
+  "what_is_the_signal_for": "Cual es la señal de",
+  "@what_is_the_signal_for": {
+    "description": "Prompt to ask for the signal of a letter"
+  },
+  "check": "Comprobar",
+  "@check": {
+    "description": "Etiqueta del botón de comprobación"
+  },
+  "word": "¿Cuál es la palabra?",
+  "@word": {
+    "description": "Indicación para ingresar la palabra"
+  },
+  "remaining": "Restantes",
+  "@remaining": {
+    "description": "Etiqueta que indica elementos restantes"
+  },
+  "level_completed": "¡Nivel completado!",
+  "@level_completed": {
+    "description": "Mensaje mostrado cuando se completa un nivel"
+  },
+  "congratulations_level": "¡Felicidades! ¡Has completado el nivel ",
+  "@congratulations_level": {
+    "description": "Mensaje mostrado cuando se completa un nivel con el nombre del nivel"
+  },
+  "next_level": "Ir al siguiente nivel",
+  "@next_level": {
+    "description": "Etiqueta del botón para ir al siguiente nivel"
+  },
+  "duration": "Duración",
+  "@duration": {
+    "description": "Indicación de duración o tiempo"
+  },
+  "congratulations": "¡Felicidades!",
+  "@congratulations": {
+    "description": "Mensaje de felicitaciones genérico"
+  },
+  "you_won": "Has ganado, ¡sigue así!",
+  "@you_won": {
+    "description": "Mensaje mostrado cuando el jugador gana"
+  },
+  "lost": "Perdiste",
+  "@lost": {
+    "description": "Mensaje mostrado cuando el jugador pierde"
+  },
+  "try_again": "Has perdido todas tus vidas, ¡inténtalo de nuevo!",
+  "@try_again": {
+    "description": "Mensaje mostrado cuando el jugador pierde todas sus vidas"
+  },
+  "score": "Puntaje",
+  "@score": {
+    "description": "Indicación del puntaje del jugador"
+  },
+  "negative_score": "El puntaje es menor a 0, vuelve a intentarlo",
+  "@negative_score": {
+    "description": "Mensaje mostrado cuando el puntaje del jugador es negativo"
+  },
+  "congratulations_score": "¡Felicidades! ¡Tu puntaje es de ",
+  "@congratulations_score": {
+    "description": "Mensaje mostrado cuando el puntaje del jugador es positivo"
+  },
+  "you_won_game": "¡Ganaste!",
+  "@you_won_game": {
+    "description": "Mensaje mostrado cuando el jugador gana el juego"
+  }
+}

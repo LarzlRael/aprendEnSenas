@@ -9,3 +9,34 @@ Brightness getSystemApparience() {
     return SchedulerBinding.instance.platformDispatcher.platformBrightness;
   }
 }
+
+Future<void> openDialogBuilder(
+    BuildContext context, String title, Widget content,
+    {List<Widget>? actions}) {
+  return showDialog<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(title, style: Theme.of(context).textTheme.labelLarge),
+        content: content,
+        actions: actions ??
+            <Widget>[
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge,
+                ),
+                child: const Text('Cancelar'),
+                onPressed: context.pop,
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge,
+                ),
+                child: const Text('Ok'),
+                onPressed: context.pop,
+              ),
+            ],
+      );
+    },
+  );
+}

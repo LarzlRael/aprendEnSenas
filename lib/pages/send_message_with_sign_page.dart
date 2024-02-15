@@ -18,7 +18,7 @@ class SendMessageWithSignPage extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Enviar mensaje"),
+        title: Text(AppLocalizations.of(context)!.send_message),
         actions: [
           if (signProviderS.currentMessage.isNotEmpty)
             IconButton(
@@ -40,7 +40,7 @@ class SendMessageWithSignPage extends HookConsumerWidget {
         child: Column(
           children: [
             CheckboxLabel(
-              label: 'Cambiar vista',
+              label: AppLocalizations.of(context)!.change_view,
               value: settingsS.isMainDisplayInPageView,
               onChanged: (value) async {
                 await settingsN.toggleMainDisplayInPageView();
@@ -99,8 +99,9 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
                         horizontal: 30,
                         vertical: 15,
                       ),
-                      title: "No hay mensajes todavía...",
-                      description: "Puedes escribir o usar el micrófono",
+                      title: AppLocalizations.of(context)!.no_messages_yet,
+                      description: AppLocalizations.of(context)!
+                          .you_can_write_or_use_the_microphone,
                     ),
                   )
                 : Card(
@@ -253,8 +254,10 @@ class SendMessageSlider extends HookConsumerWidget {
                               horizontal: 30,
                               vertical: 15,
                             ),
-                            title: "No hay mensajes todavía...",
-                            description: "Puedes escribir o usar el micrófono",
+                            title:
+                                AppLocalizations.of(context)!.no_messages_yet,
+                            description: AppLocalizations.of(context)!
+                                .you_can_write_or_use_the_microphone,
                           )
                         : settings.typeDisplay == TypeDisplay.pageView
                             ? Container(
@@ -408,7 +411,6 @@ class SendMessageSlider extends HookConsumerWidget {
                                 isPlaying.value ? Icons.pause : Icons.send,
                                 size: 25.0,
                                 color: Colors.white,
-                                semanticLabel: 'Show menu',
                               ),
                             ),
                           ),

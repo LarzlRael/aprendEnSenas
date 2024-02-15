@@ -29,17 +29,17 @@ class HomePage extends HookConsumerWidget {
     final List<ItemMenu> listMenu = [
       /* ItemMenu(title: 'Home', page: HomePage()), */
       ItemMenu(
-        title: 'Enviar mensaje',
+        title: AppLocalizations.of(context)!.send_message,
         page: SendMessageWithSignPage(),
         icon: CustomIcons.ic_conversation,
       ),
       ItemMenu(
-        title: 'Letrás y números',
+        title: AppLocalizations.of(context)!.letters_and_numbers,
         page: LetterAndNumbersPage(),
         icon: CustomIcons.ic_words,
       ),
       ItemMenu(
-        title: 'Juegos',
+        title: AppLocalizations.of(context)!.games,
         page: SelectGameMenuPage(),
         icon: CustomIcons.ic_puzzle,
       ),

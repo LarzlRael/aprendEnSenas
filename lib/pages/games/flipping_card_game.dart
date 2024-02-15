@@ -93,7 +93,7 @@ class FlippingCardGame extends HookConsumerWidget {
     void initializeGameData() {
       levelFlippingGame.value = getFlipCardGameLevel(level);
       _data.value = createShuffledListFromImageSource(
-        ref.watch(signProvider).currentListSing,
+        ref.read(signProvider).currentListSing,
         levelFlippingGame.value!.options,
       );
       _cardFlips.value =
@@ -121,16 +121,16 @@ class FlippingCardGame extends HookConsumerWidget {
             pathImage: getValueSoundFromList(correctImages),
             resultType: ResultGameType.win,
             title: SimpleText(
-              text: "¡Nivel completado!",
+              text: AppLocalizations.of(context)!.level_completed,
               style: theme.headlineSmall,
             ),
             subtitle: SimpleText(
               padding: const EdgeInsets.symmetric(vertical: 10.0),
-              text: "¡Has completado el nivel ${level.name}!",
+              text: "${AppLocalizations.of(context)!.congratulations_level}",
               /* Add Icon to show  */
               style: theme.bodyMedium,
             ),
-            titleButton: "Ir al siguiente nivel",
+            titleButton: AppLocalizations.of(context)!.next_level,
             action: () => context.push(
               '/games/flipping_cards_page',
               extra: getNextLevel(level),
@@ -139,7 +139,7 @@ class FlippingCardGame extends HookConsumerWidget {
         : Scaffold(
             appBar: AppBar(
               title: Text(
-                'Volteo de cartas',
+                AppLocalizations.of(context)!.card_flip,
               ),
               centerTitle: true,
               leading: BackIcon(
@@ -170,11 +170,12 @@ class FlippingCardGame extends HookConsumerWidget {
                           alignment: WrapAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Restantes: ${_left.value}',
+                              '${AppLocalizations.of(context)!.remaining}: ${_left.value}',
                               style: style,
                             ),
                             SimpleText(
-                              text: 'Duración: ${gameDuration.value}s',
+                              text:
+                                  '${AppLocalizations.of(context)!.duration}: ${gameDuration.value}s',
                               style: style,
                               padding: EdgeInsets.symmetric(horizontal: 10),
                             ),

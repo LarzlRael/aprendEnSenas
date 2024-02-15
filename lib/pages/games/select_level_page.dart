@@ -16,7 +16,6 @@ class SelectLevelPage extends HookWidget {
     final _movieCardPageController = usePageController(viewportFraction: .77);
     final size = MediaQuery.of(context).size;
     final _movieCardPage = useState<double>(0.0);
-    final _movieCardIndex = useState<int>(0);
 
     _movieCardPagePercentListener() {
       _movieCardPage.value = _movieCardPageController.page!;
@@ -66,7 +65,7 @@ class SelectLevelPage extends HookWidget {
               lineHeight: 1,
             ),
             SimpleText(
-              text: "Selecciona el nivel de dificultad",
+              text: AppLocalizations.of(context)!.select_difficulty_level,
               fontSize: 16,
               fontWeight: FontWeight.w400,
               textAlign: TextAlign.center,
@@ -81,6 +80,7 @@ class SelectLevelPage extends HookWidget {
                 itemBuilder: (context, index) {
                   final level = Level.values[index];
                   return CardLevel(
+                    title: levelName(context, level),
                     level: level,
                     onTap: (Level level) {
                       context.push(
@@ -101,12 +101,14 @@ class SelectLevelPage extends HookWidget {
 
 class CardLevel extends StatelessWidget {
   final Level level;
+  final String title;
   final Function(Level selectedLevel) onTap;
 
   const CardLevel({
     super.key,
     required this.level,
     required this.onTap,
+    required this.title,
   });
   @override
   Widget build(BuildContext context) {
@@ -122,7 +124,7 @@ class CardLevel extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SimpleText(
-                text: level.name.toUpperCase(),
+                text: title.toUpperCase(),
                 fontSize: 25,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -137,7 +139,7 @@ class CardLevel extends StatelessWidget {
                 ),
               ),
               LetterAndSign(
-                text: level.name.removeDiacriticsFromString(),
+                text: title.removeDiacriticsFromString(),
               )
             ],
           )),

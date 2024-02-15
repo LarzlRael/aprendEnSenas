@@ -100,7 +100,7 @@ class TestYourMemoryPage extends HookConsumerWidget {
               margin: EdgeInsets.symmetric(vertical: 20),
             ),
             SimpleText(
-              text: 'Cual es la seña de la ${correctAnswer.type!.name}',
+              text: AppLocalizations.of(context)!.what_is_the_signal_for,
               fontSize: 22,
               fontWeight: FontWeight.w400,
               textAlign: TextAlign.center,

@@ -1,5 +1,21 @@
 part of 'pages.dart';
 
+List<String> getThemesNames(BuildContext context) {
+  return <String>[
+    AppLocalizations.of(context)!.default_system,
+    AppLocalizations.of(context)!.light,
+    AppLocalizations.of(context)!.dark,
+  ];
+}
+
+List<String> getHorinzontationNames(BuildContext context) {
+  return <String>[
+    AppLocalizations.of(context)!.horizontal,
+    AppLocalizations.of(context)!.vertical,
+    AppLocalizations.of(context)!.images,
+  ];
+}
+
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
   static const routeName = '/settings_page';
@@ -10,10 +26,68 @@ class SettingsPage extends ConsumerWidget {
     final signProviderN = ref.read(signProvider.notifier);
     final signProviderS = ref.watch(signProvider);
     final textTheme = Theme.of(context).textTheme;
+
+    Future<void> openLanDialog() async {
+      await openDialogBuilder(
+        context,
+        AppLocalizations.of(context)!.choose_theme,
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: getThemesNames(context)
+              .mapIndexed(
+                (index, e) => ListTile(
+                    onTap: () {
+                      settingN.toggleTheme(index);
+                      context.pop();
+                    },
+                    leading: Radio(
+                      value: index,
+                      groupValue: ref.watch(settingsProvider).darkMode,
+                      onChanged: (value) {
+                        context.pop();
+                      },
+                    ),
+                    title:
+                        Text(e, style: Theme.of(context).textTheme.bodySmall)),
+              )
+              .toList(),
+        ),
+      );
+    }
+
+    Future<void> openHorientationDialog() async {
+      await openDialogBuilder(
+        context,
+        AppLocalizations.of(context)!.choose_theme,
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: getHorinzontationNames(context)
+              .mapIndexed(
+                (index, e) => ListTile(
+                    onTap: () {
+                      settingN.setSelectedDisplayOption(index);
+                      context.pop();
+                    },
+                    leading: Radio(
+                      value: index,
+                      groupValue:
+                          ref.watch(settingsProvider).selectedAxiosOption,
+                      onChanged: (value) {
+                        context.pop();
+                      },
+                    ),
+                    title:
+                        Text(e, style: Theme.of(context).textTheme.bodySmall)),
+              )
+              .toList(),
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: LetterAndSign(text: 'Ajustes'),
+        title: LetterAndSign(text: AppLocalizations.of(context)!.settings),
         leading: BackIcon(
           margin: EdgeInsets.only(left: 10),
         ),
@@ -23,34 +97,66 @@ class SettingsPage extends ConsumerWidget {
           margin: EdgeInsets.symmetric(horizontal: 15),
           child: Column(
             children: [
+              ListTile(
+                leading: Icon(
+                  Icons.brightness_4_sharp,
+                  /* color: Theme.of(context).colorScheme.primary, */
+                ),
+                subtitle: Text(
+                  getThemesNames(context)[settingS.darkMode],
+                  style: textTheme.bodySmall,
+                ),
+                title: Text(
+                  AppLocalizations.of(context)!.theme,
+                  style: textTheme.titleSmall,
+                ),
+                onTap: () async {
+                  await openLanDialog();
+                },
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.brightness_4_sharp,
+                  /* color: Theme.of(context).colorScheme.primary, */
+                ),
+                title: Text(
+                  "Tipo de transición",
+                  style: textTheme.titleSmall,
+                ),
+                subtitle: Text(
+                  getHorinzontationNames(context)[settingS.selectedAxiosOption],
+                  style: textTheme.bodySmall,
+                ),
+                onTap: () async {
+                  await openHorientationDialog();
+                },
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   OptionSetting(
-                    title: 'Tema',
-                    subTitle: 'Tema oscuro',
-                    value: settingS.isDarkMode,
-                    onTap: settingN.toggleDarkMode,
-                  ),
-                  OptionSetting(
-                    title: 'Vibración',
-                    subTitle: 'Activado',
+                    title: AppLocalizations.of(context)!.vibration,
+                    subTitle: settingS.isVibrationActive
+                        ? AppLocalizations.of(context)!.on
+                        : AppLocalizations.of(context)!.off,
                     value: settingS.isVibrationActive,
                     onTap: settingN.toggleVibration,
                   ),
+                  OptionSetting(
+                    title: AppLocalizations.of(context)!.sound,
+                    subTitle: settingS.isSoundActive
+                        ? AppLocalizations.of(context)!.on
+                        : AppLocalizations.of(context)!.off,
+                    value: settingS.isSoundActive,
+                    onTap: settingN.toggleSound,
+                  ),
                 ],
-              ),
-              OptionSetting(
-                title: 'Sonido',
-                subTitle: 'Activado',
-                value: settingS.isSoundActive,
-                onTap: settingN.toggleSound,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SimpleText(
-                    text: 'Tiempo de retraso de transición',
+                    text: AppLocalizations.of(context)!.transition_delay,
                     style: textTheme.titleSmall,
                   ),
                   Slider(
@@ -61,11 +167,9 @@ class SettingsPage extends ConsumerWidget {
                     value: settingS.transitionTime,
                     onChanged: (value) => settingN.setTransitionTime(value),
                   ),
-                  Text('Tiempo actual: ${settingS.transitionTime}'),
-                  SimpleText(
-                    text: 'Tipo de transición',
-                    style: textTheme.titleSmall,
-                  ),
+                  Text(
+                      '${AppLocalizations.of(context)!.current_time}: ${settingS.transitionTime}'),
+
                   /*  CustomCheckBox(
                     label: 'Horizontal',
                     value: settingS.selectedAxiosOption == 0,
@@ -82,7 +186,7 @@ class SettingsPage extends ConsumerWidget {
                     onTap: () => settingN.setSelectedDisplayOption(2),
                   ), */
                   SimpleText(
-                      text: "es",
+                      text: AppLocalizations.of(context)!.language,
                       style: textTheme.titleSmall,
                       padding: EdgeInsets.symmetric(horizontal: 10)),
                   Row(
@@ -90,7 +194,7 @@ class SettingsPage extends ConsumerWidget {
                     children: [
                       FlagButton(
                         pathImage: esFlag,
-                        language: "xd",
+                        language: AppLocalizations.of(context)!.spanish,
                         isSelected: settingS.language == 'es',
                         onTap: () async {
                           await settingN.changeLanguage('es');
@@ -98,15 +202,15 @@ class SettingsPage extends ConsumerWidget {
                       ),
                       FlagButton(
                         pathImage: enFlag,
-                        language: "en",
+                        language: AppLocalizations.of(context)!.english,
                         isSelected: settingS.language == 'en',
                         onTap: () async {
-                          await settingN.changeLanguage('es');
+                          await settingN.changeLanguage('en');
                         },
                       ),
                     ],
                   ),
-                  Column(
+                  /* Column(
                     children: [
                       'Horizontal',
                       'Vertical',
@@ -120,17 +224,20 @@ class SettingsPage extends ConsumerWidget {
                         onTap: () => settingN.setSelectedDisplayOption(index),
                       );
                     }).toList(),
-                  ),
-                  SimpleText(
-                    text: 'Estilo de señalización',
-                    style: textTheme.titleSmall,
-                    padding: EdgeInsets.symmetric(vertical: 5),
-                  ),
+                  ), */
+
                   OptionSetting(
-                    title: 'Invertir señales',
-                    subTitle: settingS.isTurned ? 'Derecha' : 'Izquierda',
+                    title: AppLocalizations.of(context)!.reverse_signals,
+                    subTitle: settingS.isTurned
+                        ? AppLocalizations.of(context)!.right
+                        : AppLocalizations.of(context)!.left,
                     value: settingS.isTurned,
                     onTap: settingN.setIsTurned,
+                  ),
+                  SimpleText(
+                    text: AppLocalizations.of(context)!.signaling_style,
+                    style: textTheme.titleSmall,
+                    padding: EdgeInsets.symmetric(vertical: 5),
                   ),
                   SizedBox(
                     width: double.infinity,
@@ -149,7 +256,7 @@ class SettingsPage extends ConsumerWidget {
                     ),
                   ),
                   SimpleText(
-                    text: 'Color de icono',
+                    text: AppLocalizations.of(context)!.icon_color,
                     style: textTheme.titleSmall,
                     padding: EdgeInsets.symmetric(vertical: 5),
                   ),
@@ -276,4 +383,48 @@ class IconShowToChange extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<void> _dialogBuilder(BuildContext context, WidgetRef ref) {
+  return showDialog<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Escoge un tema'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: getThemesNames(context)
+              .mapIndexed(
+                (index, e) => ListTile(
+                    leading: Radio(
+                      value: index,
+                      groupValue: ref.watch(settingsProvider).darkMode,
+                      onChanged: (value) {
+                        ref.read(settingsProvider.notifier).toggleTheme(index);
+                      },
+                    ),
+                    title:
+                        Text(e, style: Theme.of(context).textTheme.bodySmall)),
+              )
+              .toList(),
+        ),
+        actions: <Widget>[
+          TextButton(
+            style: TextButton.styleFrom(
+              textStyle: Theme.of(context).textTheme.labelLarge,
+            ),
+            child: const Text('Cancelar'),
+            onPressed: context.pop,
+          ),
+          TextButton(
+            style: TextButton.styleFrom(
+              textStyle: Theme.of(context).textTheme.labelLarge,
+            ),
+            child: const Text('Ok'),
+            onPressed: context.pop,
+          ),
+        ],
+      );
+    },
+  );
 }

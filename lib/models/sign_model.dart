@@ -6,19 +6,14 @@ enum SignType {
   space,
 }
 
-extension SignTypeExtension on SignType {
-  String get name {
-    switch (this) {
-      case SignType.letter:
-        return 'letra';
-      case SignType.number:
-        return 'número';
-      case SignType.space:
-        return 'espacio';
-      default:
-        return '';
-    }
-  }
+String signType(BuildContext context, SignType sign) {
+  final Map<SignType, String> levelNames = {
+    SignType.letter: AppLocalizations.of(context)!.letter,
+    SignType.number: AppLocalizations.of(context)!.number,
+    SignType.space: "",
+  };
+
+  return levelNames[sign] ?? '';
 }
 
 class Sign {

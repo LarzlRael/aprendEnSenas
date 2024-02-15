@@ -8,7 +8,7 @@ class SelectGameMenuPage extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         /* leading: BackIcon(margin: const EdgeInsets.only(left: 10)), */
-        title: Text("Selecciona un juego "),
+        title: Text(AppLocalizations.of(context)!.select_a_game),
       ),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -18,9 +18,9 @@ class SelectGameMenuPage extends HookConsumerWidget {
               crossAxisCount: 2,
               mainAxisSpacing: 5,
               crossAxisSpacing: 5,
-              itemCount: selecteGameItems.length,
+              itemCount: selecteGameItems(context).length,
               itemBuilder: (_, index) {
-                final item = selecteGameItems[index];
+                final item = selecteGameItems(context)[index];
                 return SelectGameCard(
                   icon: item.icon,
                   title: item.title,

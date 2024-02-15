@@ -19,6 +19,17 @@ extension LevelExtension on Level {
   }
 }
 
+String levelName(BuildContext context, Level level) {
+  final Map<Level, String> levelNames = {
+    Level.easy: AppLocalizations.of(context)!.easy,
+    Level.medium: AppLocalizations.of(context)!.medium,
+    Level.hard: AppLocalizations.of(context)!.hard,
+    Level.very_hard: AppLocalizations.of(context)!.very_hard,
+  };
+
+  return levelNames[level] ?? '';
+}
+
 Level getNextLevel(Level currenLevel) {
   final values = Level.values;
   final currentIndex = values.indexOf(currenLevel);
