@@ -104,7 +104,7 @@ class WordInSightPage extends HookConsumerWidget {
                           padding: EdgeInsets.all(10),
                           width: 75,
                           height: 75,
-                          child: ColoredIcon(
+                          child: SignIcon(
                             icon: sign.iconSign,
                             size: 45,
                           ),

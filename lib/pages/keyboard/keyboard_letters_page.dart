@@ -24,7 +24,7 @@ class KeyboardLettersPage extends HookConsumerWidget {
           children: [
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 250),
-              child: ColoredIcon(
+              child: SignIcon(
                 icon: currentSign.value?.iconSign ?? Icons.access_alarm,
                 size: 300,
               ),

@@ -62,14 +62,9 @@ class OneLetterAndNumbers extends StatelessWidget {
           Positioned(
             right: 0,
             top: 0,
-            child: Transform(
-              alignment: Alignment.center,
-              transform: Matrix4.rotationY(math.pi),
-              child: Icon(
-                sign.iconSign,
-                size: 225,
-                color: Colors.grey.withOpacity(0.3),
-              ),
+            child: SignIcon(
+              icon: sign.iconSign,
+              size: 225,
             ),
           ),
           Align(

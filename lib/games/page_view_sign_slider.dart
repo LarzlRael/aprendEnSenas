@@ -50,7 +50,7 @@ class PageViewSignSlider extends HookWidget {
                   /* child: SvgPicture.asset(
                     singList[index].icon,
                   ), */
-                  child: ColoredIcon(
+                  child: SignIcon(
                     icon: singList[index].iconSign,
                     size: 300,
                   ),
