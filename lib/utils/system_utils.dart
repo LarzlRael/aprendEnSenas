@@ -17,7 +17,9 @@ Future<void> openDialogBuilder(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text(title, style: Theme.of(context).textTheme.labelLarge),
+        title: Text(title,
+            style:
+                Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 16)),
         content: content,
         actions: actions ??
             <Widget>[

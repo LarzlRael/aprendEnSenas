@@ -171,7 +171,7 @@
   "@cancel": {
     "description": "Cancel action"
   },
-  "transition_type": "Tipo de transición",
+  "transition_type": "Type of transition",
   "@transition_type": {
     "description": "Type of transition"
   },
@@ -266,5 +266,13 @@
   "you_won_game": "You won!",
   "@you_won_game": {
     "description": "Message displayed when the player wins the game"
+  },
+  "choose_language": "Choose a language",
+  "@choose_language": {
+    "description": "Prompt to choose a language"
+  },
+  "save": "Save",
+  "@save": {
+    "description": "Save action"
   }
 }

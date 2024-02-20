@@ -31,28 +31,81 @@ class SettingsPage extends ConsumerWidget {
       await openDialogBuilder(
         context,
         AppLocalizations.of(context)!.choose_theme,
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          children: getThemesNames(context)
-              .mapIndexed(
-                (index, e) => ListTile(
-                    onTap: () {
-                      settingN.toggleTheme(index);
-                      context.pop();
-                    },
-                    leading: Radio(
-                      value: index,
-                      groupValue: ref.watch(settingsProvider).darkMode,
-                      onChanged: (value) {
+        Consumer(builder: (context, ref, child) {
+          final settingS = ref.watch(settingsProvider);
+          final settingN = ref.read(settingsProvider.notifier);
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: getThemesNames(context)
+                .mapIndexed(
+                  (index, e) => ListTile(
+                      onTap: () {
+                        settingN.toggleTheme(index);
                         context.pop();
                       },
-                    ),
-                    title:
-                        Text(e, style: Theme.of(context).textTheme.bodySmall)),
-              )
-              .toList(),
-        ),
+                      leading: Radio(
+                        value: index,
+                        groupValue: settingS.darkModeAux,
+                        onChanged: (value) {
+                          settingN.setIsThemeAux(index);
+                        },
+                      ),
+                      title: Text(e,
+                          style: Theme.of(context).textTheme.bodySmall)),
+                )
+                .toList(),
+          );
+        }),
       );
+    }
+
+/* fix message when language is changed */
+    Future<void> openLanguageDialog() async {
+      String auxLanguage = "";
+      await openDialogBuilder(
+          context, AppLocalizations.of(context)!.choose_language,
+          Consumer(builder: (context, ref, child) {
+        final languageAux = ref.watch(settingsProvider).languageAux;
+        final settingNotifier = ref.read(settingsProvider.notifier);
+
+        return Container(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              FlagButtonRow(
+                pathImage: esFlag,
+                language: AppLocalizations.of(context)!.spanish,
+                isSelected: languageAux == 'es',
+                onTap: () {
+                  settingNotifier.setLanguageAux('es');
+                  auxLanguage = 'es';
+                },
+              ),
+              FlagButtonRow(
+                pathImage: enFlag,
+                language: AppLocalizations.of(context)!.english,
+                isSelected: languageAux == 'en',
+                onTap: () {
+                  settingNotifier.setLanguageAux('en');
+                  auxLanguage = 'en';
+                },
+              ),
+            ],
+          ),
+        );
+      }), actions: [
+        Row(children: [
+          Expanded(
+            child: FilledButton(
+              onPressed: () async {
+                await settingN.changeLanguage(auxLanguage);
+                context.pop();
+              },
+              child: Text(AppLocalizations.of(context)!.save),
+            ),
+          ),
+        ]),
+      ]);
     }
 
     Future<void> openHorientationDialog() async {
@@ -120,7 +173,7 @@ class SettingsPage extends ConsumerWidget {
                   /* color: Theme.of(context).colorScheme.primary, */
                 ),
                 title: Text(
-                  "Tipo de transición",
+                  AppLocalizations.of(context)!.transition_type,
                   style: textTheme.titleSmall,
                 ),
                 subtitle: Text(
@@ -129,6 +182,22 @@ class SettingsPage extends ConsumerWidget {
                 ),
                 onTap: () async {
                   await openHorientationDialog();
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.language),
+                title: Text(
+                  AppLocalizations.of(context)!.language,
+                  style: textTheme.titleSmall,
+                ),
+                subtitle: Text(
+                  settingS.language == 'es'
+                      ? AppLocalizations.of(context)!.spanish
+                      : AppLocalizations.of(context)!.english,
+                  style: textTheme.bodySmall,
+                ),
+                onTap: () async {
+                  await openLanguageDialog();
                 },
               ),
               Row(
@@ -165,67 +234,10 @@ class SettingsPage extends ConsumerWidget {
                     divisions: 10,
                     label: settingS.transitionTime.toString(),
                     value: settingS.transitionTime,
-                    onChanged: (value) => settingN.setTransitionTime(value),
+                    onChanged: settingN.setTransitionTime,
                   ),
                   Text(
                       '${AppLocalizations.of(context)!.current_time}: ${settingS.transitionTime}'),
-
-                  /*  CustomCheckBox(
-                    label: 'Horizontal',
-                    value: settingS.selectedAxiosOption == 0,
-                    onTap: () => settingN.setSelectedDisplayOption(0),
-                  ),
-                  CustomCheckBox(
-                    label: 'Vertical',
-                    value: settingS.selectedAxiosOption == 1,
-                    onTap: () => settingN.setSelectedDisplayOption(1),
-                  ),
-                  CustomCheckBox(
-                    label: 'Imágenes',
-                    value: settingS.selectedAxiosOption == 2,
-                    onTap: () => settingN.setSelectedDisplayOption(2),
-                  ), */
-                  SimpleText(
-                      text: AppLocalizations.of(context)!.language,
-                      style: textTheme.titleSmall,
-                      padding: EdgeInsets.symmetric(horizontal: 10)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      FlagButton(
-                        pathImage: esFlag,
-                        language: AppLocalizations.of(context)!.spanish,
-                        isSelected: settingS.language == 'es',
-                        onTap: () async {
-                          await settingN.changeLanguage('es');
-                        },
-                      ),
-                      FlagButton(
-                        pathImage: enFlag,
-                        language: AppLocalizations.of(context)!.english,
-                        isSelected: settingS.language == 'en',
-                        onTap: () async {
-                          await settingN.changeLanguage('en');
-                        },
-                      ),
-                    ],
-                  ),
-                  /* Column(
-                    children: [
-                      'Horizontal',
-                      'Vertical',
-                      'Imágenes',
-                    ].asMap().entries.map((entry) {
-                      int index = entry.key;
-                      String label = entry.value;
-                      return CustomCheckBox(
-                        label: label,
-                        value: settingS.selectedAxiosOption == index,
-                        onTap: () => settingN.setSelectedDisplayOption(index),
-                      );
-                    }).toList(),
-                  ), */
-
                   OptionSetting(
                     title: AppLocalizations.of(context)!.reverse_signals,
                     subTitle: settingS.isTurned
@@ -383,48 +395,4 @@ class IconShowToChange extends StatelessWidget {
       ),
     );
   }
-}
-
-Future<void> _dialogBuilder(BuildContext context, WidgetRef ref) {
-  return showDialog<void>(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Escoge un tema'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: getThemesNames(context)
-              .mapIndexed(
-                (index, e) => ListTile(
-                    leading: Radio(
-                      value: index,
-                      groupValue: ref.watch(settingsProvider).darkMode,
-                      onChanged: (value) {
-                        ref.read(settingsProvider.notifier).toggleTheme(index);
-                      },
-                    ),
-                    title:
-                        Text(e, style: Theme.of(context).textTheme.bodySmall)),
-              )
-              .toList(),
-        ),
-        actions: <Widget>[
-          TextButton(
-            style: TextButton.styleFrom(
-              textStyle: Theme.of(context).textTheme.labelLarge,
-            ),
-            child: const Text('Cancelar'),
-            onPressed: context.pop,
-          ),
-          TextButton(
-            style: TextButton.styleFrom(
-              textStyle: Theme.of(context).textTheme.labelLarge,
-            ),
-            child: const Text('Ok'),
-            onPressed: context.pop,
-          ),
-        ],
-      );
-    },
-  );
 }

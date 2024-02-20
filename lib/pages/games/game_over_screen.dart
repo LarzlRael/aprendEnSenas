@@ -51,10 +51,15 @@ class GameOverScreen extends HookConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   title,
-                  Image.asset(
-                    pathImageState.value,
-                    fit: BoxFit.cover,
-                    height: 150,
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                      vertical: 20,
+                    ),
+                    child: Image.asset(
+                      pathImageState.value,
+                      fit: BoxFit.cover,
+                      height: 150,
+                    ),
                   ),
                   subtitle,
                   /* const SizedBox(height: 20), */

@@ -266,5 +266,13 @@
   "you_won_game": "¡Ganaste!",
   "@you_won_game": {
     "description": "Mensaje mostrado cuando el jugador gana el juego"
+  },
+  "choose_language": "Escoge un idioma",
+  "@choose_language": {
+    "description": "Mensaje para elegir un idioma"
+  },
+  "save": "Guardar",
+  "@save": {
+    "description": "Acción para guardar cambios"
   }
 }

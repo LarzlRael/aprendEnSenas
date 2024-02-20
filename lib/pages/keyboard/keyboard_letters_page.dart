@@ -60,7 +60,6 @@ class _Button extends StatelessWidget {
   final bool isSelected;
 
   const _Button({
-    super.key,
     required this.letter,
     required this.onTap,
     required this.isSelected,

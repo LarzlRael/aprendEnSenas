@@ -82,6 +82,7 @@ final signStyle3 = <Sign>[
   Sign("k", SignIcons.k_sign_3),
   Sign("l", SignIcons.l_sign_3),
   Sign("m", SignIcons.m_sign_3),
+  Sign("n", SignIcons.n_sign_3),
   Sign("ñ", SignIcons.nn_sign),
   Sign("o", SignIcons.o_sign_3),
   Sign("p", SignIcons.p_sign_3),

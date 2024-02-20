@@ -7,8 +7,9 @@ class WordInSightPage extends HookConsumerWidget {
   const WordInSightPage({super.key});
   @override
   Widget build(BuildContext context, ref) {
+    final settingS = ref.watch(settingsProvider);
     final state = useState<WordInSightGame>(createWordInSightGame(
-      commonWords,
+      getWords(settingS.language),
       ref.watch(signProvider).currentListSing,
       4,
     ));
@@ -27,7 +28,10 @@ class WordInSightPage extends HookConsumerWidget {
         settingsNotifier.playSound(correctsSounds[2]);
         selectedCardIndex.value = -1;
         state.value = createWordInSightGame(
-            commonWords, ref.watch(signProvider).currentListSing, 4);
+          getWords(settingS.language),
+          ref.watch(signProvider).currentListSing,
+          4,
+        );
         status.value = status.value + stepValue;
         key.value = UniqueKey();
       }
@@ -272,11 +276,13 @@ class ResultScreen extends StatelessWidget {
     if (resultType == ResultGameType.win) {
       return GameOverScreen(
         resultType: ResultGameType.win,
-        title: SimpleText(text: winTitle, style: textTheme.headlineSmall!),
+        title: SimpleText(
+          text: winTitle,
+          style: textTheme.headlineSmall!,
+        ),
         subtitle: SimpleText(
           text: winSubtitle,
           style: textTheme.bodyMedium!,
-          padding: EdgeInsets.symmetric(vertical: 10),
         ),
         pathImage: getValueSoundFromList(correctImages),
       );

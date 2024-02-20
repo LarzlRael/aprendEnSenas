@@ -31,6 +31,8 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
             isMainDisplayInPageView: false,
             isTurned: false,
             language: getSystemLanguage(),
+            darkModeAux: 0,
+            languageAux: getSystemLanguage(),
           ),
         ) {
     asyncInit();
@@ -67,6 +69,8 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
           isMainDisplayInPageView ?? state.isMainDisplayInPageView,
       isTurned: isTurned ?? state.isTurned,
       language: language ?? state.language,
+      languageAux: language ?? state.language,
+      darkModeAux: darkMode ?? state.darkMode,
     );
     setSelectedDisplayOption(
         selectedDisplayOption ?? state.selectedAxiosOption);
@@ -191,10 +195,19 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
     state = state.copyWith(isTurned: !state.isTurned);
     await keyValueStorageService.setKeyValue<bool>(IS_TURNED, state.isTurned);
   }
+
+  void setIsThemeAux(int aux) async {
+    state = state.copyWith(darkModeAux: aux);
+  }
+
+  void setLanguageAux(String lang) {
+    state = state.copyWith(languageAux: lang);
+  }
 }
 
 class SettingsState {
   final int darkMode;
+  final int darkModeAux;
   final bool isSoundActive;
   final bool isVibrationActive;
   final double transitionTime;
@@ -205,6 +218,7 @@ class SettingsState {
   final bool isMainDisplayInPageView;
   final bool isTurned;
   final String language;
+  final String languageAux;
 
   SettingsState({
     required this.darkMode,
@@ -218,6 +232,8 @@ class SettingsState {
     required this.isMainDisplayInPageView,
     required this.isTurned,
     required this.language,
+    required this.darkModeAux,
+    required this.languageAux,
   });
 
   SettingsState copyWith({
@@ -232,6 +248,8 @@ class SettingsState {
     bool? isMainDisplayInPageView,
     bool? isTurned,
     String? language,
+    int? darkModeAux,
+    String? languageAux,
   }) {
     return SettingsState(
       darkMode: darkMode ?? this.darkMode,
@@ -246,6 +264,8 @@ class SettingsState {
           isMainDisplayInPageView ?? this.isMainDisplayInPageView,
       isTurned: isTurned ?? this.isTurned,
       language: language ?? this.language,
+      languageAux: languageAux ?? this.languageAux,
+      darkModeAux: darkModeAux ?? this.darkModeAux,
     );
   }
 }
