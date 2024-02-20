@@ -31,7 +31,6 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
             isMainDisplayInPageView: false,
             isTurned: false,
             language: getSystemLanguage(),
-            darkModeAux: 0,
             languageAux: getSystemLanguage(),
           ),
         ) {
@@ -70,7 +69,6 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
       isTurned: isTurned ?? state.isTurned,
       language: language ?? state.language,
       languageAux: language ?? state.language,
-      darkModeAux: darkMode ?? state.darkMode,
     );
     setSelectedDisplayOption(
         selectedDisplayOption ?? state.selectedAxiosOption);
@@ -196,10 +194,6 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
     await keyValueStorageService.setKeyValue<bool>(IS_TURNED, state.isTurned);
   }
 
-  void setIsThemeAux(int aux) async {
-    state = state.copyWith(darkModeAux: aux);
-  }
-
   void setLanguageAux(String lang) {
     state = state.copyWith(languageAux: lang);
   }
@@ -207,7 +201,7 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
 
 class SettingsState {
   final int darkMode;
-  final int darkModeAux;
+
   final bool isSoundActive;
   final bool isVibrationActive;
   final double transitionTime;
@@ -232,7 +226,6 @@ class SettingsState {
     required this.isMainDisplayInPageView,
     required this.isTurned,
     required this.language,
-    required this.darkModeAux,
     required this.languageAux,
   });
 
@@ -248,7 +241,6 @@ class SettingsState {
     bool? isMainDisplayInPageView,
     bool? isTurned,
     String? language,
-    int? darkModeAux,
     String? languageAux,
   }) {
     return SettingsState(
@@ -265,7 +257,6 @@ class SettingsState {
       isTurned: isTurned ?? this.isTurned,
       language: language ?? this.language,
       languageAux: languageAux ?? this.languageAux,
-      darkModeAux: darkModeAux ?? this.darkModeAux,
     );
   }
 }

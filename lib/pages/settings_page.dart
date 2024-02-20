@@ -27,7 +27,7 @@ class SettingsPage extends ConsumerWidget {
     final signProviderS = ref.watch(signProvider);
     final textTheme = Theme.of(context).textTheme;
 
-    Future<void> openLanDialog() async {
+    Future<void> openThemeDialog() async {
       await openDialogBuilder(
         context,
         AppLocalizations.of(context)!.choose_theme,
@@ -45,9 +45,10 @@ class SettingsPage extends ConsumerWidget {
                       },
                       leading: Radio(
                         value: index,
-                        groupValue: settingS.darkModeAux,
+                        groupValue: settingS.darkMode,
                         onChanged: (value) {
-                          settingN.setIsThemeAux(index);
+                          settingN.toggleTheme(index);
+                          context.pop();
                         },
                       ),
                       title: Text(e,
@@ -126,6 +127,7 @@ class SettingsPage extends ConsumerWidget {
                       groupValue:
                           ref.watch(settingsProvider).selectedAxiosOption,
                       onChanged: (value) {
+                        settingN.setSelectedDisplayOption(index);
                         context.pop();
                       },
                     ),
@@ -153,7 +155,6 @@ class SettingsPage extends ConsumerWidget {
               ListTile(
                 leading: Icon(
                   Icons.brightness_4_sharp,
-                  /* color: Theme.of(context).colorScheme.primary, */
                 ),
                 subtitle: Text(
                   getThemesNames(context)[settingS.darkMode],
@@ -164,12 +165,12 @@ class SettingsPage extends ConsumerWidget {
                   style: textTheme.titleSmall,
                 ),
                 onTap: () async {
-                  await openLanDialog();
+                  await openThemeDialog();
                 },
               ),
               ListTile(
                 leading: Icon(
-                  Icons.brightness_4_sharp,
+                  Icons.exit_to_app,
                   /* color: Theme.of(context).colorScheme.primary, */
                 ),
                 title: Text(
