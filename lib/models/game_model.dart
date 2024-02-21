@@ -47,7 +47,7 @@ enum GameType {
 
 final colorByLevel = {
   Level.easy: Colors.green,
-  Level.medium: Colors.yellow,
+  Level.medium: Colors.pink,
   Level.hard: Colors.orange,
   Level.very_hard: Colors.red,
 };

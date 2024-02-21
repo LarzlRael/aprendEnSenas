@@ -110,11 +110,14 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
                       mainAxisSpacing: 5,
                       crossAxisSpacing: 5,
                       itemCount: listOnlyLettersNumbers.value.length,
-                      itemBuilder: (_, index) => SquareCard(
-                        iconSize: currentSize.value,
-                        sign: listOnlyLettersNumbers.value[index],
-                        onTap: (sign) => context.push(
-                          '${LetterAndNumbersPage.routeName}/${sign.letter}',
+                      itemBuilder: (_, index) => Hero(
+                        tag: listOnlyLettersNumbers.value[index].letter,
+                        child: SquareCard(
+                          iconSize: currentSize.value,
+                          sign: listOnlyLettersNumbers.value[index],
+                          onTap: (sign) => context.push(
+                            '${LetterAndNumbersPage.routeName}/${sign.letter}',
+                          ),
                         ),
                       ),
                     ),
@@ -271,13 +274,16 @@ class SendMessageSlider extends HookConsumerWidget {
                                   itemBuilder: (context, int index) {
                                     final sign =
                                         signProviderS.listSignsToMessage[index];
-                                    return InkWell(
-                                      onTap: () => context.push(
-                                          '${LetterAndNumbersPage.routeName}/${sign.letter}'),
-                                      child: Card(
-                                        child: SignIcon(
-                                          icon: sign.iconSign,
-                                          size: 250,
+                                    return Hero(
+                                      tag: sign.letter,
+                                      child: InkWell(
+                                        onTap: () => context.push(
+                                            '${LetterAndNumbersPage.routeName}/${sign.letter}'),
+                                        child: Card(
+                                          child: SignIcon(
+                                            icon: sign.iconSign,
+                                            size: 250,
+                                          ),
                                         ),
                                       ),
                                     );
@@ -375,6 +381,7 @@ class SendMessageSlider extends HookConsumerWidget {
                           onSpeechResult: signProviderN.setCurrentMessage,
                         )
                       : InkWell(
+                          customBorder: CircleBorder(),
                           onTap:
                               settings.typeDisplay == TypeDisplay.imageSwitcher
                                   ? () async {

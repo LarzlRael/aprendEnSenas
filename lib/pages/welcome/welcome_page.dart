@@ -12,41 +12,44 @@ class WelcomeSLider {
 }
 
 const horizontalPadding = 20.0;
-final welcomeSlides = <WelcomeSLider>[
-  WelcomeSLider(
-    title: 'Bienvenido a ${appName}',
-    subtitle: 'Aprende y diviertete con los juegos de palabras.',
-    image: logoPath,
-  ),
-  WelcomeSLider(
-    title: 'Comunicación y aprendizaje',
-    subtitle:
-        'Envia mensajes a tus amigos y familiars desde la apliacio. Matente en contacto con tus seres queridos en cualquier lugar.',
-    image: 'assets/welcome_images/welcome_1.png',
-  ),
-  WelcomeSLider(
-    title: 'Aprendizaje y educación',
-    subtitle:
-        'Apreder cosas nuevas sobre diferentes temas de una manera divertida y entretenida. Desarrolla tus habilidades y conocimientos.',
-    image: 'assets/welcome_images/welcome_3.png',
-  ),
-  WelcomeSLider(
-    title: 'Juega y aprender',
-    subtitle:
-        'Diviertete jugando con los juegos de palabras. Aprende y diviertete con tus compitiendo con tus amigos.',
-    image: 'assets/welcome_images/welcome_2.png',
-  ),
-];
+List<WelcomeSLider> welcomeSlides(BuildContext context) {
+  return [
+    WelcomeSLider(
+      title: '${AppLocalizations.of(context)!.welcome_title_1} $appName',
+      subtitle: AppLocalizations.of(context)!.welcome_subtitle_1,
+      image: logoPath,
+    ),
+    WelcomeSLider(
+      title: AppLocalizations.of(context)!.welcome_subtitle_2,
+      subtitle: AppLocalizations.of(context)!.welcome_subtitle_2,
+      image: 'assets/welcome_images/welcome_1.png',
+    ),
+    WelcomeSLider(
+      title: AppLocalizations.of(context)!.welcome_title_3,
+      subtitle: AppLocalizations.of(context)!.welcome_subtitle_3,
+      image: 'assets/welcome_images/welcome_3.png',
+    ),
+    WelcomeSLider(
+      title: AppLocalizations.of(context)!.welcome_title_4,
+      subtitle: AppLocalizations.of(context)!.welcome_subtitle_3,
+      image: 'assets/welcome_images/welcome_2.jpg',
+    ),
+  ];
+}
 
 class WelcomePage extends HookWidget {
   const WelcomePage({super.key});
   static const routeName = '/welcome_page';
   @override
   Widget build(BuildContext context) {
+    /* local states */
     final isLastPage = useState(false);
+    /* UI */
     final textTheme = Theme.of(context).textTheme;
     final size = MediaQuery.of(context).size;
     final colors = Theme.of(context).colorScheme;
+    /* Controller */
+    final welcomeSlide = welcomeSlides(context);
     final controller = SwiperController();
     return Scaffold(
       body: SizedBox.expand(
@@ -56,8 +59,8 @@ class WelcomePage extends HookWidget {
               top: kToolbarHeight,
               right: 10,
               child: TextButton(
-                child: Text('Saltar'),
-                onPressed: () => controller.move(welcomeSlides.length - 1),
+                child: Text(AppLocalizations.of(context)!.skip),
+                onPressed: () => controller.move(welcomeSlide.length - 1),
               ),
             ),
             Align(
@@ -66,7 +69,7 @@ class WelcomePage extends HookWidget {
                 height: size.height * 0.65,
                 child: Swiper(
                   controller: controller,
-                  itemCount: welcomeSlides.length,
+                  itemCount: welcomeSlide.length,
                   onIndexChanged: (index) {
                     /* Other way
                     if (index == welcomeSlides.length - 1) {
@@ -75,10 +78,10 @@ class WelcomePage extends HookWidget {
                       isLastPage.value = false;
                     }
                     */
-                    isLastPage.value = index == welcomeSlides.length - 1;
+                    isLastPage.value = index == welcomeSlide.length - 1;
                   },
                   itemBuilder: (_, index) {
-                    final slide = welcomeSlides[index];
+                    final slide = welcomeSlide[index];
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -98,7 +101,10 @@ class WelcomePage extends HookWidget {
                         ),
                         SimpleText(
                           text: slide.subtitle,
-                          style: textTheme.bodyMedium,
+                          style: textTheme.labelLarge!.copyWith(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w400,
+                          ),
                           padding: const EdgeInsets.symmetric(
                             horizontal: horizontalPadding,
                           ),
@@ -126,7 +132,7 @@ class WelcomePage extends HookWidget {
                 duration: const Duration(milliseconds: 500),
                 child: FilledButton(
                   onPressed: () => goToNextPage(context),
-                  child: Text('Comenzar'),
+                  child: Text(AppLocalizations.of(context)!.start),
                 ),
               ),
             )

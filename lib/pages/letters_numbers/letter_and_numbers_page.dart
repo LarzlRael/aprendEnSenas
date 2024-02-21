@@ -30,15 +30,58 @@ class LetterAndNumbersPage extends HookConsumerWidget {
               child: AnimatedSwitcher(
                 duration: Duration(milliseconds: 350),
                 child: isSwitched.value
-                    ? ListGrid(
-                        onTap: onSelected,
-                        key: UniqueKey(),
-                        currentSignList: currentSignList,
+                    ? AlignedGridView.count(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 5,
+                        crossAxisSpacing: 5,
+                        itemCount: currentSignList.length,
+                        itemBuilder: (context, int index) {
+                          final listIndex = currentSignList[index];
+                          return SignCard(
+                            sign: listIndex,
+                            onSelected: onSelected,
+                          );
+                        },
                       )
-                    : ListRow(
-                        onTap: onSelected,
-                        key: UniqueKey(),
-                        currentSignList: currentSignList,
+                    : ListView.separated(
+                        separatorBuilder: (context, index) =>
+                            SizedBox(height: 5),
+                        itemCount: currentSignList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final listItem = currentSignList[index];
+                          return InkWell(
+                            customBorder: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            onTap: () {
+                              onSelected(listItem);
+                            },
+                            child: Card(
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                child: ListTile(
+                                  /*  onTap: () {
+                  if (onTap != null) {
+                    onTap!(list);
+                  }
+                }, */
+                                  leading: SignIcon(
+                                    icon: listItem.iconSign,
+                                    size: 50,
+                                  ),
+                                  title: Text(
+                                    listItem.letter,
+                                    style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ); //) Cambia el color de tu SVG);
+                        },
                       ),
               ),
             ),

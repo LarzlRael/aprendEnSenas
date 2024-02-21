@@ -274,5 +274,45 @@
   "save": "Guardar",
   "@save": {
     "description": "Acción para guardar cambios"
+  },
+  "welcome_title_1": "Bienvenido a ",
+  "@welcome_title_1": {
+    "description": "Título de bienvenida principal"
+  },
+  "welcome_subtitle_1": "Sumérgete en el mundo del lenguaje de señas y diviértete mientras aprendes.",
+  "@welcome_subtitle_1": {
+    "description": "Subtítulo de bienvenida"
+  },
+  "welcome_title_2": "Comunícate y aprende",
+  "@welcome_title_2": {
+    "description": "Texto que anima a comunicarse y aprender"
+  },
+  "welcome_subtitle_2": "Envía mensajes a tus amigos y familiares desde la aplicación.",
+  "@welcome_subtitle_2": {
+    "description": "Descripción de la función de envío de mensajes"
+  },
+  "welcome_title_3": "Diviértete aprendiendo palabras nuevas en lenguaje de señas",
+  "@welcome_title_3": {
+    "description": "Texto que anima a divertirse aprendiendo lenguaje de señas"
+  },
+  "welcome_subtitle_3": "Aprende cosas nuevas sobre diferentes temas de una manera divertida y entretenida. Desarrolla tus habilidades y conocimientos.",
+  "@welcome_subtitle_3": {
+    "description": "Descripción de la experiencia de aprendizaje"
+  },
+  "welcome_title_4": "Juega y aprende con tus amigos",
+  "@welcome_title_4": {
+    "description": "Texto que anima a jugar y aprender con amigos"
+  },
+  "welcome_subtitle_4": "Diviértete jugando con los juegos de palabras. Aprende y diviértete compitiendo con tus amigos.",
+  "@welcome_subtitle_4": {
+    "description": "Descripción de la experiencia de jugar con juegos de palabras"
+  },
+  "start": "Comenzar",
+  "@start": {
+    "description": "Acción para iniciar o comenzar"
+  },
+  "skip": "Saltar",
+  "@skip": {
+    "description": "Acción para saltar o omitir"
   }
 }

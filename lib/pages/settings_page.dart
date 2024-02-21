@@ -44,6 +44,7 @@ class SettingsPage extends ConsumerWidget {
                         context.pop();
                       },
                       leading: Radio(
+                        splashRadius: 0,
                         value: index,
                         groupValue: settingS.darkMode,
                         onChanged: (value) {
@@ -123,6 +124,7 @@ class SettingsPage extends ConsumerWidget {
                       context.pop();
                     },
                     leading: Radio(
+                      splashRadius: 0,
                       value: index,
                       groupValue:
                           ref.watch(settingsProvider).selectedAxiosOption,
@@ -241,7 +243,7 @@ class SettingsPage extends ConsumerWidget {
                       '${AppLocalizations.of(context)!.current_time}: ${settingS.transitionTime}'),
                   OptionSetting(
                     title: AppLocalizations.of(context)!.reverse_signals,
-                    subTitle: settingS.isTurned
+                    subTitle: !settingS.isTurned
                         ? AppLocalizations.of(context)!.right
                         : AppLocalizations.of(context)!.left,
                     value: settingS.isTurned,

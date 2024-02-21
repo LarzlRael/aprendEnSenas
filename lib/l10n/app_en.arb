@@ -15,7 +15,7 @@
   "@change_view": {
     "description": "Action of altering the appearance or layout"
   },
-  "letters_and_numbers": "Letters and Numbers",
+  "letters_and_numbers": "Letters and numbers",
   "@letters_and_numbers": {
     "description": "Characters and numerical digits"
   },
@@ -274,5 +274,45 @@
   "save": "Save",
   "@save": {
     "description": "Save action"
+  },
+  "welcome_title_1": "Welcome to ",
+  "@welcome_title_1": {
+    "description": "Main welcome title"
+  },
+  "welcome_subtitle_1": "Immerse yourself in the world of sign language and have fun while learning.",
+  "@welcome_subtitle_1": {
+    "description": "Welcome subtitle"
+  },
+  "welcome_title_2": "Communicate and Learn",
+  "@welcome_title_2": {
+    "description": "Text encouraging communication and learning"
+  },
+  "welcome_subtitle_2": "Send messages to your friends and family from the app.",
+  "@welcome_subtitle_2": {
+    "description": "Description of the messaging feature"
+  },
+  "welcome_title_3": "Have Fun Learning New Words in Sign Language",
+  "@welcome_title_3": {
+    "description": "Text encouraging fun learning of sign language"
+  },
+  "welcome_subtitle_3": "Learn new things on various topics in a fun and entertaining way. Develop your skills and knowledge.",
+  "@welcome_subtitle_3": {
+    "description": "Description of the learning experience"
+  },
+  "welcome_title_4": "Play and Learn with Your Friends",
+  "@welcome_title_4": {
+    "description": "Text encouraging playing and learning with friends"
+  },
+  "welcome_subtitle_4": "Enjoy playing word games. Learn and have fun competing with your friends.",
+  "@welcome_subtitle_4": {
+    "description": "Description of the gaming experience with word games"
+  },
+  "start": "Start",
+  "@start": {
+    "description": "Action to start"
+  },
+  "skip": "Skip",
+  "@skip": {
+    "description": "Action to skip"
   }
 }

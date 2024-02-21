@@ -48,9 +48,13 @@ class LetterAndNumbersPageDetail extends HookConsumerWidget {
 
 class OneLetterAndNumbers extends StatelessWidget {
   final Sign sign;
-  const OneLetterAndNumbers({super.key, required this.sign});
+  const OneLetterAndNumbers({
+    super.key,
+    required this.sign,
+  });
   @override
   Widget build(BuildContext context) {
+    print(sign.letter);
     final style = TextStyle(fontSize: 175, fontWeight: FontWeight.w600);
     final media = MediaQuery.of(context).size;
     return SizedBox.expand(
@@ -62,9 +66,14 @@ class OneLetterAndNumbers extends StatelessWidget {
           Positioned(
             right: 0,
             top: 0,
-            child: SignIcon(
-              icon: sign.iconSign,
-              size: 225,
+            child: Transform(
+              alignment: Alignment.center,
+              transform: Matrix4.rotationY(math.pi),
+              child: Icon(
+                sign.iconSign,
+                size: 225,
+                color: Colors.grey.withOpacity(0.3),
+              ),
             ),
           ),
           Align(
@@ -85,7 +94,7 @@ class OneLetterAndNumbers extends StatelessWidget {
                       ),
                     ),
                     Hero(
-                      tag: 'tag-${sign.letter}',
+                      tag: sign.letter,
                       child: Icon(
                         sign.iconSign,
                         size: 175,
