@@ -3,9 +3,10 @@ part of '../widgets/widgets.dart';
 class KeyboardButton extends StatelessWidget {
   final Color? bgColor;
   final KeyboardButtonType type;
-  final String text;
+  final IconData text;
 
   final Function()? onPressed;
+  final Function()? onLongPress;
   final Widget? icon;
   KeyboardButton({
     Key? key,
@@ -14,6 +15,7 @@ class KeyboardButton extends StatelessWidget {
     required this.type,
     required this.text,
     required this.onPressed,
+    required this.onLongPress,
   });
 
   @override
@@ -26,6 +28,7 @@ class KeyboardButton extends StatelessWidget {
     );
     final mediaQuery = MediaQuery.of(context).size;
     return InkWell(
+      onLongPress: onLongPress,
       onTap: onPressed,
       customBorder: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(7),
@@ -41,13 +44,8 @@ class KeyboardButton extends StatelessWidget {
           width: widthByType(type, mediaQuery),
           height: 40,
           child: Center(
-              child: icon != null
-                  ? icon
-                  : Text(
-                      text,
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
-                    )),
+            child: icon != null ? icon : Icon(text),
+          ),
         ),
       ),
     );
@@ -58,7 +56,7 @@ class KeyboardButton extends StatelessWidget {
       case KeyboardButtonType.normal:
         return mediaQuery.width * 0.08;
 
-      case KeyboardButtonType.clearOne:
+      case KeyboardButtonType.backSpace:
         return mediaQuery.width * 0.1;
 
       case KeyboardButtonType.space:
