@@ -7,6 +7,7 @@ class LetterAndNumbersPageDetail extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final signState = useState<List<Sign>>([]);
+    final isRotated = ref.watch(settingsProvider).isTurned;
     useEffect(() {
       signState.value =
           getIconSign(signChar, ref.read(signProvider).currentListSing)!;
@@ -36,7 +37,8 @@ class LetterAndNumbersPageDetail extends HookConsumerWidget {
         ),
       ),
       body: signState.value.length == 1
-          ? OneLetterAndNumbers(sign: signState.value.first)
+          ? OneLetterAndNumbers(
+              sign: signState.value.first, isRotated: isRotated)
           : ListGridSign(
               listSign: signState.value,
               onTap: (sing) => context.push(
@@ -47,10 +49,12 @@ class LetterAndNumbersPageDetail extends HookConsumerWidget {
 }
 
 class OneLetterAndNumbers extends StatelessWidget {
+  final bool isRotated;
   final Sign sign;
   const OneLetterAndNumbers({
     super.key,
     required this.sign,
+    required this.isRotated,
   });
   @override
   Widget build(BuildContext context) {
@@ -66,15 +70,21 @@ class OneLetterAndNumbers extends StatelessWidget {
           Positioned(
             right: 0,
             top: 0,
-            child: Transform(
-              alignment: Alignment.center,
-              transform: Matrix4.rotationY(math.pi),
-              child: Icon(
-                sign.iconSign,
-                size: 225,
-                color: Colors.grey.withOpacity(0.3),
-              ),
-            ),
+            child: isRotated
+                ? Icon(
+                    sign.iconSign,
+                    size: 225,
+                    color: Colors.grey.withOpacity(0.3),
+                  )
+                : Transform(
+                    alignment: Alignment.center,
+                    transform: Matrix4.rotationY(math.pi),
+                    child: Icon(
+                      sign.iconSign,
+                      size: 225,
+                      color: Colors.grey.withOpacity(0.3),
+                    ),
+                  ),
           ),
           Align(
             alignment: Alignment.center,
@@ -95,8 +105,8 @@ class OneLetterAndNumbers extends StatelessWidget {
                     ),
                     Hero(
                       tag: sign.letter,
-                      child: Icon(
-                        sign.iconSign,
+                      child: SignIcon(
+                        icon: sign.iconSign,
                         size: 175,
                       ),
                     ),

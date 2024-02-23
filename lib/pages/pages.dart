@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:math' as math;
 import 'package:animate_do/animate_do.dart';
 
@@ -47,6 +48,7 @@ part 'games/guess_the_word_page.dart';
 part 'games/test_flipping_cards_page.dart';
 part 'games/match_image_game.dart';
 part 'games/flipping_card_game.dart';
+part 'games/guess_the_word_keyboard.dart';
 part 'games/game_over_screen.dart';
 
 part 'welcome/welcome_page.dart';
