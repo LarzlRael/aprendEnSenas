@@ -60,14 +60,16 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
   SendMessageWithStaticImages({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final listOnlyLettersNumbers = useState<List<Sign>>([]);
+    final settingS = ref.watch(settingsProvider);
+    final settingN = ref.read(settingsProvider.notifier);
     final signProviderS = ref.watch(signProvider);
     final signProviderN = ref.read(signProvider.notifier);
-    final currentSliderState = useState(5);
+
     final currentSize = useState(50.0);
+    final listOnlyLettersNumbers = useState<List<Sign>>([]);
     useEffect(() {
-      currentSize.value = 250 / currentSliderState.value;
-    }, [currentSliderState.value]);
+      currentSize.value = 250 / settingS.sendMessageStaticSlider;
+    }, [settingS.sendMessageStaticSlider]);
 
     useEffect(() {
       listOnlyLettersNumbers.value = generateListToMessageUtil(
@@ -82,9 +84,9 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
         children: [
           if (signProviderS.currentMessage.isNotEmpty)
             Slider(
-              value: currentSliderState.value.toDouble(),
+              value: settingS.sendMessageStaticSlider.toDouble(),
               onChanged: (value) {
-                currentSliderState.value = value.toInt();
+                settingN.setSendMessageStaticSlider(value);
               },
               min: 1,
               max: 10,
@@ -106,7 +108,7 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
                   )
                 : Card(
                     child: AlignedGridView.count(
-                      crossAxisCount: currentSliderState.value,
+                      crossAxisCount: settingS.sendMessageStaticSlider,
                       mainAxisSpacing: 5,
                       crossAxisSpacing: 5,
                       itemCount: listOnlyLettersNumbers.value.length,

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:asl/customs_icons/custom_icons_icons.dart';
 import 'package:asl/models/models.dart';
 import 'package:asl/utils/utils.dart';
@@ -216,5 +218,19 @@ List<String> getWords(String language) {
       return _spanishToEnglish.values.toList();
     default:
       return [];
+  }
+}
+
+String getOneRandomWords(String language) {
+  switch (language) {
+    case "es":
+      return _spanishToEnglish.keys
+          .toList()[Random().nextInt(_spanishToEnglish.length)]
+          .removeDiacriticsFromString();
+    case "en":
+      return _spanishToEnglish.values
+          .toList()[Random().nextInt(_spanishToEnglish.length)];
+    default:
+      return "";
   }
 }

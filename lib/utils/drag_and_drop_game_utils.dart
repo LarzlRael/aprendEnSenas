@@ -29,6 +29,7 @@ class ItemModel {
   }
 }
 
+/* TODO change this for names string languages */
 final dataDragNDrop = <ItemModel>[
   ItemModel(pathAssetImage: 'assets/animals/abeja.png', name: 'abeja'),
   ItemModel(pathAssetImage: 'assets/animals/llama.png', name: 'llama'),

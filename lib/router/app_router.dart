@@ -5,7 +5,7 @@ import 'package:asl/pages/pages.dart';
 
 final appRouter = GoRouter(
   /* initialLocation: SplashScreenPage.routeName, */
-  initialLocation: '/games/guess_the_word_keyboard',
+  initialLocation: SplashScreenPage.routeName,
   /* refreshListenable: goRouterNotifier, */
   routes: [
     ///* Primera pantalla
@@ -114,6 +114,10 @@ final appRouter = GoRouter(
         GoRoute(
           path: 'guess_the_word_keyboard',
           builder: (_, state) => GuessTheWordKeyboard(),
+        ),
+        GoRoute(
+          path: 'keyboard_sign_page',
+          builder: (_, state) => KeyboardSignPage(),
         ),
       ],
     ),

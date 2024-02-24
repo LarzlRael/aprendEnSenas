@@ -26,3 +26,4 @@ part 'sounds_and_image_utils.dart';
 part 'firebase_utils.dart';
 part 'arrays_utils.dart';
 part 'system_utils.dart';
+part 'keyboard_utils.dart';

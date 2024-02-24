@@ -48,3 +48,4 @@ part 'ads/banner_ad.dart';
 part 'slideshow/slide_item.dart';
 part 'slideshow/slideshow.dart';
 part 'text/letter_and_sign.dart';
+part 'keyboard_sign.dart';

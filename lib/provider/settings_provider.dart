@@ -32,6 +32,7 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
             isTurned: false,
             language: getSystemLanguage(),
             languageAux: getSystemLanguage(),
+            sendMessageStaticSlider: 5,
           ),
         ) {
     asyncInit();
@@ -56,6 +57,8 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
     final isTurned = await keyValueStorageService.getValue<bool>(IS_TURNED);
 
     final language = await keyValueStorageService.getValue<String>(LANGUAGE);
+    final currentSliderState =
+        await keyValueStorageService.getValue<int>(CURRENT_SLIDER_STATE);
 
     state = state.copyWith(
       darkMode: darkMode != null ? darkMode : state.darkMode,
@@ -69,6 +72,8 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
       isTurned: isTurned ?? state.isTurned,
       language: language ?? state.language,
       languageAux: language ?? state.language,
+      sendMessageStaticSlider:
+          currentSliderState ?? state.sendMessageStaticSlider,
     );
     setSelectedDisplayOption(
         selectedDisplayOption ?? state.selectedAxiosOption);
@@ -197,6 +202,12 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
   void setLanguageAux(String lang) {
     state = state.copyWith(languageAux: lang);
   }
+
+  void setSendMessageStaticSlider(double value) {
+    state = state.copyWith(sendMessageStaticSlider: value.toInt());
+    keyValueStorageService.setKeyValue<int>(
+        CURRENT_SLIDER_STATE, value.toInt());
+  }
 }
 
 class SettingsState {
@@ -213,7 +224,7 @@ class SettingsState {
   final bool isTurned;
   final String language;
   final String languageAux;
-
+  final int sendMessageStaticSlider;
   SettingsState({
     required this.darkMode,
     required this.isSoundActive,
@@ -227,6 +238,7 @@ class SettingsState {
     required this.isTurned,
     required this.language,
     required this.languageAux,
+    required this.sendMessageStaticSlider,
   });
 
   SettingsState copyWith({
@@ -242,6 +254,7 @@ class SettingsState {
     bool? isTurned,
     String? language,
     String? languageAux,
+    int? sendMessageStaticSlider,
   }) {
     return SettingsState(
       darkMode: darkMode ?? this.darkMode,
@@ -257,6 +270,8 @@ class SettingsState {
       isTurned: isTurned ?? this.isTurned,
       language: language ?? this.language,
       languageAux: languageAux ?? this.languageAux,
+      sendMessageStaticSlider:
+          sendMessageStaticSlider ?? this.sendMessageStaticSlider,
     );
   }
 }
