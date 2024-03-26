@@ -70,16 +70,15 @@ class KeyboardSignPage extends HookConsumerWidget {
         for (int i = 0; i < getLista.length; i++) {
           final index = i + (5 * try_.value);
           if (getLista[i].letter == correct.split('')[i]) {
-            //* TODO remove repeats elements
-            /* Green color if some letter is okey */
             updatedList[index] = fumar.value[index].copyWith(color: okColor);
             usedLetters.value
                 .add(KeyColor(key: getLista[i].letter, color: okColor));
-          } else if (getLista[i].letter.contains(fumar.value[index].letter)) {
-            /* Other color */
-            updatedList[index] = fumar.value[index].copyWith(color: Colors.red);
+          }
+          if (correct.split('').contains(fumar.value[index].letter)) {
+            updatedList[index] =
+                fumar.value[index].copyWith(color: Colors.blue);
             usedLetters.value
-                .add(KeyColor(key: getLista[i].letter, color: Colors.red));
+                .add(KeyColor(key: getLista[i].letter, color: Colors.blue));
           } else {
             updatedList[index] = fumar.value[index].copyWith(color: wrongColor);
             usedLetters.value
