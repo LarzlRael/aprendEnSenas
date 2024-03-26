@@ -50,6 +50,7 @@ dependencies:
   flutter_native_splash: ^2.1.6
   flutter_riverpod: ^2.4.9
   flutter_staggered_grid_view: ^0.7.0
+  hooks_riverpod: ^2.4.9
   flutter_svg: ^2.0.9
   flutter_swiper_view: ^1.1.8
   flutter_verification_code: ^1.1.7
@@ -58,7 +59,6 @@ dependencies:
   google_fonts: ^4.0.3
   google_mobile_ads: ^4.0.0
   google_nav_bar: ^5.0.6
-  hooks_riverpod: ^2.4.9
   image_picker: ^0.8.7+5
   path_provider: ^2.1.2
   provider: ^6.1.1

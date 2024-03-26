@@ -1,9 +1,44 @@
 part of 'widgets.dart';
 
+class KeyColor {
+  String key;
+  Color? color;
+  KeyColor({
+    required this.key,
+    this.color,
+  });
+
+  KeyColor copyWith({
+    String? key,
+    Color? color,
+  }) {
+    return KeyColor(
+      key: key ?? this.key,
+      color: color ?? this.color,
+    );
+  }
+}
+
 class KeyboardSignWidget extends HookConsumerWidget {
-  const KeyboardSignWidget({super.key, this.onChanged, this.onBackSpace});
+  const KeyboardSignWidget({
+    super.key,
+    this.onChanged,
+    this.onBackSpace,
+    this.onLetterChanged,
+    this.coloredKeys,
+    this.showNumbers = true,
+    this.showSpace = true,
+    this.lettersUppercase = false,
+    this.onEnter,
+  });
   final Function(String value)? onChanged;
+  final Function(String value)? onLetterChanged;
   final Function(String onChange)? onBackSpace;
+  final Function()? onEnter;
+  final List<KeyColor>? coloredKeys;
+  final bool showNumbers;
+  final bool showSpace;
+  final bool lettersUppercase;
 
   @override
   Widget build(BuildContext context, ref) {
@@ -13,6 +48,7 @@ class KeyboardSignWidget extends HookConsumerWidget {
       onPressed: (String newText) {
         text.value = text.value + newText;
         onChanged!(text.value);
+        onLetterChanged!(newText);
       },
       onLongPress: () {
         text.value = '';
@@ -25,17 +61,27 @@ class KeyboardSignWidget extends HookConsumerWidget {
       onSpace: () {
         text.value = text.value + ' ';
       },
+      coloredKeys: coloredKeys,
+      showNumbers: showNumbers,
+      showSpace: showSpace,
+      lettersUppercase: lettersUppercase,
+      onEnter: onEnter,
     );
   }
 }
 
 class KeyboardSign extends HookConsumerWidget {
+  final bool showNumbers;
+  final bool showSpace;
   final bool isShowIcons;
   final String text;
+  final bool lettersUppercase;
   final Function(String newText)? onPressed;
   final Function()? onLongPress;
   final Function()? onBackSpace;
   final Function()? onSpace;
+  final Function()? onEnter;
+  final List<KeyColor>? coloredKeys;
   const KeyboardSign({
     super.key,
     this.isShowIcons = true,
@@ -44,6 +90,11 @@ class KeyboardSign extends HookConsumerWidget {
     this.onLongPress,
     this.onBackSpace,
     this.onSpace,
+    this.onEnter,
+    this.coloredKeys,
+    this.showNumbers = true,
+    this.showSpace = true,
+    this.lettersUppercase = false,
   });
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -56,6 +107,8 @@ class KeyboardSign extends HookConsumerWidget {
         for (var row in keyboardListGenerate(
           ref.read(signProvider).currentListSing,
           changeView: true,
+          showNumbers: showNumbers,
+          showSpace: showSpace,
         ))
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -67,6 +120,15 @@ class KeyboardSign extends HookConsumerWidget {
                       .map((e) => e.letter)
                       .join()
                       .contains(key.value.letter), */
+                  /* bgColor: Colors.blue, */
+                  bgColor: coloredKeys != null && coloredKeys!.isNotEmpty
+                      ? coloredKeys!
+                          .firstWhere(
+                            (element) => element.key == key.value.letter,
+                            orElse: () => KeyColor(key: key.value.letter),
+                          )
+                          .color
+                      : null,
                   keyView: key.type == KeyboardButtonType.normal
                       ? (showIcons.value
                           ? Icon(
@@ -75,7 +137,9 @@ class KeyboardSign extends HookConsumerWidget {
                               color: Colors.white,
                             )
                           : Text(
-                              key.value.letter,
+                              lettersUppercase
+                                  ? key.value.letter.toUpperCase()
+                                  : key.value.letter,
                               style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
@@ -100,6 +164,9 @@ class KeyboardSign extends HookConsumerWidget {
                         break;
                       case KeyboardButtonType.changeView:
                         showIcons.value = !showIcons.value;
+                        break;
+                      case KeyboardButtonType.enter:
+                        if (onEnter != null) onEnter!();
                         break;
                       default:
                     }

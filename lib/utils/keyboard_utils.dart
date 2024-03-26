@@ -12,7 +12,6 @@ enum KeyboardButtonType {
 
 class KeyboardBtn {
   Sign value;
-
   Widget? widgetIcon;
   KeyboardButtonType? type;
   KeyboardBtn({
@@ -22,21 +21,26 @@ class KeyboardBtn {
   });
 }
 
-List<List<KeyboardBtn>> keyboardListGenerate(List<Sign> list,
-    {bool changeView = false}) {
+List<List<KeyboardBtn>> keyboardListGenerate(
+  List<Sign> list, {
+  bool changeView = false,
+  bool showNumbers = true,
+  bool showSpace = true,
+}) {
   return [
-    [
-      KeyboardBtn(value: list[29]), // number_1
-      KeyboardBtn(value: list[30]), // number_2
-      KeyboardBtn(value: list[31]), // number_3
-      KeyboardBtn(value: list[32]), // number_4
-      KeyboardBtn(value: list[33]), // number_5
-      KeyboardBtn(value: list[34]), // number_6
-      KeyboardBtn(value: list[35]), // number_7
-      KeyboardBtn(value: list[36]), // number_8
-      KeyboardBtn(value: list[37]), // number_9
-      KeyboardBtn(value: list[28]), // number_0
-    ],
+    if (showNumbers)
+      [
+        KeyboardBtn(value: list[29]), // number_1
+        KeyboardBtn(value: list[30]), // number_2
+        KeyboardBtn(value: list[31]), // number_3
+        KeyboardBtn(value: list[32]), // number_4
+        KeyboardBtn(value: list[33]), // number_5
+        KeyboardBtn(value: list[34]), // number_6
+        KeyboardBtn(value: list[35]), // number_7
+        KeyboardBtn(value: list[36]), // number_8
+        KeyboardBtn(value: list[37]), // number_9
+        KeyboardBtn(value: list[28]), // number_0
+      ],
     [
       KeyboardBtn(value: list[17]), // q_sign_4
       KeyboardBtn(value: list[23]), // w_sign_4
@@ -64,14 +68,23 @@ List<List<KeyboardBtn>> keyboardListGenerate(List<Sign> list,
     [
       if (changeView)
         KeyboardBtn(
-          value: list[22],
-          type: KeyboardButtonType.changeView,
+          value: list[29],
           widgetIcon: Icon(
-            Icons.refresh,
+            Icons.forward,
             color: Colors.white,
             size: 20,
           ),
-        ), // z_sign_4
+          type: KeyboardButtonType.enter,
+        ), //
+      KeyboardBtn(
+        value: list[22],
+        type: KeyboardButtonType.changeView,
+        widgetIcon: Icon(
+          Icons.refresh,
+          color: Colors.white,
+          size: 20,
+        ),
+      ), // z_sign_4
 
       KeyboardBtn(value: list[26]), // z_sign_4
       KeyboardBtn(value: list[24]), // x_sign_4
@@ -90,11 +103,12 @@ List<List<KeyboardBtn>> keyboardListGenerate(List<Sign> list,
         type: KeyboardButtonType.backSpace,
       ), // m_sign_4
     ],
-    [
-      KeyboardBtn(
-          value: list[10],
-          widgetIcon: Icon(Icons.space_bar, color: Colors.transparent),
-          type: KeyboardButtonType.space),
-    ],
+    if (showSpace)
+      [
+        KeyboardBtn(
+            value: list[10],
+            widgetIcon: Icon(Icons.space_bar, color: Colors.transparent),
+            type: KeyboardButtonType.space),
+      ],
   ];
 }

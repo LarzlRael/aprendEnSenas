@@ -5,7 +5,7 @@ import 'package:asl/pages/pages.dart';
 
 final appRouter = GoRouter(
   /* initialLocation: SplashScreenPage.routeName, */
-  initialLocation: SplashScreenPage.routeName,
+  initialLocation: '/games/keyboard_sign_page',
   /* refreshListenable: goRouterNotifier, */
   routes: [
     ///* Primera pantalla

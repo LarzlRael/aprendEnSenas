@@ -77,7 +77,7 @@ class SendMessageWithStaticImages extends HookConsumerWidget {
         signProviderS.currentMessage,
       );
       return null;
-    }, [signProviderS]);
+    }, [signProviderS.currentMessage]);
 
     return Expanded(
       child: Column(

@@ -21,12 +21,6 @@ class KeyboardButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Button
-    final buttonStyle = TextButton.styleFrom(
-      backgroundColor: this.bgColor,
-      primary: Colors.white,
-      shape: StadiumBorder(),
-    );
     final mediaQuery = MediaQuery.of(context).size;
     return InkWell(
       onLongPress: onLongPress,
@@ -38,7 +32,7 @@ class KeyboardButton extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 3, vertical: 3),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(7),
-          color: isSelected! ? Colors.amber : Color(0xff7184a2),
+          color: bgColor != null ? bgColor : Color(0xff7184a2),
           border: Border.all(color: Colors.grey, width: .5),
         ),
         child: Container(
@@ -58,7 +52,7 @@ class KeyboardButton extends StatelessWidget {
         return mediaQuery.width * 0.08;
 
       case KeyboardButtonType.backSpace:
-        return mediaQuery.width * 0.1;
+        return mediaQuery.width * 0.09;
 
       case KeyboardButtonType.space:
         return mediaQuery.width * 0.45;
