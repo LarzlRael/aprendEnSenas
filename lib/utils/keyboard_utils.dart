@@ -26,6 +26,7 @@ List<List<KeyboardBtn>> keyboardListGenerate(
   bool changeView = false,
   bool showNumbers = true,
   bool showSpace = true,
+  bool showSwitcherLetter = true,
 }) {
   return [
     if (showNumbers)
@@ -76,15 +77,16 @@ List<List<KeyboardBtn>> keyboardListGenerate(
           ),
           type: KeyboardButtonType.enter,
         ), //
-      KeyboardBtn(
-        value: list[22],
-        type: KeyboardButtonType.changeView,
-        widgetIcon: Icon(
-          Icons.refresh,
-          color: Colors.white,
-          size: 20,
-        ),
-      ), // z_sign_4
+      if (showSwitcherLetter)
+        KeyboardBtn(
+          value: list[22],
+          type: KeyboardButtonType.changeView,
+          widgetIcon: Icon(
+            Icons.refresh,
+            color: Colors.white,
+            size: 20,
+          ),
+        ), // z_sign_4
 
       KeyboardBtn(value: list[26]), // z_sign_4
       KeyboardBtn(value: list[24]), // x_sign_4

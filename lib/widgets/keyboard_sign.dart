@@ -29,6 +29,7 @@ class KeyboardSignWidget extends HookConsumerWidget {
     this.showNumbers = true,
     this.showSpace = true,
     this.lettersUppercase = false,
+    this.showSwitcherLetter = true,
     this.onEnter,
   });
   final Function(String value)? onChanged;
@@ -39,6 +40,7 @@ class KeyboardSignWidget extends HookConsumerWidget {
   final bool showNumbers;
   final bool showSpace;
   final bool lettersUppercase;
+  final bool showSwitcherLetter;
 
   @override
   Widget build(BuildContext context, ref) {
@@ -66,6 +68,7 @@ class KeyboardSignWidget extends HookConsumerWidget {
       showSpace: showSpace,
       lettersUppercase: lettersUppercase,
       onEnter: onEnter,
+      showSwitcherLetter: showSwitcherLetter,
     );
   }
 }
@@ -76,6 +79,7 @@ class KeyboardSign extends HookConsumerWidget {
   final bool isShowIcons;
   final String text;
   final bool lettersUppercase;
+  final bool showSwitcherLetter;
   final Function(String newText)? onPressed;
   final Function()? onLongPress;
   final Function()? onBackSpace;
@@ -91,6 +95,7 @@ class KeyboardSign extends HookConsumerWidget {
     this.onBackSpace,
     this.onSpace,
     this.onEnter,
+    this.showSwitcherLetter = true,
     this.coloredKeys,
     this.showNumbers = true,
     this.showSpace = true,
@@ -109,6 +114,7 @@ class KeyboardSign extends HookConsumerWidget {
           changeView: true,
           showNumbers: showNumbers,
           showSpace: showSpace,
+          showSwitcherLetter: showSwitcherLetter,
         ))
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
