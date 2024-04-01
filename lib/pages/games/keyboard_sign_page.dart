@@ -1,8 +1,8 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of '../pages.dart';
 
 const okColor = Color(0xFF25c461);
-const wrongColor = Color(0xFFFF7043);
+const wrongColor = Color(0xFF757575);
+const swapColor = Color(0xFFe3a81c);
 
 class GameLetter {
   final String letter;
@@ -33,14 +33,15 @@ class KeyboardSignPage extends HookConsumerWidget {
   Widget build(BuildContext context, ref) {
     final correct = 'pulga';
     final text = useState<String>('');
-    final gridLetters = useState<List<GameLetter>>(List.generate(25, (index) {
-      return GameLetter(letter: '');
-    }));
+    final gridLetters = useState<List<GameLetter>>(
+        List.generate(25, (index) => GameLetter(letter: '')));
     final usedLetters = useState<List<KeyColor>>([]);
     final try_ = useState(0);
     final uniqueKey = useState<UniqueKey>(UniqueKey());
     final isBlock = useState(false);
     final currentIndex = useState(0);
+    final signList = useState<List<Sign>>(generateListToMessageUtil(
+        ref.read(signProvider).currentListSing, correct));
 
     /* void resetWidget() {
       text.value = ''; // Reiniciar el texto
@@ -68,35 +69,43 @@ class KeyboardSignPage extends HookConsumerWidget {
       final getLista = generateList(getlast5);
       final correctAnswer = correct.split('');
 
-      if (getlast5 != correct) {
-        for (int i = 0; i < getLista.length; i++) {
-          final index = i + (5 * try_.value);
-          if (getLista[i].letter == correctAnswer[i]) {
-            gridLetters.value[index] =
-                gridLetters.value[index].copyWith(color: okColor);
-            usedLetters.value
-                .add(KeyColor(key: getLista[i].letter, color: okColor));
-            continue;
-          }
-          if (correctAnswer.contains(gridLetters.value[index].letter)) {
-            gridLetters.value[index] =
-                gridLetters.value[index].copyWith(color: Colors.blue);
-            usedLetters.value
-                .add(KeyColor(key: getLista[i].letter, color: Colors.blue));
-            continue;
-          }
-          gridLetters.value[index] =
-              gridLetters.value[index].copyWith(color: wrongColor);
-          usedLetters.value
-              .add(KeyColor(key: getLista[i].letter, color: wrongColor));
-        }
-
-        try_.value++;
-        isBlock.value = false;
-        return;
+      if (getlast5 == correct) {
+        return context.pop();
       }
-      /* if is correct */
-      context.pop();
+      for (int i = 0; i < getLista.length; i++) {
+        final index = i + (5 * try_.value);
+        if (getLista[i].letter == correctAnswer[i]) {
+          gridLetters.value[index] =
+              gridLetters.value[index].copyWith(color: okColor);
+          usedLetters.value
+              .add(KeyColor(key: getLista[i].letter, color: okColor));
+          continue;
+        }
+        if (correctAnswer.contains(gridLetters.value[index].letter)) {
+          gridLetters.value[index] =
+              gridLetters.value[index].copyWith(color: swapColor);
+          usedLetters.value
+              .add(KeyColor(key: getLista[i].letter, color: swapColor));
+          continue;
+        }
+        /* wrong color */
+        gridLetters.value[index] =
+            gridLetters.value[index].copyWith(color: wrongColor);
+        usedLetters.value
+            .add(KeyColor(key: getLista[i].letter, color: wrongColor));
+      }
+
+      try_.value++;
+      if (try_.value == 5) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Has superado el número de intentos'),
+          ),
+        );
+        return context.pop();
+      }
+      isBlock.value = false;
+      return;
     }
 
     useEffect(() {
@@ -107,22 +116,41 @@ class KeyboardSignPage extends HookConsumerWidget {
       if (currentIndex.value > 0 && currentIndex.value % 5 == 0) {
         isBlock.value = true;
       }
+
       return () {};
       /* verify */
     }, [text.value]);
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Keyboard Sign'),
+      ),
       key: uniqueKey.value,
       body: SizedBox.expand(
         child: Column(
           children: [
-            SizedBox(height: 50),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: signList.value
+                  .map((e) => Card(
+                        child: Container(
+                          width: 60,
+                          height: 60,
+                          child: Icon(
+                            e.iconSign,
+                            size: 45,
+                          ),
+                        ),
+                      ))
+                  .toList(),
+            ),
+            SizedBox(height: 25),
             Expanded(
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 50),
+                margin: EdgeInsets.symmetric(horizontal: 45),
                 child: AlignedGridView.count(
                   crossAxisCount: 5,
-                  mainAxisSpacing: 2.5,
-                  crossAxisSpacing: 2.5,
+                  mainAxisSpacing: 5,
+                  crossAxisSpacing: 5,
                   itemCount: gridLetters.value.length,
                   itemBuilder: (_, index) {
                     final e = gridLetters.value[index];
@@ -131,14 +159,15 @@ class KeyboardSignPage extends HookConsumerWidget {
                           milliseconds:
                               ((index - (5 * try_.value)) * 150) + 1000),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.5),
+                          borderRadius: BorderRadius.circular(5),
                           color: e.color,
-                          border: e.color == null
-                              ? Border.all(
-                                  color: Colors.white,
-                                  width: 1,
-                                )
-                              : null),
+                          border: e.color != null
+                              ? currentIndex.value == index
+                                  ? Border.all(color: Colors.white, width: 1)
+                                  : null
+                              : Border.all(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  width: 1)),
                       width: 60,
                       height: 60,
                       padding: EdgeInsets.symmetric(
@@ -161,6 +190,7 @@ class KeyboardSignPage extends HookConsumerWidget {
               showNumbers: false,
               showSpace: false,
               showSwitcherLetter: false,
+              isShowIcons: false,
               onChanged: (String newText) {
                 /* text.value = newText;
                 fumar.value = generateList(newText);
@@ -179,18 +209,16 @@ class KeyboardSignPage extends HookConsumerWidget {
                       .copyWith(letter: newText);
                   currentIndex
                       .value++; // Incrementa el índice para la próxima letra
-                } else {
-                  isBlock.value = false;
+                  return;
                 }
-
-                print(newText);
+                isBlock.value = false;
               },
               onEnter: () {
                 print(text.value);
                 verifyTry();
               },
               onBackSpace: (_) {
-                if (currentIndex.value % 5 == 0) {
+                if (currentIndex.value == 0 || currentIndex.value % 5 == 0) {
                   return;
                 }
                 currentIndex.value--;

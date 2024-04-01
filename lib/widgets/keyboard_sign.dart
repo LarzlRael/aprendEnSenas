@@ -31,6 +31,7 @@ class KeyboardSignWidget extends HookConsumerWidget {
     this.lettersUppercase = false,
     this.showSwitcherLetter = true,
     this.onEnter,
+    this.isShowIcons = true,
   });
   final Function(String value)? onChanged;
   final Function(String value)? onLetterChanged;
@@ -41,7 +42,7 @@ class KeyboardSignWidget extends HookConsumerWidget {
   final bool showSpace;
   final bool lettersUppercase;
   final bool showSwitcherLetter;
-
+  final bool isShowIcons;
   @override
   Widget build(BuildContext context, ref) {
     final text = useState<String>('');
@@ -69,6 +70,7 @@ class KeyboardSignWidget extends HookConsumerWidget {
       lettersUppercase: lettersUppercase,
       onEnter: onEnter,
       showSwitcherLetter: showSwitcherLetter,
+      isShowIcons: isShowIcons,
     );
   }
 }

@@ -73,13 +73,11 @@ List<SelectGameCard> selecteGameItems(BuildContext context) {
 final Map<String, String> _spanishToEnglish = {
   'algo': 'something',
   'alguien': 'someone',
-  'algún': 'some',
   'alguna': 'some',
   'algunas': 'some',
   'alguno': 'some',
   'algunos': 'some',
-  'allá': 'there',
-  'allí': 'there',
+  'alli': 'there',
   'ambos': 'both',
   'ampleamos': 'we use',
   'ante': 'before',
@@ -119,10 +117,8 @@ final Map<String, String> _spanishToEnglish = {
   'de': 'of',
   'dejar': 'to leave',
   'del': 'of the',
-  'demás': 'others',
   'demas': 'others',
   'demasiadas': 'too many',
-  'demasiados': 'too many',
   'dentro': 'inside',
   'desde': 'since',
   'donde': 'where',
@@ -208,6 +204,7 @@ final Map<String, String> _spanishToEnglish = {
   'vez': 'time',
   'volver': 'to return',
   'ya': 'already',
+  'pulga': 'flea',
 };
 
 List<String> getWords(String language) {
@@ -233,4 +230,61 @@ String getOneRandomWords(String language) {
     default:
       return "";
   }
+}
+
+final wordsKeyboardList = [
+  'Casa',
+  'Mesa',
+  'Perro',
+  'Gato',
+  'Llave',
+  'Taza',
+  'Niño',
+  'Libro',
+  'Árbol',
+  'Pared',
+  'Calle',
+  'Flor',
+  'Silla',
+  'Panza',
+  'Campo',
+  'Playa',
+  'Pecho',
+  'Hojas',
+  'Reloj',
+  'Cama',
+  'Cesto',
+  'Cebra',
+  'Fuego',
+  'Ángel',
+  'Pared',
+  'Manos',
+  'Rápido',
+  'Gordo',
+  'Azul',
+  'Rojo',
+  'Verde',
+  'Blanco',
+  'Negro',
+  'Vino',
+  'Queso',
+  'Oro',
+  'Lunes',
+  'Marte',
+  'Sábado',
+  'Octubre',
+  'Novela',
+  'Zapato',
+  'Cebra',
+  'Alfombra',
+  'Sol',
+  'Luna',
+  'Fruta',
+  'Otoño',
+  'Invierno',
+  'Verano',
+];
+
+String getRandomWordsKeyboardList() {
+  return wordsKeyboardList[Random().nextInt(wordsKeyboardList.length)];
 }
