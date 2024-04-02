@@ -43,6 +43,14 @@
   "@guess_the_correct_word_or_number": {
     "description": "Challenge to identify the correct word or numeral"
   },
+  "word_challenge": "Word challenge",
+  "@word_challenge": {
+    "description": ""
+  },
+  "word_challenge_desc": "Guessing game in which players are tasked with unscrambling a hidden word with just five chances",
+  "@word_challenge_desc": {
+    "description": ""
+  },
   "card_flip": "Card Flip",
   "@card_flip": {
     "description": "Action of turning over a card"
@@ -314,5 +322,13 @@
   "skip": "Skip",
   "@skip": {
     "description": "Action to skip"
+  },
+  "insufficient": "Insufficient Number of Letters",
+  "@insufficient": {
+    "description": ""
+  },
+  "you_have_exceeded_the_number_of_attempts": "You have exceeded the number of attempts",
+  "@you_have_exceeded_the_number_of_attempts": {
+    "description": ""
   }
 }

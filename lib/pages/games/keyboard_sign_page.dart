@@ -26,22 +26,26 @@ List<GameLetter> generateList(String text) {
   }).toList();
 }
 
+const totalTry = 5;
+
 class KeyboardSignPage extends HookConsumerWidget {
   const KeyboardSignPage({super.key});
   static const routeName = 'keyboard_sign_page';
   @override
   Widget build(BuildContext context, ref) {
-    final correct = 'pulga';
+    final correct = useState(getRandomWordsKeyboardList());
+    final correctLength = correct.value.length;
     final text = useState<String>('');
-    final gridLetters = useState<List<GameLetter>>(
-        List.generate(25, (index) => GameLetter(letter: '')));
+    final gridLetters = useState<List<GameLetter>>(List.generate(
+        totalTry * correctLength, (index) => GameLetter(letter: '')));
     final usedLetters = useState<List<KeyColor>>([]);
-    final try_ = useState(0);
+    final currentTry = useState(0);
     final uniqueKey = useState<UniqueKey>(UniqueKey());
     final isBlock = useState(false);
+    final isFinished = useState(false);
     final currentIndex = useState(0);
     final signList = useState<List<Sign>>(generateListToMessageUtil(
-        ref.read(signProvider).currentListSing, correct));
+        ref.read(signProvider).currentListSing, correct.value));
 
     /* void resetWidget() {
       text.value = ''; // Reiniciar el texto
@@ -54,26 +58,28 @@ class KeyboardSignPage extends HookConsumerWidget {
     }
  */
     void verifyTry() {
-      if (gridLetters.value[5 * try_.value].letter.isEmpty ||
-          currentIndex.value % 5 != 0) {
+      if (gridLetters.value[correctLength * currentTry.value].letter.isEmpty ||
+          currentIndex.value % correctLength != 0) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Cantidad de letras insuficiente'),
+            content: Text(AppLocalizations.of(context)!.insufficient),
           ),
         );
         return;
       }
 
       isBlock.value = true;
-      final getlast5 = text.value.substring(text.value.length - 5);
-      final getLista = generateList(getlast5);
-      final correctAnswer = correct.split('');
+      final getlastNletter =
+          text.value.substring(text.value.length - correctLength);
+      final getLista = generateList(getlastNletter);
+      final correctAnswer = correct.value.split('');
 
-      if (getlast5 == correct) {
-        return context.pop();
+      if (getlastNletter == correct.value) {
+        isFinished.value = true;
+        return;
       }
       for (int i = 0; i < getLista.length; i++) {
-        final index = i + (5 * try_.value);
+        final index = i + (correctLength * currentTry.value);
         if (getLista[i].letter == correctAnswer[i]) {
           gridLetters.value[index] =
               gridLetters.value[index].copyWith(color: okColor);
@@ -95,11 +101,12 @@ class KeyboardSignPage extends HookConsumerWidget {
             .add(KeyColor(key: getLista[i].letter, color: wrongColor));
       }
 
-      try_.value++;
-      if (try_.value == 5) {
+      currentTry.value++;
+      if (currentTry.value == totalTry) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Has superado el número de intentos'),
+            content: Text(AppLocalizations.of(context)!
+                .you_have_exceeded_the_number_of_attempts),
           ),
         );
         return context.pop();
@@ -113,7 +120,7 @@ class KeyboardSignPage extends HookConsumerWidget {
         ref.read(signProvider).currentListSing,
         text.value,
       ); */
-      if (currentIndex.value > 0 && currentIndex.value % 5 == 0) {
+      if (currentIndex.value > 0 && currentIndex.value % correctLength == 0) {
         isBlock.value = true;
       }
 
@@ -122,116 +129,161 @@ class KeyboardSignPage extends HookConsumerWidget {
     }, [text.value]);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Keyboard Sign'),
+        title: Text(AppLocalizations.of(context)!.word_challenge),
       ),
       key: uniqueKey.value,
-      body: SizedBox.expand(
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: signList.value
-                  .map((e) => Card(
-                        child: Container(
-                          width: 60,
-                          height: 60,
-                          child: Icon(
-                            e.iconSign,
-                            size: 45,
-                          ),
-                        ),
-                      ))
-                  .toList(),
-            ),
-            SizedBox(height: 25),
-            Expanded(
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 45),
-                child: AlignedGridView.count(
-                  crossAxisCount: 5,
-                  mainAxisSpacing: 5,
-                  crossAxisSpacing: 5,
-                  itemCount: gridLetters.value.length,
-                  itemBuilder: (_, index) {
-                    final e = gridLetters.value[index];
-                    return AnimatedContainer(
-                      duration: Duration(
-                          milliseconds:
-                              ((index - (5 * try_.value)) * 150) + 1000),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: e.color,
-                          border: e.color != null
-                              ? currentIndex.value == index
-                                  ? Border.all(color: Colors.white, width: 1)
-                                  : null
-                              : Border.all(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  width: 1)),
-                      width: 60,
-                      height: 60,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 5,
+      body: isFinished.value
+          ? GameOverScreen(
+              title: SimpleText(
+                text: AppLocalizations.of(context)!.congratulations,
+                fontSize: 30,
+                fontWeight: FontWeight.w500,
+                textAlign: TextAlign.center,
+              ),
+              subtitle: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Wrap(
+                        alignment: WrapAlignment.center,
+                        children: signList.value
+                            .map((e) => Column(
+                                  children: [
+                                    Card(
+                                      child: Container(
+                                        width: correctLength == 6 ? 45 : 55,
+                                        height: correctLength == 6 ? 45 : 55,
+                                        child: Icon(e.iconSign,
+                                            size: correctLength == 6 ? 30 : 40),
+                                      ),
+                                    ),
+                                    SimpleText(
+                                      text: e.letter.toUpperCase(),
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w500,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ))
+                            .toList(),
                       ),
-                      child: Center(
-                        child: SimpleText(
-                          text: e.letter.toUpperCase(),
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    ],
+                  ),
+                  SimpleText(
+                    padding: EdgeInsets.symmetric(vertical: 20),
+                    text: 'Adivinaste la palabra correctamente',
+                    fontSize: 20,
+                    textAlign: TextAlign.center,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ],
+              ),
+              resultType: ResultGameType.win,
+              pathImage: getValueSoundFromList(correctImages),
+            )
+          : SizedBox.expand(
+              child: Column(
+                children: [
+                  Wrap(
+                    children: signList.value
+                        .map((e) => Card(
+                              child: Container(
+                                width: 60,
+                                height: 60,
+                                child: Icon(
+                                  e.iconSign,
+                                  size: 45,
+                                ),
+                              ),
+                            ))
+                        .toList(),
+                  ),
+                  SizedBox(height: 25),
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 40),
+                      child: AlignedGridView.count(
+                        crossAxisCount: correctLength,
+                        mainAxisSpacing: 5,
+                        crossAxisSpacing: 5,
+                        itemCount: gridLetters.value.length,
+                        itemBuilder: (_, index) {
+                          final e = gridLetters.value[index];
+                          return AnimatedContainer(
+                            duration: Duration(
+                                milliseconds: ((index -
+                                            (correctLength *
+                                                currentTry.value)) *
+                                        150) +
+                                    1000),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: e.color,
+                              border: e.color == null &&
+                                      currentIndex.value == index &&
+                                      !isBlock.value
+                                  ? Border.all(color: Colors.white, width: 1.5)
+                                  : Border.all(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      width: 1,
+                                    ),
+                            ),
+                            width: 60,
+                            height: 60,
+                            child: Center(
+                              child: SimpleText(
+                                text: e.letter.toUpperCase(),
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  ),
+                  KeyboardSignWidget(
+                    showNumbers: false,
+                    showSpace: false,
+                    showSwitcherLetter: false,
+                    isShowIcons: false,
+                    onChanged: (_) {},
+                    onLetterChanged: (String newText) {
+                      if (isBlock.value) return;
+                      // Asegúrate de que text.value.length esté dentro del rango de
+                      // Actualiza el texto
+                      text.value = text.value + newText;
+                      if (currentIndex.value < gridLetters.value.length) {
+                        gridLetters.value[currentIndex.value] = gridLetters
+                            .value[currentIndex.value]
+                            .copyWith(letter: newText);
+                        // Incrementa el índice para la próxima letra
+                        currentIndex.value++;
+                        return;
+                      }
+                    },
+                    onEnter: () {
+                      print(text.value);
+                      verifyTry();
+                    },
+                    onBackSpace: (_) {
+                      if (currentIndex.value == 0 ||
+                          currentIndex.value % correctLength == 0) {
+                        return;
+                      }
+                      currentIndex.value--;
+                      gridLetters.value[currentIndex.value] = gridLetters
+                          .value[currentIndex.value]
+                          .copyWith(letter: '');
+                    },
+                    /* isShowIcons: !isLetter.value, */
+                    coloredKeys: usedLetters.value,
+                    lettersUppercase: false,
+                  ),
+                ],
               ),
             ),
-            KeyboardSignWidget(
-              showNumbers: false,
-              showSpace: false,
-              showSwitcherLetter: false,
-              isShowIcons: false,
-              onChanged: (String newText) {
-                /* text.value = newText;
-                fumar.value = generateList(newText);
-                print(newText); */
-              },
-              onLetterChanged: (String newText) {
-                if (isBlock.value) return;
-
-                // Asegúrate de que text.value.length esté dentro del rango de
-                // Actualiza el texto
-                text.value = text.value + newText;
-
-                if (currentIndex.value < gridLetters.value.length) {
-                  gridLetters.value[currentIndex.value] = gridLetters
-                      .value[currentIndex.value]
-                      .copyWith(letter: newText);
-                  currentIndex
-                      .value++; // Incrementa el índice para la próxima letra
-                  return;
-                }
-                isBlock.value = false;
-              },
-              onEnter: () {
-                print(text.value);
-                verifyTry();
-              },
-              onBackSpace: (_) {
-                if (currentIndex.value == 0 || currentIndex.value % 5 == 0) {
-                  return;
-                }
-                currentIndex.value--;
-                gridLetters.value[currentIndex.value] =
-                    gridLetters.value[currentIndex.value].copyWith(letter: '');
-              },
-              /* isShowIcons: !isLetter.value, */
-              coloredKeys: usedLetters.value,
-              lettersUppercase: false,
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

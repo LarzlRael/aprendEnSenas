@@ -43,6 +43,14 @@
   "@guess_the_correct_word_or_number": {
     "description": "Desafío para identificar la palabra o numeral correcto"
   },
+  "word_challenge": "Reto de palabras",
+  "@word_challenge": {
+    "description": ""
+  },
+  "word_challenge_desc": "Juego de adivinanza descifra la palabra oculta con solo cinco oportunidades",
+  "@word_challenge_desc": {
+    "description": ""
+  },
   "card_flip": "Volteo de cartas",
   "@card_flip": {
     "description": "Acción de voltear una carta"
@@ -314,5 +322,13 @@
   "skip": "Saltar",
   "@skip": {
     "description": "Acción para saltar o omitir"
+  },
+  "insufficient": "Cantidad de letras insuficiente",
+  "@insufficient": {
+    "description": ""
+  },
+  "you_have_exceeded_the_number_of_attempts": "Has superado el número de intentos",
+  "@you_have_exceeded_the_number_of_attempts": {
+    "description": ""
   }
 }
