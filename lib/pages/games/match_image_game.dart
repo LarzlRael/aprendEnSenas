@@ -76,7 +76,7 @@ class MatchImageGame extends HookConsumerWidget {
                           AppLocalizations.of(context)!.negative_score,
                       loseTitle: AppLocalizations.of(context)!.lost,
                       winSubtitle:
-                          '${AppLocalizations.of(context)!.congratulations_score} ${score.value}',
+                          '${AppLocalizations.of(context)!.congratulations_score}${score.value}',
                       winTitle: AppLocalizations.of(context)!.you_won,
                       callBackOnLose: initGame,
                       callBackOnWin: initGame,

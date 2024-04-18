@@ -179,62 +179,62 @@ class SendMessageSlider extends HookConsumerWidget {
     });
 
     useEffect(() {
-      signProviderS.listSignsToMessage = generateListToMessageUtil(
-        signProviderS.currentListSing,
-        signProviderS.currentMessage,
-      );
+      Future.delayed(Duration.zero, () {
+        signProviderN.setListSignsToMessage(generateListToMessageUtil(
+          signProviderS.currentListSing,
+          signProviderS.currentMessage,
+        ));
+      });
       /* return pageController.dispose; */
-    }, [signProviderS]);
+    }, [signProviderS.currentMessage]);
 
     startPageViewMessage() {
       signProviderN.setCurrentMessage(signProviderS.currentMessage);
 
-      pageController.jumpToPage(0);
+      pageController.jumpToPage(_currentIndex.value);
 
-      signProviderS.timer = Timer.periodic(
+      signProviderN.setTimer(Timer.periodic(
           Duration(milliseconds: settings.transitionTime.toInt()),
           (Timer timer) {
-        if (pageController.page!.toInt() <
-            signProviderS.listSignsToMessage.length - 1) {
+        if (_currentIndex.value < signProviderS.listSignsToMessage.length - 1) {
           isPlaying.value = true;
           pageController.nextPage(
             duration: Duration(milliseconds: settings.transitionTime.toInt()),
             curve: Curves.easeInOut,
           );
+          _currentIndex.value = _currentIndex.value + 1;
         } else {
           // Si estás en la última página, vuelve al principio
           timer.cancel();
           signProviderS.timer?.cancel();
-
-          pageController.jumpToPage(0);
+          _currentIndex.value = 0;
+          pageController.jumpToPage(_currentIndex.value);
           isPlaying.value = false;
         }
-      });
+      }));
     }
 
     void stopTimerAnimatedImages() {
-      isPlaying.value = false;
       signProviderS.timer?.cancel();
-      _currentIndex.value = 0;
-      signProviderN.setCurrentSign(
-          signProviderS.listSignsToMessage[_currentIndex.value]);
+      isPlaying.value = false;
+      /* _currentIndex.value = 0; */
     }
 
     void startTimerAnimatedImages() {
-      signProviderS.timer = Timer.periodic(
+      signProviderN.setTimer(Timer.periodic(
           Duration(milliseconds: settings.transitionTime.toInt()),
           (timer) async {
-        isPlaying.value = true;
-        signProviderN.setCurrentSign(
-            signProviderS.listSignsToMessage[_currentIndex.value]);
-        _currentIndex.value = _currentIndex.value + 1;
-
-        if (_currentIndex.value == signProviderS.listSignsToMessage.length) {
-          stopTimerAnimatedImages();
-          /* TODO change this */
-          /* ref.read(signProviderProvider.notifier).setCurrentSign(null); */
+        if (_currentIndex.value < signProviderS.listSignsToMessage.length - 1) {
+          isPlaying.value = true;
+          _currentIndex.value = _currentIndex.value + 1;
+        } else {
+          // Si estás en la última página, vuelve al principio
+          timer.cancel();
+          signProviderS.timer?.cancel();
+          _currentIndex.value = 0;
+          isPlaying.value = false;
         }
-      });
+      }));
     }
 
     final size = MediaQuery.of(context).size;
@@ -269,6 +269,9 @@ class SendMessageSlider extends HookConsumerWidget {
                                 width: 300,
                                 height: size.height * 0.50,
                                 child: PageView.builder(
+                                  physics: isPlaying.value
+                                      ? const NeverScrollableScrollPhysics()
+                                      : const PageScrollPhysics(),
                                   controller: pageController,
                                   scrollDirection: settings.sliderDirection,
                                   itemCount:
@@ -318,8 +321,9 @@ class SendMessageSlider extends HookConsumerWidget {
                               ),
                   ),
                   Container(
-                    margin: EdgeInsets.symmetric(vertical: 5),
+                    margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                     child: RichText(
+                      textAlign: TextAlign.center,
                       text: TextSpan(
                         style: TextStyle(
                           fontSize: 16,
@@ -336,7 +340,7 @@ class SendMessageSlider extends HookConsumerWidget {
                                 child: Text(
                                   e.letter,
                                   style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 22,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.green,
                                     /* color: Colors.black, */
@@ -368,9 +372,15 @@ class SendMessageSlider extends HookConsumerWidget {
               children: [
                 Expanded(
                     child: TextFieldSendMessage(
-                  onTextChange: signProviderN.setCurrentMessage,
+                  onTextChange: (string) {
+                    signProviderN.setCurrentMessage(string);
+                  },
                   initialValue: signProviderS.currentMessage,
                   onClear: (textController) {
+                    if (isPlaying.value) {
+                      stopTimerAnimatedImages();
+                    }
+                    _currentIndex.value = 0;
                     textController.clear();
                     signProviderN.setCurrentMessage('');
                   },
@@ -452,9 +462,9 @@ class CurrentSign extends StatelessWidget {
         text: TextSpan(
           children: [
             TextSpan(
-              text: currenSign?.type!.name.toCapitalize() ?? "",
+              text: signType(context, currenSign?.type ?? SignType.letter),
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 23,
                 fontWeight: FontWeight.bold,
                 color: Colors.grey,
               ),

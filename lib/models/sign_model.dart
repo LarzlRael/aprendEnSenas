@@ -20,5 +20,13 @@ class Sign {
   String letter;
   IconData iconSign;
   SignType? type;
-  Sign(this.letter, this.iconSign, {this.type = SignType.letter});
+  Sign(
+    this.letter,
+    this.iconSign, {
+    this.type = SignType.letter,
+  });
+
+  getLetterType(BuildContext context) {
+    return signType(context, type!);
+  }
 }

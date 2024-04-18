@@ -19,7 +19,7 @@
   "@letters_and_numbers": {
     "description": "Caracteres y dígitos numéricos"
   },
-  "no_messages_yet": "No hay mensajes todavía...",
+  "no_messages_yet": "Escribe un mensaje...",
   "@no_messages_yet": {
     "description": "Indicación de que actualmente no hay mensajes"
   },
@@ -267,7 +267,7 @@
   "@negative_score": {
     "description": "Mensaje mostrado cuando el puntaje del jugador es negativo"
   },
-  "congratulations_score": "¡Felicidades! ¡Tu puntaje es de ",
+  "congratulations_score": "¡Felicidades! Tu puntaje es de ",
   "@congratulations_score": {
     "description": "Mensaje mostrado cuando el puntaje del jugador es positivo"
   },

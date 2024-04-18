@@ -282,7 +282,11 @@ class ResultScreen extends StatelessWidget {
         ),
         subtitle: SimpleText(
           text: winSubtitle,
-          style: textTheme.bodyMedium!,
+          textAlign: TextAlign.center,
+          style: textTheme.bodyLarge!.copyWith(
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         pathImage: getValueSoundFromList(correctImages),
       );

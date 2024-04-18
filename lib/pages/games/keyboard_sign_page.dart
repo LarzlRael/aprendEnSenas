@@ -47,16 +47,6 @@ class KeyboardSignPage extends HookConsumerWidget {
     final signList = useState<List<Sign>>(generateListToMessageUtil(
         ref.read(signProvider).currentListSing, correct.value));
 
-    /* void resetWidget() {
-      text.value = ''; // Reiniciar el texto
-      textSign.value = []; // Limpiar la lista de signos
-      isLetter.value = true; // Restaurar el estado de letra
-      fumar.value = []; // Limpiar la lista de GameLetter
-      usedLetters.value = []; // Limpiar la lista de letras usadas
-      try_.value = 0; // Reiniciar el contador de intentos
-      uniqueKey.value = UniqueKey(); // Generar una nueva clave única
-    }
- */
     void verifyTry() {
       if (gridLetters.value[correctLength * currentTry.value].letter.isEmpty ||
           currentIndex.value % correctLength != 0) {
@@ -147,26 +137,28 @@ class KeyboardSignPage extends HookConsumerWidget {
                     children: [
                       Wrap(
                         alignment: WrapAlignment.center,
-                        children: signList.value
-                            .map((e) => Column(
-                                  children: [
-                                    Card(
-                                      child: Container(
-                                        width: correctLength == 6 ? 45 : 55,
-                                        height: correctLength == 6 ? 45 : 55,
-                                        child: Icon(e.iconSign,
-                                            size: correctLength == 6 ? 30 : 40),
-                                      ),
-                                    ),
-                                    SimpleText(
-                                      text: e.letter.toUpperCase(),
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.w500,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ))
-                            .toList(),
+                        children: signList.value.map((e) {
+                          final isLength6 = correctLength == 6;
+                          return Column(
+                            children: [
+                              Card(
+                                color: okColor,
+                                child: Container(
+                                  width: isLength6 ? 45 : 55,
+                                  height: isLength6 ? 45 : 55,
+                                  child: Icon(e.iconSign,
+                                      size: isLength6 ? 30 : 40),
+                                ),
+                              ),
+                              SimpleText(
+                                text: e.letter.toUpperCase(),
+                                fontSize: 30,
+                                fontWeight: FontWeight.w500,
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          );
+                        }).toList(),
                       ),
                     ],
                   ),
@@ -251,9 +243,11 @@ class KeyboardSignPage extends HookConsumerWidget {
                     onChanged: (_) {},
                     onLetterChanged: (String newText) {
                       if (isBlock.value) return;
+
                       // Asegúrate de que text.value.length esté dentro del rango de
                       // Actualiza el texto
                       text.value = text.value + newText;
+
                       if (currentIndex.value < gridLetters.value.length) {
                         gridLetters.value[currentIndex.value] = gridLetters
                             .value[currentIndex.value]
@@ -262,6 +256,7 @@ class KeyboardSignPage extends HookConsumerWidget {
                         currentIndex.value++;
                         return;
                       }
+                      isBlock.value = false;
                     },
                     onEnter: () {
                       print(text.value);

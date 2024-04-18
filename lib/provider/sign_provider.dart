@@ -81,15 +81,23 @@ class SignNotifier extends StateNotifier<SignState> {
     );
     await keyValueStorageService.setKeyValue<int>(CURRENT_LIST_INDEX, index);
   }
+
+  void setListSignsToMessage(List<Sign> listSigns) {
+    state = state.copyWith(listSigns: listSigns);
+  }
+
+  void setTimer(Timer timer) {
+    state = state.copyWith(timer: timer);
+  }
 }
 
 class SignState {
-  List<Sign> listSignsToMessage = [];
-  Sign? currentSign;
-  String currentMessage = '';
-  Timer? timer;
-  List<Sign> currentListSing = [];
-  int currentListIndex = 0;
+  final List<Sign> listSignsToMessage;
+  final Sign? currentSign;
+  final String currentMessage;
+  final Timer? timer;
+  final List<Sign> currentListSing;
+  final int currentListIndex;
   SignState({
     required this.listSignsToMessage,
     required this.currentSign,
